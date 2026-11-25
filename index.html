@@ -252,6 +252,8 @@ th{font-weight:500;text-transform:none;letter-spacing:0;font-size:12px}
 .toggle{position:relative;width:38px;height:22px;flex:none;appearance:none;-webkit-appearance:none;background:rgba(255,255,255,.15);border-radius:99px;cursor:pointer;transition:background .15s;border:0;padding:0}
 .toggle::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .15s}
 .toggle:checked{background:var(--accent)}.toggle:checked::after{transform:translateX(16px)}
+.pform h2{margin-top:20px}
+.pbadge{flex:none;font-size:11.5px;font-weight:700;padding:4px 9px;border-radius:99px;background:rgba(255,255,255,.08);color:var(--muted);align-self:center}.pbadge.on{background:color-mix(in srgb,var(--s-active) 25%,transparent);color:var(--text)}
 .setrow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.05)}
 .setrow:last-child{border-bottom:0}.setrow .d{font-size:12px;color:var(--muted);margin-top:2px}
 
@@ -317,6 +319,7 @@ th{font-weight:500;text-transform:none;letter-spacing:0;font-size:12px}
   <nav class="glass">
     <div class="logo"><svg class="ghost" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"> <defs> <linearGradient id="gb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e3dcff"/></linearGradient> </defs> <g transform="rotate(-8 128 132)"> <path d="M52 132 C30 120 22 100 30 88 C40 96 50 104 62 108 Z" fill="url(#gb)" stroke="#2b2342" stroke-width="7" stroke-linejoin="round"/> <path d="M204 140 C226 136 238 120 236 104 C224 110 212 116 196 118 Z" fill="url(#gb)" stroke="#2b2342" stroke-width="7" stroke-linejoin="round"/> <path d="M56 214 L56 112 C56 62 88 30 130 30 C172 30 202 62 202 112 L202 214 C192 232 178 232 170 216 C162 232 146 234 138 216 C130 234 114 234 106 216 C98 232 82 232 74 216 C68 228 58 228 56 214 Z" fill="url(#gb)" stroke="#2b2342" stroke-width="8" stroke-linejoin="round"/> <circle cx="104" cy="104" r="24" fill="#fff" stroke="#2b2342" stroke-width="6"/> <circle cx="160" cy="98" r="19" fill="#fff" stroke="#2b2342" stroke-width="6"/> <circle cx="112" cy="112" r="11" fill="#2b2342"/> <circle cx="154" cy="92" r="9" fill="#2b2342"/> <circle cx="116" cy="108" r="3.5" fill="#fff"/> <circle cx="157" cy="89" r="3" fill="#fff"/> <ellipse cx="82" cy="140" rx="12" ry="7" fill="#ff8fb8" opacity=".75"/> <ellipse cx="180" cy="134" rx="11" ry="6.5" fill="#ff8fb8" opacity=".75"/> <path d="M108 140 C116 166 156 164 164 136 Z" fill="#2b2342" stroke="#2b2342" stroke-width="6" stroke-linejoin="round"/> <path d="M128 152 C128 172 152 176 154 154 C146 150 136 150 128 152 Z" fill="#ff6b9a" stroke="#2b2342" stroke-width="5" stroke-linejoin="round"/> <path d="M141 154 L142 166" stroke="#d94a7a" stroke-width="3" stroke-linecap="round"/> </g> </svg><span>Soul</span></div>
     <button data-v="friends"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14.8c1.8.7 3 2.4 3.5 5.2"/></svg>Friends<span class="count" id="c-online" hidden></span></button>
+    <button data-v="people"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="8" r="3.5"/><path d="M3.5 20c.8-3.6 3.4-5.5 6.5-5.5 1.3 0 2.5.3 3.5.9"/><circle cx="17.5" cy="16.5" r="3"/><path d="M21.5 20.5l-1.8-1.8"/></svg>People</button>
     <button data-v="feed"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h3l2.5-6 5 12 2.5-6h3"/></svg>Feed</button>
     <button data-v="friendlog"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3.5" width="14" height="17" rx="2.5"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>Friend Log</button>
     <button data-v="worlds"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.4 2.6 3.5 5.4 3.5 8.5s-1.1 5.9-3.5 8.5c-2.4-2.6-3.5-5.4-3.5-8.5s1.1-5.9 3.5-8.5z"/></svg>My Worlds</button>
@@ -326,6 +329,7 @@ th{font-weight:500;text-transform:none;letter-spacing:0;font-size:12px}
     <button data-v="photos"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><circle cx="9" cy="10" r="1.8"/><path d="M21 16l-5-5-8 8"/></svg>Photos</button>
     <button data-v="avatars"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="3.5"/><path d="M6 21v-3.5A4.5 4.5 0 0 1 10.5 13h3a4.5 4.5 0 0 1 4.5 4.5V21"/><path d="M4 10l2-1M20 10l-2-1"/></svg>Avatars</button>
     <div class="spacer"></div>
+    <button data-v="profile"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="15" rx="2.5"/><circle cx="9" cy="11" r="2.5"/><path d="M5.5 16.5c.6-1.6 1.9-2.5 3.5-2.5s2.9.9 3.5 2.5M14.5 10h4M14.5 13.5h3"/></svg>My Profile</button>
     <button data-v="theme"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5a8.5 8.5 0 1 0 0 17c1.2 0 1.8-.9 1.4-1.9-.5-1.2.3-2.6 1.6-2.6h1.8a3.7 3.7 0 0 0 3.7-3.7c0-4.9-3.8-8.8-8.5-8.8z"/><circle cx="7.8" cy="11" r="1"/><circle cx="10.5" cy="7.5" r="1"/><circle cx="15" cy="7.8" r="1"/></svg>Theme</button>
     <button data-v="settings"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>Settings</button>
     <div id="acct"></div>
@@ -437,12 +441,12 @@ const saveTheme = debounce(() => {
 function setTheme(patch) { Object.assign(theme, patch); applyTheme(); saveTheme(); }
 
 // ================= navigation =================
-const TITLES = { friends: "Friends", feed: "Feed", friendlog: "Friend Log", worlds: "My Worlds", notifications: "Notifications", explore: "Explore Worlds", groups: "Groups", photos: "Photos", avatars: "Avatars", theme: "Theme", settings: "Settings" };
+const TITLES = { friends: "Friends", people: "People", feed: "Feed", friendlog: "Friend Log", worlds: "My Worlds", notifications: "Notifications", explore: "Explore Worlds", groups: "Groups", photos: "Photos", avatars: "Avatars", profile: "My Profile", theme: "Theme", settings: "Settings" };
 function go(v) {
   S.view = v; prefs.view = v; savePrefs();
   document.querySelectorAll("nav button").forEach((b) => b.classList.toggle("on", b.dataset.v === v));
   $("#title").textContent = TITLES[v];
-  $("#q").value = S.q = ""; $("#q").parentElement.style.visibility = ["theme", "settings", "groups"].includes(v) ? "hidden" : "";
+  $("#q").value = S.q = ""; $("#q").placeholder = v === "people" ? "Search anyone on VRChat by name…" : "Search…"; $("#q").parentElement.style.visibility = ["theme", "settings", "groups", "profile"].includes(v) ? "hidden" : "";
   $("#view").scrollTop = 0;
   render(true);
 }
@@ -694,17 +698,18 @@ VIEWS.notifications = async () => {
 };
 
 // ================= user drawer =================
+const nameHint = new Map();
 window.openUser = async (id) => {
   if (!id) return;
   const d = $("#drawer"); d.classList.add("open"); d.innerHTML = `<div class="muted">Loading…</div>`;
   const u = await api("/api/user?id=" + encodeURIComponent(id));
-  const f = u.friend; const name = f?.name || u.met?.name || u.recent[0]?.name || "Unknown";
+  const f = u.friend; const name = f?.name || u.met?.name || u.recent[0]?.name || nameHint.get(id)?.name || "Unknown";
   const L = f ? parseLoc(f.location) : null;
   d.innerHTML = `<button class="btn x" onclick="closeUser()">✕</button>
     <div style="display:flex;gap:16px;align-items:center">
-      <div class="avwrap">${avatar(name, f?.thumb, "lg")}<span class="sdot" style="background:${statusColor(f)};width:18px;height:18px"></span></div>
-      <div style="min-width:0"><div class="name" style="font-size:20px;color:${f ? trustVar(f.trust) : "var(--text)"}">${esc(name)}</div>
-        <div class="sub">${f ? esc(f.trust) + (f.num ? ` · friend #${f.num}` : "") : "Not on your friends list"}</div>
+      <div class="avwrap" id="d-pic">${avatar(name, f?.thumb || nameHint.get(id)?.thumb, "lg")}<span class="sdot" style="background:${statusColor(f)};width:18px;height:18px"></span></div>
+      <div style="min-width:0"><div class="name" id="d-name" style="font-size:20px;color:${f ? trustVar(f.trust) : "var(--text)"}">${esc(name)}</div>
+        <div class="sub" id="d-trust">${f ? esc(f.trust) + (f.num ? ` · friend #${f.num}` : "") : id === VRC.id ? "This is you" : "Not on your friends list"}</div>
         ${f?.statusText ? `<div class="sub" style="color:var(--text)">${esc(f.statusText)}</div>` : ""}
         <div class="sub">${f ? (f.online ? (L.kind === "world" ? "In " + esc(f.world) + " · " + esc(L.type) : esc(L.label)) : "Last seen " + ago(f.since)) : ""}</div></div></div>
     <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
@@ -713,6 +718,8 @@ window.openUser = async (id) => {
       ${f ? `<button class="btn primary" onclick="openPoke('${esc(id)}','${esc(jsq(name))}')">👉 Poke</button>` : ""}
       ${f && VRC.loggedIn ? `<button class="btn" onclick="inviteUser('${esc(id)}','${esc(jsq(name))}')">Invite to my world</button>` : ""}
       ${f?.online && VRC.loggedIn ? `<button class="btn" onclick="requestInvite('${esc(id)}','${esc(jsq(name))}')">Ask to join</button>` : ""}
+      <span id="d-friend" style="display:contents"></span>
+      ${id === VRC.id ? `<button class="btn primary" onclick="closeUser();go('profile')">Edit my profile</button>` : ""}
       <a class="btn" href="https://vrchat.com/home/user/${esc(id)}" target="_blank">VRChat profile</a>
       <button class="btn" onclick="navigator.clipboard.writeText('${esc(id)}');toast('User ID copied')">Copy ID</button></div>
     <div class="kv">
@@ -732,9 +739,10 @@ window.openUser = async (id) => {
     ${u.avatars?.length > 1 ? `<h2>Avatars they've worn <span class="muted small">· ${u.avatars.length}${u.avatars.length >= 24 ? "+" : ""}</span></h2><div class="avgrid">${u.avatars.map((a) => `<div class="avtile" title="${esc(a.name)} — last worn ${ago(a.at)}${a.times > 1 ? ", " + a.times + " times" : ""}">${a.thumb ? `<img loading="lazy" referrerpolicy="no-referrer" style="cursor:zoom-in" onclick="zoomImg(this.src.replace(/%2F256$/, '%2F1024'))" src="${proxied(a.thumb)}" onerror="this.style.visibility='hidden'">` : "<div class=img></div>"}<div class="ellip small">${esc(a.name || "Unknown")}</div><div class="muted" style="font-size:11px">${ago(a.at)}</div></div>`).join("")}</div>` : ""}
     <h2>Recent activity</h2><div class="rows glass">${u.recent.map(feedRow).join("") || `<div class="empty">No activity logged.</div>`}</div>`;
   if (VRC.loggedIn) {
-    loadMutuals(id);
+    loadMutuals(id); friendButtons(id, name);
     const live = await api("/api/vrc/user?id=" + encodeURIComponent(id)).catch(() => null);
     if (!live || live.error || !$("#d-avatar")) return;
+    if (!f && live.name) { $("#d-name").textContent = live.name; $("#d-name").style.color = trustVar(live.trust); if (id !== VRC.id) $("#d-trust").textContent = live.trust + " · not on your friends list"; if (live.pic) $("#d-pic").innerHTML = avatar(live.name, live.pic, "lg"); }
     if (live.avatar) $("#d-avatar").innerHTML = avatarSection(live.avatar, live);
     $("#d-details").innerHTML = detailsSection(live);
     if (live.bio) $("#d-bio").innerHTML = `<h2>Bio</h2><div class="bio">${esc(live.bio)}</div><div style="height:14px"></div>`;
@@ -1161,6 +1169,132 @@ async function pickMessage(type, title, send) {
 }
 window.inviteUser = (id, name) => pickMessage("message", `Invite ${name} to your world`, async (slot) => { const r = await postJ("/api/vrc/invite", { userId: id, slot }); toast(r.ok ? `Invited ${name} to your world` : r.error); });
 window.requestInvite = (id, name) => pickMessage("request", `Ask ${name} for an invite`, async (slot) => { const r = await postJ("/api/vrc/requestInvite", { userId: id, slot }); toast(r.ok ? `Asked ${name} for an invite` : r.error); });
+
+// ================= people search =================
+const ppl = { q: null, rows: [], off: 0, more: false, sent: new Set() };
+VIEWS.people = async (fresh) => {
+  if (!VRC.loggedIn) { $("#view").innerHTML = `<div class="empty glass">Sign in to VRChat to search for people.</div>`; return; }
+  const q = S.q;
+  if (!q) {
+    $("#view").innerHTML = `<div class="empty glass" style="text-align:center"><div style="font-size:34px">🔎</div><div style="margin-top:6px">Type a name in the search bar above to find anyone on VRChat.</div>
+      <div class="muted small" style="margin-top:6px">You'll see who's already your friend, and you can send friend requests from here. You can also paste a user ID (usr_…).</div></div>`;
+    return;
+  }
+  if (ppl.q !== q || fresh) { ppl.q = q; ppl.off = 0; $("#view").innerHTML = `<div class="muted">Searching…</div>`; const r = await api("/api/vrc/users/search?q=" + encodeURIComponent(q)); if (r.error) { $("#view").innerHTML = `<div class="empty glass">${esc(r.error)}</div>`; return; } ppl.rows = r; ppl.more = r.length >= 40; }
+  if (S.q !== q) return;
+  const nf = ppl.rows.filter((x) => x.friend).length;
+  $("#view").innerHTML = `<div class="toolbar"><span class="muted small">${ppl.rows.length ? `${ppl.rows.length} people named like “${esc(q)}”${nf ? ` · ${nf} already your friend${nf > 1 ? "s" : ""}` : ""}` : ""}</span></div>
+    ${ppl.rows.length ? `<div class="grid">${ppl.rows.map(personCard).join("")}</div>` : `<div class="empty glass">Nobody found called “${esc(q)}”.</div>`}
+    ${ppl.more ? `<div style="text-align:center;margin:14px 0"><button class="btn" onclick="morePeople()">Show more</button></div>` : ""}`;
+};
+function personCard(p) {
+  nameHint.set(p.id, p);
+  const badge = p.me ? `<span class="pbadge">You</span>` : p.friend ? `<span class="pbadge on">✓ Friend</span>`
+    : ppl.sent.has(p.id) ? `<span class="pbadge">Request sent</span>` : `<button class="btn primary" style="padding:5px 10px" onclick="event.stopPropagation();friendAction('${esc(p.id)}','add','${esc(jsq(p.name))}')">+ Add friend</button>`;
+  return `<div class="fcard glass" onclick="openUser('${esc(p.id)}')">
+    <div class="avwrap">${avatar(p.name, p.thumb)}</div>
+    <div class="info"><div class="name" style="color:${trustVar(p.trust)}">${esc(p.name)}</div>
+      <div class="sub">${p.statusText ? esc(p.statusText) : esc(p.trust)}${p.pronouns ? " · " + esc(p.pronouns) : ""}</div>
+      <div class="sub">${p.bio ? esc(p.bio.split("\n")[0]) : ""}</div></div>${badge}</div>`;
+}
+window.morePeople = async () => { ppl.off += 40; const r = await api(`/api/vrc/users/search?q=${encodeURIComponent(ppl.q)}&offset=${ppl.off}`); if (Array.isArray(r)) { const have = new Set(ppl.rows.map((x) => x.id)); ppl.rows.push(...r.filter((x) => !have.has(x.id))); ppl.more = r.length >= 40; } render(); };
+async function friendButtons(id, name) {
+  const box = $("#d-friend"); if (!box || id === VRC.id) return;
+  const st = await api("/api/vrc/friendStatus?id=" + id).catch(() => null);
+  if (!st || st.error || st.self || !$("#d-friend")) return;
+  const n = esc(jsq(name));
+  $("#d-friend").innerHTML = st.isFriend ? `<button class="btn" onclick="friendAction('${esc(id)}','unfriend','${n}')">Unfriend</button>`
+    : st.incoming ? `<button class="btn primary" onclick="friendAction('${esc(id)}','accept','${n}')">✓ Accept their friend request</button>`
+    : st.outgoing ? `<button class="btn" onclick="friendAction('${esc(id)}','cancel','${n}')">Request sent · Cancel</button>`
+    : `<button class="btn primary" onclick="friendAction('${esc(id)}','add','${n}')">+ Add friend</button>`;
+}
+window.friendAction = async (id, action, name) => {
+  if (action === "unfriend" && !confirm(`Unfriend ${name}? They won't be told, but you'll need to send a new request to be friends again.`)) return;
+  const r = await postJ("/api/vrc/friend", { id, action });
+  if (!r.ok) return toast(r.error || "That didn't work");
+  toast({ add: `Friend request sent to ${name}`, cancel: "Friend request cancelled", unfriend: `Unfriended ${name}`, accept: `You and ${name} are now friends 🎉` }[action]);
+  if (action === "add") ppl.sent.add(id); if (action === "cancel") ppl.sent.delete(id);
+  if (action === "unfriend" || action === "accept") { const p = ppl.rows.find((x) => x.id === id); if (p) p.friend = action === "accept"; }
+  if ($("#drawer").classList.contains("open")) friendButtons(id, name);
+  if (S.view === "people") render();
+};
+
+// ================= my profile =================
+const STATUS_OPTS = [["join me", "Join Me", "var(--s-join)"], ["active", "Online", "var(--s-active)"], ["ask me", "Ask Me", "var(--s-ask)"], ["busy", "Do Not Disturb", "var(--s-busy)"]];
+let myProf = null;
+VIEWS.profile = async () => {
+  if (!VRC.loggedIn) { $("#view").innerHTML = `<div class="empty glass">Sign in to VRChat to edit your profile.</div>`; return; }
+  $("#view").innerHTML = `<div class="muted">Loading your profile…</div>`;
+  const P = myProf = await api("/api/vrc/profile");
+  if (P.error) { $("#view").innerHTML = `<div class="empty glass">${esc(P.error)}</div>`; return; }
+  const links = [...P.links, "", "", ""].slice(0, 3);
+  $("#view").innerHTML = `<div class="cols" style="display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:14px;align-items:start">
+    <div class="glass pform" style="padding:18px">
+      <h2 style="margin-top:0">Status</h2>
+      <div class="chips" id="pf-status">${STATUS_OPTS.map(([v, l, c]) => `<button class="chip ${P.status === v ? "on" : ""}" data-s="${v}" onclick="document.querySelectorAll('#pf-status .chip').forEach(b=>b.classList.toggle('on',b===this));pfPreview()"><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:${c};margin-right:6px"></span>${l}</button>`).join("")}</div>
+      <input id="pf-st" maxlength="32" placeholder="What are you up to? (status message)" value="${esc(P.statusText)}" style="width:100%;box-sizing:border-box;margin-top:10px" oninput="pfPreview()">
+      ${P.history.length ? `<div class="chips" style="margin-top:8px">${P.history.filter((h) => h && h !== P.statusText).slice(0, 6).map((h) => `<button class="chip" onclick="$('#pf-st').value=this.textContent;pfPreview()">${esc(h)}</button>`).join("")}</div>` : ""}
+      <h2>Pronouns</h2>
+      <input id="pf-pro" maxlength="32" placeholder="e.g. he/him" value="${esc(P.pronouns)}" style="width:100%;box-sizing:border-box" oninput="pfPreview()">
+      <h2>Bio <span class="muted small" id="pf-bc"></span></h2>
+      <textarea id="pf-bio" rows="7" maxlength="512" placeholder="Tell people about yourself…" style="width:100%;box-sizing:border-box;resize:vertical" oninput="pfPreview()">${esc(P.bio)}</textarea>
+      <h2>Links <span class="muted small">· up to 3</span></h2>
+      ${links.map((l, i) => `<input class="pf-link" placeholder="https://…" value="${esc(l)}" style="width:100%;box-sizing:border-box;margin-bottom:6px">`).join("")}
+      <div style="display:flex;gap:8px;align-items:center;margin-top:12px"><button class="btn primary" id="pf-save" onclick="saveProfile()">Save profile</button><button class="btn" onclick="render()">Undo changes</button><span class="muted small" id="pf-msg"></span></div>
+    </div>
+    <div>
+      <div class="glass" style="padding:16px">
+        <div class="muted small" style="margin-bottom:10px">How people see you</div>
+        <div style="display:flex;gap:12px;align-items:center"><div class="avwrap" id="pf-pic">${avatar(P.name, P.icon || P.pic, "lg")}<span class="sdot" id="pf-dot" style="width:16px;height:16px"></span></div>
+          <div style="min-width:0"><div class="name" style="font-size:18px">${esc(P.name)}</div><div class="sub" id="pf-pv-st"></div><div class="sub" id="pf-pv-pro"></div></div></div>
+        <div class="bio" id="pf-pv-bio" style="margin-top:12px;max-height:200px"></div>
+      </div>
+      <div class="glass" style="padding:16px;margin-top:14px">
+        <h2 style="margin-top:0">Profile picture</h2>
+        ${P.vrcPlus ? `<div class="muted small">Pick one of your pictures, or upload a new one.</div>
+          <div id="pf-icons" class="muted small" style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:10px 0">Loading…</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap"><label class="btn primary">Upload picture<input type="file" accept="image/*" hidden onchange="uploadIcon(this.files[0])"></label>${P.icon ? `<button class="btn" onclick="setIcon('')">Use my avatar instead</button>` : ""}</div>`
+        : `<div class="muted small">Without VRC+, your picture is your current avatar. Switch avatars on the <a class="lnk" onclick="go('avatars')">Avatars</a> page to change it.</div>`}
+      </div>
+    </div></div>`;
+  pfPreview();
+  if (P.vrcPlus) loadIcons();
+};
+window.pfPreview = () => {
+  const st = document.querySelector("#pf-status .chip.on")?.dataset.s || "active";
+  $("#pf-dot").style.background = STATUS_OPTS.find((x) => x[0] === st)[2];
+  $("#pf-pv-st").textContent = $("#pf-st").value || STATUS_OPTS.find((x) => x[0] === st)[1];
+  $("#pf-pv-pro").textContent = $("#pf-pro").value;
+  $("#pf-pv-bio").textContent = $("#pf-bio").value || "No bio yet.";
+  $("#pf-bc").textContent = `· ${$("#pf-bio").value.length}/512`;
+};
+window.saveProfile = async () => {
+  const b = { status: document.querySelector("#pf-status .chip.on")?.dataset.s || "active", statusText: $("#pf-st").value, pronouns: $("#pf-pro").value, bio: $("#pf-bio").value,
+    links: [...document.querySelectorAll(".pf-link")].map((i) => i.value.trim()).filter(Boolean) };
+  $("#pf-save").disabled = true; $("#pf-msg").textContent = "Saving…";
+  const r = await postJ("/api/vrc/profile", b);
+  $("#pf-save").disabled = false; $("#pf-msg").textContent = "";
+  if (!r.ok) return toast(r.error || "Couldn't save your profile");
+  toast("✓ Profile saved — it's live on VRChat"); refreshAccount(true);
+};
+async function loadIcons() {
+  const box = $("#pf-icons"); const icons = await api("/api/vrc/icons").catch(() => ({ error: "Couldn't load your pictures" }));
+  if (!$("#pf-icons")) return;
+  if (icons.error) { box.textContent = icons.error; return; }
+  box.innerHTML = icons.map((ic) => `<img src="${proxied(ic.url + "/file")}" alt="" loading="lazy" title="Use this picture" onerror="this.style.visibility='hidden'" onclick="setIcon('${esc(ic.url)}')" style="width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;cursor:pointer;background:rgba(255,255,255,.06);outline:${myProf?.icon && myProf.icon.startsWith(ic.url) ? "2px solid var(--accent)" : "none"}">`).join("") || "No pictures uploaded yet.";
+}
+window.setIcon = async (url) => { const r = await postJ("/api/vrc/profile", { icon: url }); if (!r.ok) return toast(r.error); toast(url ? "✓ Profile picture changed" : "Now using your avatar as your picture"); refreshAccount(true); render(); };
+window.uploadIcon = async (file) => {
+  if (!file) return;
+  toast("Uploading picture…");
+  const img = await createImageBitmap(file).catch(() => null); if (!img) return toast("That file isn't an image.");
+  const c = document.createElement("canvas"); c.width = c.height = 1024; const side = Math.min(img.width, img.height);
+  c.getContext("2d").drawImage(img, (img.width - side) / 2, (img.height - side) / 2, side, side, 0, 0, 1024, 1024);
+  const blob = await new Promise((r) => c.toBlob(r, "image/png")); const fd = new FormData(); fd.append("file", blob, "icon.png");
+  const r = await fetch("/api/vrc/icon", { method: "POST", body: fd }).then((x) => x.json()).catch(() => ({ ok: false, error: "Upload failed" }));
+  if (!r.ok) return toast(r.error || "Upload failed");
+  await setIcon(r.url);
+};
 
 // ================= explore worlds =================
 let favWorlds = [];

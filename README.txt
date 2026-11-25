@@ -2,7 +2,7 @@ SOUL  -  a fast, themeable VRChat companion
 ===========================================
 
 HOW TO INSTALL
-1. Run Soul-Setup-3.1.0.exe. It installs Soul for just you (no admin needed),
+1. Run Soul-Setup-3.2.0.exe. It installs Soul for just you (no admin needed),
    adds Start menu and desktop shortcuts, and an uninstaller in Windows'
    "Installed apps". Your history and settings are always kept.
    Windows may show "Windows protected your PC" because the app isn't signed:
@@ -38,6 +38,17 @@ FAVORITES
 
 FRIEND REQUESTS
 - Notifications -> Friend requests: Accept or Decline right in Soul.
+
+PEOPLE
+- The People page: type any name to search everyone on VRChat. Each result
+  shows "Friend" if they're already your friend, or an "Add friend" button.
+- Open anyone's profile to Add friend, Cancel a request you sent, Accept a
+  request they sent you, or Unfriend.
+
+MY PROFILE
+- The My Profile page: change your status, status message, pronouns, bio
+  and links, with a preview of how people see you. Saved straight to VRChat.
+- With VRC+ you can also pick or upload your profile picture there.
 
 AVATARS
 - The Avatars page: your VRChat favorite avatars, your own uploads and the

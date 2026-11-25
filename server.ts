@@ -11,7 +11,7 @@ import { networkInterfaces } from "node:os";
 import { randomBytes } from "node:crypto";
 import icon256 from "./icon-256.png" with { type: "file" };
 
-const VERSION = "3.1.0";
+const VERSION = "3.2.0";
 const APPDATA = process.env.APPDATA || join(process.env.HOME || ".", ".config");
 const args = process.argv.slice(2);
 const BACKGROUND = args.includes("--background");
@@ -475,6 +475,13 @@ async function vrcUserInfo(id: string) {
   };
   userCache.set(id, { at: Date.now(), v });
   return v;
+}
+// a search result / any VRChat user, in the shape the People page shows
+function personRow(u: any) {
+  const friend = !!u.isFriend || fstate.has(u.id) || (vrcUser?.friends || []).includes(u.id);
+  return { id: u.id, name: u.displayName, statusText: u.statusDescription || "", status: u.status || "", trust: trustOf(u.tags), pronouns: u.pronouns || "",
+    thumb: u.profilePicOverrideThumbnail || u.profilePicOverride || u.userIcon || u.currentAvatarThumbnailImageUrl || "", platform: u.last_platform || "",
+    friend, me: u.id === ME, vrcPlus: (u.tags || []).includes("system_supporter"), bio: (u.bio || "").slice(0, 140) };
 }
 // ---------- theme ----------
 function readTheme() {
@@ -1313,6 +1320,79 @@ function handle(req: Request, server?: any): Response | Promise<Response> | unde
       sdb.query("INSERT OR REPLACE INTO notif_state(id, state, at) VALUES(?,?,?)").run(id, accept ? "accepted" : "declined", iso()); pendingIds.delete(id); bump();
       if (accept) setTimeout(fullSync, 1500);
       return json({ ok: true });
+    });
+    // ---------- people search + friending ----------
+    if (p === "/api/vrc/users/search") {
+      const q = (s.get("q") || "").trim().slice(0, 64), off = Math.max(0, Math.min(900, +(s.get("offset") || 0)));
+      if (!q) return json([]);
+      if (/^usr_[0-9a-f-]{36}$/.test(q)) return vrc(`users/${q}`).then((r) => json(r.status === 200 ? [personRow(r.body)] : []));
+      return vrc(`users?search=${encodeURIComponent(q)}&n=40&offset=${off}`).then((r) => json(Array.isArray(r.body) ? r.body.map(personRow) : { error: vrcError(r) }));
+    }
+    if (p === "/api/vrc/friendStatus") {
+      const id = s.get("id") || "";
+      if (!/^usr_[0-9a-f-]{36}$/.test(id)) return json({ error: "bad id" }, 400);
+      if (id === ME) return json({ self: true });
+      return vrc(`user/${id}/friendStatus`).then((r) => json(r.status === 200 ? { isFriend: !!r.body.isFriend, outgoing: !!r.body.outgoingRequest, incoming: !!r.body.incomingRequest } : { error: vrcError(r) }));
+    }
+    if (p === "/api/vrc/friend" && req.method === "POST") return req.json().then(async ({ id, action }: any) => {
+      if (!/^usr_[0-9a-f-]{36}$/.test(id || "") || id === ME) return json({ ok: false, error: "That isn't a valid user." });
+      let r;
+      if (action === "add") r = await vrc(`user/${id}/friendRequest`, { method: "POST" });
+      else if (action === "cancel") r = await vrc(`user/${id}/friendRequest`, { method: "DELETE" });
+      else if (action === "unfriend") r = await vrc(`auth/user/friends/${id}`, { method: "DELETE" });
+      else if (action === "accept") {
+        const n = await vrc("auth/user/notifications?type=friendRequest&n=100");
+        const req2 = Array.isArray(n.body) ? n.body.find((x: any) => x.senderUserId === id) : null;
+        r = req2 ? await vrc(`auth/user/notifications/${req2.id}/accept`, { method: "PUT" }) : await vrc(`user/${id}/friendRequest`, { method: "POST" });
+        if (req2 && r.status === 200) { sdb.query("INSERT OR REPLACE INTO notif_state(id, state, at) VALUES(?,?,?)").run(req2.id, "accepted", iso()); pendingIds.delete(req2.id); }
+      } else return json({ ok: false, error: "Unknown action." });
+      if (r.status !== 200) return json({ ok: false, error: vrcError(r) });
+      userCache.delete(id);
+      if (action === "unfriend" || action === "accept") { vrcUserAt = 0; setTimeout(fullSync, 1500); }
+      bump(); return json({ ok: true });
+    });
+    // ---------- your own profile ----------
+    if (p === "/api/vrc/profile" && req.method === "GET") return vrc("auth/user").then((r) => {
+      if (r.status !== 200 || !r.body?.id) return json({ error: vrcError(r) });
+      vrcUser = r.body; vrcUserAt = Date.now(); const u = r.body, tags: string[] = u.tags || [];
+      return json({ id: u.id, name: u.displayName, bio: u.bio || "", links: u.bioLinks || [], pronouns: u.pronouns || "", status: u.status || "active", statusText: u.statusDescription || "",
+        pic: u.profilePicOverrideThumbnail || u.profilePicOverride || u.currentAvatarThumbnailImageUrl || "", icon: u.userIcon || "", banner: u.bannerUrl || "",
+        vrcPlus: tags.includes("system_supporter"), languages: tags.filter((t) => t.startsWith("language_")).map((t) => t.slice(9)), history: u.statusHistory || [] });
+    });
+    if (p === "/api/vrc/profile" && req.method === "POST") return req.json().then(async (b: any) => {
+      const body: any = {};
+      if (b.bio !== undefined) body.bio = String(b.bio).slice(0, 512);
+      if (b.pronouns !== undefined) body.pronouns = String(b.pronouns).slice(0, 32);
+      if (b.statusText !== undefined) body.statusDescription = String(b.statusText).slice(0, 32);
+      if (b.status !== undefined) { if (!["join me", "active", "ask me", "busy"].includes(b.status)) return json({ ok: false, error: "Pick a status." }); body.status = b.status; }
+      if (b.links !== undefined) {
+        const links = (Array.isArray(b.links) ? b.links : []).map((x: any) => String(x).trim()).filter(Boolean).slice(0, 3);
+        if (links.some((l: string) => !/^https?:\/\/\S+$/i.test(l) || l.length > 512)) return json({ ok: false, error: "Links need to start with https://" });
+        body.bioLinks = links;
+      }
+      if (b.icon !== undefined) {
+        if (b.icon && !/^https:\/\/api\.vrchat\.cloud\/api\/1\/file\/file_[0-9a-f-]{36}\/\d+(\/file)?$/.test(b.icon)) return json({ ok: false, error: "Bad picture." });
+        body.userIcon = b.icon || "";
+      }
+      if (!Object.keys(body).length) return json({ ok: true });
+      const r = await vrc(`users/${ME}`, { method: "PUT", body: JSON.stringify(body) });
+      if (r.status !== 200) return json({ ok: false, error: vrcError(r) });
+      vrcUser = { ...(vrcUser || {}), ...r.body }; vrcUserAt = Date.now(); userCache.delete(ME); bump();
+      return json({ ok: true });
+    });
+    if (p === "/api/vrc/icons") return vrc("files?tag=icon&n=100").then((r) => json(Array.isArray(r.body) ? r.body.map((f: any) => {
+      const v = f.versions?.[f.versions.length - 1]; return v?.file?.url ? { id: f.id, url: `https://api.vrchat.cloud/api/1/file/${f.id}/${v.version}` } : null;
+    }).filter(Boolean).reverse() : { error: vrcError(r) }));
+    if (p === "/api/vrc/icon" && req.method === "POST") return req.formData().then(async (fd) => {
+      const file = fd.get("file") as unknown as Blob | null;
+      if (!file) return json({ ok: false, error: "No image." });
+      if (file.size > 10_000_000) return json({ ok: false, error: "That image is over 10 MB." });
+      const out = new FormData(); out.append("tag", "icon");
+      out.append("file", new Blob([await file.arrayBuffer()], { type: "image/png" }), "blob");
+      const r = await vrc("file/image", { method: "POST", body: out as any });
+      if (r.status !== 200) return json({ ok: false, error: vrcError(r) });
+      const v = r.body?.versions?.[r.body.versions.length - 1]?.version ?? 1;
+      return json({ ok: true, url: `https://api.vrchat.cloud/api/1/file/${r.body.id}/${v}` });
     });
     // ---------- avatars ----------
     if (p === "/api/vrc/avatars/favorites") return vrc("avatars/favorites?n=100").then((r) => json(Array.isArray(r.body) ? r.body.map((a: any) => ({ id: a.id, name: a.name, author: a.authorName, authorId: a.authorId, thumb: a.thumbnailImageUrl, image: a.imageUrl, status: a.releaseStatus,

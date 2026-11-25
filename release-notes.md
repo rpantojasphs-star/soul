@@ -1,8 +1,13 @@
-**New in 3.1.0**
-- Accept or decline friend requests right in Soul (Notifications → Friend requests)
-- New **Avatars** page: your VRChat favorite avatars, your uploads and recently worn — search, star and "Wear this"
-- **Phone view**: Settings → Phone, scan the QR code with your phone on the same Wi-Fi
-- **Auto-update**: Soul now checks this page and updates itself
+## Soul 3.2.0
 
-**How to install:** download `Soul-Setup-3.1.0.exe` and run it. If Windows says "Windows protected your PC", click *More info* → *Run anyway*.
-Prefer no installer? Use `Soul-3.1.0-portable.zip`.
+**New: People search**
+- New **People** page: search anyone on VRChat by name (or paste a user ID).
+- Every result shows **✓ Friend** if they're already your friend, or an **+ Add friend** button.
+- On anyone's profile: **Add friend**, **Cancel** a request you sent, **Accept** a request they sent you, or **Unfriend**.
+
+**New: Edit your profile**
+- New **My Profile** page: status, status message (with your recent ones one click away), pronouns, bio and up to 3 links, with a live preview.
+- VRC+ members can pick or upload their profile picture.
+
+Already have Soul? It updates itself — click **✨ Update to Soul 3.2.0** in the sidebar.
+New here? Download **Soul-Setup-3.2.0.exe** below.
