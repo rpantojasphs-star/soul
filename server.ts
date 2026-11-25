@@ -11,7 +11,7 @@ import { networkInterfaces } from "node:os";
 import { randomBytes } from "node:crypto";
 import icon256 from "./icon-256.png" with { type: "file" };
 
-const VERSION = "3.2.1";
+const VERSION = "3.2.2";
 const APPDATA = process.env.APPDATA || join(process.env.HOME || ".", ".config");
 const args = process.argv.slice(2);
 const BACKGROUND = args.includes("--background");
@@ -766,7 +766,7 @@ function saveNotification(n: any, quiet = false) {
   sdb.query(`INSERT OR IGNORE INTO notifications(id, created_at, type, sender_user_id, sender_username, receiver_user_id, message, world_id, world_name, image_url, invite_message, request_message, response_message, expired)
     VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,0)`).run(n.id, n.created_at || iso(), n.type, n.senderUserId || "", n.senderUsername || "", n.receiverUserId || ME, n.message || "",
     d.worldId || "", d.worldName || "", n.imageUrl || "", d.inviteMessage || "", d.requestMessage || "", d.responseMessage || "");
-  bump(); if (!quiet && isNew) alertEvent("notification", { type: n.type, uid: n.senderUserId, name: n.senderUsername, world: d.worldName, location: d.worldId, message: n.message, id: n.id });
+  bump(); if (!quiet && isNew) alertEvent("notification", { type: n.type, uid: n.senderUserId, name: n.senderUsername, world: d.worldName, location: d.worldId, message: n.message, id: n.id, text: d.requestMessage || d.inviteMessage || d.responseMessage || "" });
 }
 function saveNotificationV2(n: any) {
   if (!n?.id) return;
@@ -936,8 +936,9 @@ let alertEvent = (kind: string, d: any) => {
     pushAlert({ kind, uid: d.uid, title: `You and ${name} are now friends`, body: "Friend request accepted", img: picFor(d.uid) });
   } else if (kind === "notification") {
     const t = String(d.type || "");
-    if (t === "invite" && c.invite) pushAlert({ kind: "invite", uid: d.uid, title: `${name} invited you`, body: d.world ? `To ${d.world}` : "To their world", location: d.location, img: picFor(d.uid) });
-    else if (t === "requestInvite" && c.requestInvite) pushAlert({ kind: "requestInvite", uid: d.uid, title: `${name} wants an invite`, body: "Asked to join you", img: picFor(d.uid) });
+    if (t === "invite" && c.invite) pushAlert({ kind: "invite", uid: d.uid, title: `${name} invited you`, body: (d.text ? `“${d.text}” · ` : "") + (d.world ? `To ${d.world}` : "To their world"), location: d.location, img: picFor(d.uid) });
+    else if (t === "requestInvite" && c.requestInvite) pushAlert({ kind: "requestInvite", uid: d.uid, title: d.text ? `💬 ${name}` : `${name} wants an invite`, body: d.text || "Asked to join you", img: picFor(d.uid) });
+    else if ((t === "inviteResponse" || t === "requestInviteResponse") && d.text && c.requestInvite) pushAlert({ kind: "requestInvite", uid: d.uid, title: `💬 ${name} replied`, body: d.text, img: picFor(d.uid) });
     else if (t === "friendRequest" && c.friendRequest) pushAlert({ kind: "friendRequest", uid: d.uid, title: `${name} sent you a friend request`, body: "Open Notifications to see it", img: picFor(d.uid) });
     else if (t === "boop" && c.poke) pushAlert({ kind: "poke", uid: d.uid, title: `${name} poked you!`, body: d.title || "👉 Boop", img: picFor(d.uid) });
     else if (t.startsWith("group.") && c.groups) pushAlert({ kind: "group", uid: d.uid, title: d.title || "Group update", body: d.message || "", img: "" });
@@ -1156,10 +1157,11 @@ async function checkUpdate() {
   } catch (e: any) { upd.error = "Couldn't reach GitHub."; }
 }
 async function installUpdate() {
-  if (upd.state === "downloading" || upd.state === "restarting") return;
+  if (upd.state === "downloading" || upd.state === "restarting" || upd.state === "installed") return;
   if (!upd.available || !upd.asset) return void (upd.error = "No update to install.");
   if ((process.platform !== "win32" && !process.env.SOUL_UPDATE_TEST) || IS_DEV) return void (upd.error = "Updates install on the Windows app only.");
-  const dir = dirname(process.execPath), cur = process.execPath, tmp = join(dir, "Soul.new.exe"), old = join(dir, "Soul.old.exe");
+  const dir = dirname(process.execPath), cur = process.execPath, tmp = join(dir, "Soul.new.exe");
+  let old = join(dir, "Soul.old.exe");
   try {
     upd.state = "downloading"; upd.progress = 0; upd.error = "";
     const r = await fetch(upd.asset.browser_download_url, { headers: { "User-Agent": UA }, redirect: "follow" });
@@ -1170,12 +1172,20 @@ async function installUpdate() {
     await w.end();
     if (upd.asset.size && statSync(tmp).size !== upd.asset.size) throw new Error("the download was incomplete");
     upd.state = "restarting";
-    try { if (existsSync(old)) unlinkSync(old); } catch {}
+    // an older copy may still be in use (e.g. a half-finished update) — then pick a fresh name
+    try { if (existsSync(old)) unlinkSync(old); } catch { old = join(dir, `Soul.old-${Date.now()}.exe`); }
     renameSync(cur, old);       // Windows lets a running program be renamed
-    renameSync(tmp, cur);
+    try { renameSync(tmp, cur); } catch (e) { renameSync(old, cur); throw e; }
     if (process.platform !== "win32") { try { (await import("node:fs")).chmodSync(cur, 0o755); } catch {} }
-    // start the new version in the background; it takes over from this one and the open window reloads into it
-    Bun.spawn([cur, "--background"], { windowsHide: true, stdout: "ignore", stderr: "ignore", detached: true } as any).unref?.();
+    // Start the new version; it takes over from this one and the open window reloads into it.
+    // Right after download, Windows Defender is often still scanning the new file and Windows
+    // refuses to start it ("EBUSY"), so keep trying for up to ~45 seconds.
+    let started = false, lastErr: any = null;
+    for (let i = 0; i < 30 && !started; i++) {
+      try { Bun.spawn([cur, "--background"], { windowsHide: true, stdout: "ignore", stderr: "ignore", detached: true } as any).unref?.(); started = true; }
+      catch (e) { lastErr = e; await Bun.sleep(1500); }
+    }
+    if (!started) { upd.state = "installed"; upd.error = ""; logErr(lastErr); return; }
   } catch (e: any) {
     upd.state = "idle"; upd.error = "Update failed: " + (e?.message || e);
     try { if (existsSync(tmp)) unlinkSync(tmp); } catch {}
@@ -1183,9 +1193,56 @@ async function installUpdate() {
   }
 }
 // clean up the previous version after an update
-try { const old = join(dirname(process.execPath), "Soul.old.exe"); if (!IS_DEV && existsSync(old)) setTimeout(() => { try { unlinkSync(old); } catch {} }, 5000); } catch {}
+if (!IS_DEV) setTimeout(() => { try { const d = dirname(process.execPath); for (const f of readdirSync(d)) if (/^Soul\.(old(-\d+)?|new)\.exe$/i.test(f) && join(d, f) !== process.execPath) { try { unlinkSync(join(d, f)); } catch {} } } catch {} }, 5000);
 setTimeout(checkUpdate, 15_000);
 setInterval(checkUpdate, 6 * 3600_000);
+// ---------- messages ----------
+// VRChat has no direct messages. Soul sends your text as an invite request ("X asked to join
+// you: <your text>"), which pops up for your friend in VRChat. The text goes into one of your 12
+// saved request messages; VRChat lets each one be changed about once an hour, so Soul reuses a
+// slot that already has the same text, otherwise the one changed longest ago.
+const MSG_MAX = 64;
+sdb.run("CREATE TABLE IF NOT EXISTS soul_messages (id INTEGER PRIMARY KEY, user_id TEXT, text TEXT, at TEXT)");
+let lastChat = 0;
+async function msgSlots() {
+  const r = await vrc(`message/${ME}/request`);
+  if (r.status !== 200 || !Array.isArray(r.body)) return { error: vrcError(r) };
+  const slots = r.body.map((m: any) => ({ slot: m.slot, message: m.message || "", wait: Math.max(0, +m.remainingCooldownMinutes || 0), updated: m.updatedAt || "" }));
+  const free = slots.filter((m: any) => !m.wait).length;
+  return { slots, free, nextFree: free ? 0 : Math.min(...slots.map((m: any) => m.wait)) };
+}
+async function sendChat(uid: string, text: string) {
+  text = String(text || "").replace(/\s+/g, " ").trim();
+  if (!/^usr_[0-9a-f-]{36}$/.test(uid)) return { ok: false, error: "That isn't a valid user." };
+  if (!text) return { ok: false, error: "Type a message first." };
+  if (text.length > MSG_MAX) return { ok: false, error: `VRChat only allows ${MSG_MAX} characters.` };
+  if (Date.now() - lastChat < 2500) return { ok: false, error: "Slow down a little — one message every few seconds." };
+  lastChat = Date.now();
+  const st: any = await msgSlots();
+  if (st.error) return { ok: false, error: st.error };
+  let slot = st.slots.find((m: any) => m.message === text);
+  if (!slot) {
+    // empty slots first, then ones Soul filled before, then the one changed longest ago
+    const mine = new Set((sdb.query("SELECT DISTINCT text FROM soul_messages").all() as any[]).map((r) => r.text));
+    const rank = (m: any) => (!m.message ? 0 : mine.has(m.message) ? 1 : 2);
+    const free = st.slots.filter((m: any) => !m.wait).sort((a: any, b: any) => rank(a) - rank(b) || (a.updated < b.updated ? -1 : 1));
+    if (!free.length) return { ok: false, error: `VRChat only lets you send ${st.slots.length} different messages an hour. You can send a new one in ${st.nextFree} min — or resend one you already sent.` };
+    slot = free[0];
+    const u = await vrc(`message/${ME}/request/${slot.slot}`, { method: "PUT", body: JSON.stringify({ message: text }) });
+    if (u.status !== 200) return { ok: false, error: u.status === 403 || u.status === 401 ? "Sending your own words needs VRC+. " + vrcError(u) : vrcError(u) };
+  }
+  const r = await vrc(`requestInvite/${uid}`, { method: "POST", body: JSON.stringify({ requestSlot: slot.slot }) });
+  if (r.status !== 200) return { ok: false, error: vrcError(r) };
+  sdb.query("INSERT INTO soul_messages(user_id, text, at) VALUES(?,?,?)").run(uid, text, iso()); bump();
+  return { ok: true };
+}
+function chatThread(uid: string) {
+  const out = (sdb.query("SELECT text, at FROM soul_messages WHERE user_id = ? ORDER BY at DESC LIMIT 200").all(uid) as any[]).map((m) => ({ dir: "out", text: m.text, at: m.at }));
+  const KIND: Record<string, string> = { invite: "invited you", requestInvite: "asked to join you", inviteResponse: "replied", requestInviteResponse: "replied", boop: "poked you" };
+  const inc = notifications().filter((n: any) => n.uid === uid && KIND[n.type]).slice(0, 200).map((n: any) => ({ dir: "in", at: n.at, kind: KIND[n.type],
+    text: n.requestMsg || n.inviteMsg || n.responseMsg || (n.type === "boop" ? n.title || "👉" : ""), world: n.type === "invite" ? n.world || "" : "", location: n.type === "invite" ? n.location || "" : "" }));
+  return [...out, ...inc].sort((a, b) => (a.at < b.at ? -1 : 1)).slice(-150);
+}
 // ---------- server ----------
 const json = (d: any, status = 200) => new Response(JSON.stringify(d), { status, headers: { "content-type": "application/json" } });
 
@@ -1411,6 +1468,9 @@ function handle(req: Request, server?: any): Response | Promise<Response> | unde
       const r = await vrc(`invite/${userId}`, { method: "POST", body: JSON.stringify(slot >= 0 && slot <= 11 ? { instanceId: loc, messageSlot: +slot } : { instanceId: loc }) });
       return json(r.status === 200 ? { ok: true } : { ok: false, error: vrcError(r) });
     });
+    if (p === "/api/chat" && req.method === "GET") { const id = s.get("id") || ""; if (!/^usr_[0-9a-f-]{36}$/.test(id)) return json({ error: "bad id" }, 400); return json({ max: MSG_MAX, thread: chatThread(id) }); }
+    if (p === "/api/chat/slots") return msgSlots().then((r: any) => json(r.error ? r : { free: r.free, total: r.slots.length, nextFree: r.nextFree, sent: r.slots.map((m: any) => m.message).filter(Boolean) }));
+    if (p === "/api/chat" && req.method === "POST") return req.json().then(({ id, text }: any) => sendChat(id, text)).then(json);
     if (p === "/api/vrc/requestInvite" && req.method === "POST") return req.json().then(async ({ userId, slot }: any) => {
       const r = await vrc(`requestInvite/${userId}`, { method: "POST", body: JSON.stringify(slot >= 0 && slot <= 11 ? { requestSlot: +slot } : {}) });
       return json(r.status === 200 ? { ok: true } : { ok: false, error: vrcError(r) });

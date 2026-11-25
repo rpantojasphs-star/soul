@@ -14,6 +14,7 @@ Once installed, Soul updates itself from here.
 - **Alerts** — favorites coming online, pokes, invites, friend requests (in-app, Windows and VR)
 - **Pokes** with any emoji, plus custom emoji uploads (VRC+)
 - **Invites** with saved messages, **friend requests**, **status**, **notes**
+- **Messages** — send friends short messages even when you're not in VRChat or muted
 - **People search** — find anyone, see who's already your friend, add / cancel / accept / unfriend
 - **Edit your profile** — status, bio, pronouns, links and (VRC+) profile picture
 - **Explore worlds**, start instances, **groups**, **photos**, **avatars** (favorites, uploads, wear)

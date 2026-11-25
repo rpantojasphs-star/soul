@@ -252,6 +252,12 @@ th{font-weight:500;text-transform:none;letter-spacing:0;font-size:12px}
 .toggle{position:relative;width:38px;height:22px;flex:none;appearance:none;-webkit-appearance:none;background:rgba(255,255,255,.15);border-radius:99px;cursor:pointer;transition:background .15s;border:0;padding:0}
 .toggle::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .15s}
 .toggle:checked{background:var(--accent)}.toggle:checked::after{transform:translateX(16px)}
+.chat{height:min(46vh,420px);overflow:auto;display:flex;flex-direction:column;gap:6px;padding:10px;background:rgba(0,0,0,.18);border-radius:12px;margin:10px 0}
+.bub{max-width:78%;padding:7px 11px;border-radius:14px;font-size:13.5px;line-height:1.35;word-wrap:break-word;white-space:pre-wrap}
+.bub.out{align-self:flex-end;background:var(--accent);color:var(--on-accent);border-bottom-right-radius:4px}
+.bub.in{align-self:flex-start;background:rgba(255,255,255,.1);border-bottom-left-radius:4px}
+.bub .t{display:block;font-size:10.5px;opacity:.65;margin-top:2px}
+.chatday{align-self:center;font-size:11px;color:var(--muted);margin:6px 0 2px}
 .pform h2{margin-top:20px}
 .pbadge{flex:none;font-size:11.5px;font-weight:700;padding:4px 9px;border-radius:99px;background:rgba(255,255,255,.08);color:var(--muted);align-self:center}.pbadge.on{background:color-mix(in srgb,var(--s-active) 25%,transparent);color:var(--text)}
 .setrow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.05)}
@@ -524,7 +530,7 @@ function friendCard(f) {
     <div class="avwrap">${avatar(f.name, f.thumb)}<span class="sdot" style="background:${statusColor(f)}"></span></div>
     <div class="info"><div class="name" style="color:${trustVar(f.trust)}">${esc(f.name)}</div>
       <div class="sub">${f.statusText ? esc(f.statusText) : f.online ? esc(f.status || "online") : ""}</div>
-      <div class="sub">${where}</div></div><button class="star ${f.fav ? "on" : ""}" title="${f.fav ? "Remove from favorites" : "Add to favorites"}" onclick="event.stopPropagation();toggleFav('${esc(f.id)}', ${!f.fav})">${f.fav ? "★" : "☆"}</button><button class="pokebtn" title="Poke (Shift+click: repeat last poke)" onclick="event.stopPropagation();pokeClick(event,'${esc(f.id)}','${esc(jsq(f.name))}')">👉</button></div>`;
+      <div class="sub">${where}</div></div><button class="star ${f.fav ? "on" : ""}" title="${f.fav ? "Remove from favorites" : "Add to favorites"}" onclick="event.stopPropagation();toggleFav('${esc(f.id)}', ${!f.fav})">${f.fav ? "★" : "☆"}</button><button class="pokebtn" title="Message" onclick="event.stopPropagation();openChat('${esc(f.id)}','${esc(jsq(f.name))}')">💬</button><button class="pokebtn" title="Poke (Shift+click: repeat last poke)" onclick="event.stopPropagation();pokeClick(event,'${esc(f.id)}','${esc(jsq(f.name))}')">👉</button></div>`;
 }
 function memberChip(f) {
   return `<div class="member" onclick="openUser('${esc(f.id)}')"><div class="avwrap">${avatar(f.name, f.thumb, "sm")}<span class="sdot" style="background:${statusColor(f)};width:11px;height:11px"></span></div>
@@ -715,6 +721,7 @@ window.openUser = async (id) => {
     <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
       ${f?.online && L.kind === "world" ? `<a class="btn primary" href="${launchUrl(L.loc)}">Launch to their world</a>` : ""}
       ${f ? `<button class="btn" onclick="toggleFav('${esc(id)}', ${!f.fav}).then(()=>openUser('${esc(id)}'))">${f.fav ? "★ Favorite" : "☆ Add to favorites"}</button>` : ""}
+      ${f && VRC.loggedIn ? `<button class="btn primary" onclick="openChat('${esc(id)}','${esc(jsq(name))}')">💬 Message</button>` : ""}
       ${f ? `<button class="btn primary" onclick="openPoke('${esc(id)}','${esc(jsq(name))}')">👉 Poke</button>` : ""}
       ${f && VRC.loggedIn ? `<button class="btn" onclick="inviteUser('${esc(id)}','${esc(jsq(name))}')">Invite to my world</button>` : ""}
       ${f?.online && VRC.loggedIn ? `<button class="btn" onclick="requestInvite('${esc(id)}','${esc(jsq(name))}')">Ask to join</button>` : ""}
@@ -895,7 +902,7 @@ window.openAccount = async () => {
     <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:14px">${VRC.vrcPlus ? `<button class="btn" onclick="openEmojiUpload()">＋ Add custom emoji</button>` : ""}<a class="btn" href="https://vrchat.com/home/user/${esc(VRC.id)}" target="_blank">My VRChat profile</a><button class="btn" onclick="signOut()">Sign out</button></div>`);
 };
 window.signOut = async () => { await fetch("/api/vrc/logout", { method: "POST" }); customEmojis = null; await refreshAccount(); closeModal(); toast("Signed out of VRChat"); };
-window.closeModal = () => $("#modal").classList.remove("open");
+window.closeModal = () => { $("#modal").classList.remove("open"); clearInterval(window.chatTimerRef); };
 const showModal = (html) => { $("#mbox").innerHTML = html; $("#modal").classList.add("open"); };
 
 function openLogin(then, need2fa) {
@@ -1181,6 +1188,53 @@ async function pickMessage(type, title, send) {
 }
 window.inviteUser = (id, name) => pickMessage("message", `Invite ${name} to your world`, async (slot) => { const r = await postJ("/api/vrc/invite", { userId: id, slot }); toast(r.ok ? `Invited ${name} to your world` : r.error); });
 window.requestInvite = (id, name) => pickMessage("request", `Ask ${name} for an invite`, async (slot) => { const r = await postJ("/api/vrc/requestInvite", { userId: id, slot }); toast(r.ok ? `Asked ${name} for an invite` : r.error); });
+
+// ================= messages =================
+let chatTimer = null, chatFor = null;
+window.openChat = async (id, name) => {
+  if (!VRC.loggedIn) return toast("Sign in to VRChat to send messages.");
+  chatFor = id;
+  showModal(`<div style="display:flex;align-items:center;gap:10px"><div class="name" style="font-size:18px;flex:1;min-width:0">💬 ${esc(name)}</div><button class="btn" onclick="closeModal()">✕</button></div>
+    <div class="muted small" style="margin-top:4px">Pops up for them in VRChat as “${esc(VRC.name || "you")} asked to join you” with your message. Works even if you're not in VRChat or you're muted.</div>
+    <div class="chat" id="chat"><div class="muted small" style="margin:auto">Loading…</div></div>
+    <div id="chat-quick" class="chips" style="margin-bottom:8px"></div>
+    <div style="display:flex;gap:8px;align-items:center"><input id="chat-in" maxlength="64" placeholder="Type a message…" style="flex:1;min-width:0" autocomplete="off"
+      onkeydown="if(event.key==='Enter'){event.preventDefault();sendChatMsg()}" oninput="$('#chat-n').textContent=(64-this.value.length)">
+      <span class="muted small" id="chat-n" style="width:22px;text-align:right">64</span><button class="btn primary" id="chat-go" onclick="sendChatMsg()">Send</button></div>
+    <div class="muted small" id="chat-slots" style="margin-top:8px"></div>`);
+  $("#chat-in").focus();
+  await loadChat(true); loadSlots();
+  clearInterval(chatTimer); window.chatTimerRef = chatTimer = setInterval(() => { if (!$("#chat") || chatFor !== id) { clearInterval(chatTimer); return; } loadChat(); }, 4000);
+};
+async function loadChat(scroll) {
+  const id = chatFor; const r = await api("/api/chat?id=" + id).catch(() => null); const box = $("#chat");
+  if (!r || !box || chatFor !== id) return;
+  const atBottom = box.scrollHeight - box.scrollTop - box.clientHeight < 40;
+  let day = "";
+  box.innerHTML = r.thread.map((m) => {
+    const d = new Date(m.at).toLocaleDateString(); const sep = d !== day ? `<div class="chatday">${esc(d === new Date().toLocaleDateString() ? "Today" : d)}</div>` : ""; day = d;
+    const time = new Date(m.at).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+    const body = m.text ? esc(m.text) : `<i>${esc(m.kind)}</i>`;
+    const extra = m.dir === "in" && m.location ? ` <a class="lnk" href="${launchUrl(m.location)}">Join ${esc(m.world || "their world")}</a>` : "";
+    return sep + `<div class="bub ${m.dir}">${body}${extra}<span class="t">${time}${m.dir === "in" && m.text && m.kind !== "asked to join you" ? " · " + esc(m.kind) : ""}</span></div>`;
+  }).join("") || `<div class="muted small" style="margin:auto;text-align:center">No messages yet.<br>Say hi! 👋</div>`;
+  if (scroll || atBottom) box.scrollTop = box.scrollHeight;
+}
+async function loadSlots() {
+  const r = await api("/api/chat/slots").catch(() => null); if (!r || !$("#chat-slots")) return;
+  if (r.error) { $("#chat-slots").textContent = r.error; return; }
+  $("#chat-slots").innerHTML = r.free ? `You can send <b>${r.free}</b> more new message${r.free > 1 ? "s" : ""} right now. Re-sending one below is always free.`
+    : `VRChat's hourly limit is used up — a new message unlocks in ${r.nextFree} min. You can still re-send one below.`;
+  $("#chat-quick").innerHTML = [...new Set(r.sent)].slice(0, 12).map((t) => `<button class="chip" title="Send this again" onclick="$('#chat-in').value=this.textContent;sendChatMsg()">${esc(t)}</button>`).join("");
+}
+window.sendChatMsg = async () => {
+  const inp = $("#chat-in"), text = inp.value.trim(); if (!text) return;
+  $("#chat-go").disabled = true;
+  const r = await postJ("/api/chat", { id: chatFor, text });
+  $("#chat-go").disabled = false;
+  if (!r.ok) return toast(r.error || "Couldn't send");
+  inp.value = ""; $("#chat-n").textContent = 64; inp.focus(); await loadChat(true); loadSlots();
+};
 
 // ================= people search =================
 const ppl = { q: null, rows: [], off: 0, more: false, sent: new Set() };
@@ -1478,8 +1532,9 @@ async function renderUpdate(check) {
     ${u.available && u.notes ? `<div class="bio" style="margin-top:8px;max-height:140px;font-size:12.5px">${esc(u.notes)}</div>` : ""}
     ${u.state === "downloading" ? `<div class="bar" style="margin-top:10px"><i style="width:${Math.round(u.progress * 100)}%"></i></div><div class="muted small" style="margin-top:4px">Downloading… ${Math.round(u.progress * 100)}%</div>` : ""}
     ${u.state === "restarting" ? `<div class="muted small" style="margin-top:8px">Restarting into the new version…</div>` : ""}
+    ${u.state === "installed" ? `<div class="small" style="margin-top:8px;color:var(--accent)"><b>Soul ${esc(u.latest)} is installed.</b> Close Soul and open it again to start using it.</div>` : ""}
     ${u.error ? `<div class="${/No releases/.test(u.error) ? "muted" : "err"} small" style="margin-top:6px">${esc(u.error)}</div>` : ""}
-    <div style="display:flex;gap:8px;margin-top:10px">${u.available ? `<button class="btn primary" ${busy ? "disabled" : ""} onclick="startUpdate()">Update now</button>` : ""}<button class="btn" ${busy ? "disabled" : ""} onclick="renderUpdate(true)">Check for updates</button>
+    <div style="display:flex;gap:8px;margin-top:10px">${u.available && u.state !== "installed" ? `<button class="btn primary" ${busy ? "disabled" : ""} onclick="startUpdate()">Update now</button>` : ""}<button class="btn" ${busy ? "disabled" : ""} onclick="renderUpdate(true)">Check for updates</button>
     <a class="btn" href="https://github.com/rpantojasphs-star/soul/releases" target="_blank">All versions</a></div>
     <div class="muted small" style="margin-top:8px">Soul checks for updates by itself every few hours. Your history and settings are kept.</div>`;
   if (busy) setTimeout(() => renderUpdate(), 700);

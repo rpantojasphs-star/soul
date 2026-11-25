@@ -1,12 +1,12 @@
-## Soul 3.2.1
+## Soul 3.2.2
 
-**Moving GIF backgrounds, made easy**
-- Theme → Background → **Picture / GIF / video**: drop in a GIF and it keeps moving behind Soul.
-- Paste a **Giphy** link (the normal page link works) or any direct GIF link, and press **Use**.
+**New: 💬 Messages**
+- Click 💬 on a friend (or **Message** on their profile) to send a short message, even when you're not in VRChat or you're muted.
+- It pops up for them in VRChat as an invite request with your text. Their invites and requests show up in the same chat.
+- Up to 64 characters. VRChat allows about a dozen new messages an hour; re-sending one you already used is always free. Needs VRC+ (VRChat's rule for custom messages).
 
-**Also in 3.2 (if you're coming from 3.1)**
-- **People** page: search anyone on VRChat, see who's already your friend, add / cancel / accept / unfriend.
-- **My Profile** page: edit your status, bio, pronouns, links and (VRC+) profile picture.
+**Fixed: "Update failed: EBUSY"**
+- Windows was still checking the new download when Soul tried to start it. Soul now waits and retries.
+- If it still can't, it says the update is installed — just close Soul and open it again.
 
-Already have Soul 3.1 or newer? Click **✨ Update to Soul 3.2.1** in the sidebar.
-Otherwise download **Soul-Setup-3.2.1.exe** below.
+Also new since 3.1: **People** search, **My Profile** editing, moving **GIF backgrounds**.

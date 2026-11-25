@@ -2,7 +2,7 @@ SOUL  -  a fast, themeable VRChat companion
 ===========================================
 
 HOW TO INSTALL
-1. Run Soul-Setup-3.2.1.exe. It installs Soul for just you (no admin needed),
+1. Run Soul-Setup-3.2.2.exe. It installs Soul for just you (no admin needed),
    adds Start menu and desktop shortcuts, and an uninstaller in Windows'
    "Installed apps". Your history and settings are always kept.
    Windows may show "Windows protected your PC" because the app isn't signed:
@@ -38,6 +38,16 @@ FAVORITES
 
 FRIEND REQUESTS
 - Notifications -> Friend requests: Accept or Decline right in Soul.
+
+MESSAGES
+- Click 💬 on a friend (or "Message" on their profile) to send them a short
+  message (up to 64 characters). It pops up for them in VRChat as an invite
+  request with your text - works even if you're not in VRChat or you're muted.
+- VRChat has no real private messages, so Soul uses your saved invite-request
+  messages. Each one can be changed about once an hour, so you can send around
+  a dozen different messages an hour; re-sending one you've used is always
+  free. Writing your own text needs VRC+.
+- Their invites and requests (with any message) show up in the same chat.
 
 PEOPLE
 - The People page: type any name to search everyone on VRChat. Each result
