@@ -813,12 +813,12 @@ VIEWS.theme = async () => {
   </div>
   <div>
     <div class="section glass"><h2>Background</h2>
-      <div class="chips" style="margin-bottom:12px">${[["none", "Solid"], ["gradient", "Gradient"], ["image", "Image / video"]].map(([k, l]) => `<button class="chip ${t.bgType === k ? "on" : ""}" onclick="setTheme({bgType:'${k}'});render()">${l}</button>`).join("")}</div>
+      <div class="chips" style="margin-bottom:12px">${[["none", "Solid"], ["gradient", "Gradient"], ["image", "Picture / GIF / video"]].map(([k, l]) => `<button class="chip ${t.bgType === k ? "on" : ""}" onclick="setTheme({bgType:'${k}'});render()">${l}</button>`).join("")}</div>
       ${t.bgType === "gradient" ? `${color("g1", "From")}${color("g2", "To")}${range("gAngle", "Angle", 0, 360, 1, (v) => v + '°')}` : ""}
       ${t.bgType === "image" ? `
-        <div class="drop" id="drop">Drop an image, GIF or video here, or click to pick one<br><span class="small">png · jpg · gif · webp · mp4 · webm</span></div>
+        <div class="drop" id="drop">Drop a picture, a moving GIF or a video here, or click to pick one<br><span class="small">gif · png · jpg · webp · mp4 · webm — GIFs and videos keep moving</span></div>
         <input type="file" id="file" accept="image/*,video/mp4,video/webm" hidden>
-        <div class="field"><input id="bgurl" placeholder="…or paste an image URL" style="flex:1" value="${t.bgUrl && !t.bgUrl.startsWith("/bg/") ? esc(t.bgUrl) : ""}"><button class="btn" onclick="setTheme({bgUrl:$('#bgurl').value.trim()});render()">Use</button></div>
+        <div class="field"><input id="bgurl" placeholder="…or paste a GIF or image link (Giphy links work too)" style="flex:1" onkeydown="if(event.key==='Enter')useBgLink()" value="${t.bgUrl && !t.bgUrl.startsWith("/bg/") ? esc(t.bgUrl) : ""}"><button class="btn" onclick="useBgLink()">Use</button></div>
         ${bgs.length ? `<h2 style="margin-top:14px">Your backgrounds</h2><div class="bgs">${bgs.map((u) => `<div class="b ${t.bgUrl === u ? "on" : ""}" style="${isVideo(u) ? "" : `background-image:url('${u}')`}" onclick="setTheme({bgUrl:'${u}'});render()">${isVideo(u) ? `<video muted loop autoplay src="${u}"></video>` : ""}</div>`).join("")}</div>` : ""}` : ""}
     </div>
     <div class="section glass"><h2>Preview</h2>
@@ -846,6 +846,18 @@ async function upload(f) {
   if (r.error) return toast(r.error);
   setTheme({ bgType: "image", bgUrl: r.url }); render();
 }
+// turn share-page links (Giphy, Imgur .gifv) into the actual moving image
+window.useBgLink = () => {
+  let u = $("#bgurl").value.trim(); if (!u) return;
+  if (!/^https?:\/\//i.test(u)) return toast("Paste a link that starts with https://");
+  const g = u.match(/giphy\.com\/(?:gifs|stickers|embed)\/(?:[\w-]*-)?([A-Za-z0-9]{8,})/i) || u.match(/media\d*\.giphy\.com\/media\/(?:v1\.[^/]+\/)?([A-Za-z0-9]+)\//i);
+  if (g) u = `https://media.giphy.com/media/${g[1]}/giphy.gif`;
+  u = u.replace(/^(https?:\/\/i\.imgur\.com\/\w+)\.gifv$/i, "$1.mp4");
+  if (/tenor\.com\/view\//i.test(u)) return toast("For Tenor, right-click the GIF → Copy image address, then paste that link.");
+  const test = isVideo(u) ? null : new Image();
+  if (test) { test.onload = () => { setTheme({ bgType: "image", bgUrl: u }); render(); toast("Background set"); }; test.onerror = () => toast("That link isn't a picture or GIF. Right-click the GIF → Copy image address, and paste that."); test.src = u; }
+  else { setTheme({ bgType: "image", bgUrl: u }); render(); }
+};
 window.usePreset = (n) => { const keep = { font: theme.font, density: theme.density, radius: theme.radius }; theme = { ...THEME_DEFAULT, ...PRESETS[n], ...keep }; if (PRESETS[n].bgType !== "image") theme.bgUrl = ""; applyTheme(); saveTheme(); render(); };
 window.exportTheme = () => { const code = "SOUL:" + btoa(unescape(encodeURIComponent(JSON.stringify(theme)))); navigator.clipboard.writeText(code); toast("Theme code copied"); };
 window.importTheme = () => { const c = prompt("Paste a Soul theme code:"); if (!c) return; try { const t = JSON.parse(decodeURIComponent(escape(atob(c.replace(/^(SOUL|LUMEN):/, ""))))); theme = { ...THEME_DEFAULT, ...t }; applyTheme(); saveTheme(); render(); toast("Theme applied"); } catch { toast("That code didn't work"); } };

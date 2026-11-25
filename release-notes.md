@@ -1,13 +1,12 @@
-## Soul 3.2.0
+## Soul 3.2.1
 
-**New: People search**
-- New **People** page: search anyone on VRChat by name (or paste a user ID).
-- Every result shows **✓ Friend** if they're already your friend, or an **+ Add friend** button.
-- On anyone's profile: **Add friend**, **Cancel** a request you sent, **Accept** a request they sent you, or **Unfriend**.
+**Moving GIF backgrounds, made easy**
+- Theme → Background → **Picture / GIF / video**: drop in a GIF and it keeps moving behind Soul.
+- Paste a **Giphy** link (the normal page link works) or any direct GIF link, and press **Use**.
 
-**New: Edit your profile**
-- New **My Profile** page: status, status message (with your recent ones one click away), pronouns, bio and up to 3 links, with a live preview.
-- VRC+ members can pick or upload their profile picture.
+**Also in 3.2 (if you're coming from 3.1)**
+- **People** page: search anyone on VRChat, see who's already your friend, add / cancel / accept / unfriend.
+- **My Profile** page: edit your status, bio, pronouns, links and (VRC+) profile picture.
 
-Already have Soul? It updates itself — click **✨ Update to Soul 3.2.0** in the sidebar.
-New here? Download **Soul-Setup-3.2.0.exe** below.
+Already have Soul 3.1 or newer? Click **✨ Update to Soul 3.2.1** in the sidebar.
+Otherwise download **Soul-Setup-3.2.1.exe** below.
