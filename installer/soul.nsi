@@ -2,7 +2,9 @@
 Unicode true
 !include "MUI2.nsh"
 !define APP "Soul"
-!define VERSION "3.1.0"
+!ifndef VERSION
+  !define VERSION "3.1.0"
+!endif
 Name "${APP}"
 OutFile "..\dist\Soul-Setup-${VERSION}.exe"
 InstallDir "$LOCALAPPDATA\Programs\Soul"

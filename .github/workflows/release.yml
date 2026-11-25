@@ -1,0 +1,66 @@
+name: Build & release Soul
+# Push a tag like v3.2.0 (matching VERSION in server.ts) and GitHub builds Soul.exe,
+# the installer and the portable zip, then publishes them as a release.
+# Soul checks this repository's latest release to update itself.
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag to build (e.g. v3.1.0)"
+        required: true
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      BUN_VERSION: "1.4.4"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.tag || github.ref }}
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: ${{ env.BUN_VERSION }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Work out the version
+        id: v
+        run: |
+          TAG="${{ github.event.inputs.tag || github.ref_name }}"
+          VERSION="${TAG#v}"
+          grep -q "const VERSION = \"$VERSION\"" server.ts || { echo "server.ts VERSION doesn't match tag $TAG"; exit 1; }
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"; echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+      - run: bun install --frozen-lockfile
+      - name: Give the Windows runtime the ghost icon
+        run: |
+          mkdir -p /tmp/ic && cd /tmp/ic
+          npm pack @oven/bun-windows-x64@${BUN_VERSION}
+          tar xzf oven-bun-windows-x64-${BUN_VERSION}.tgz
+          npm init -y >/dev/null && npm i resedit@3 pe-library@2 >/dev/null
+          cp "$GITHUB_WORKSPACE/tools/seticon.mjs" .
+          node seticon.mjs package/bin/bun.exe "$GITHUB_WORKSPACE/icon.ico" /tmp/ic/bun-ghost.exe
+      - name: Build Soul.exe
+        run: |
+          mkdir -p dist
+          bun build server.ts --compile --minify --target=bun-windows-x64 --compile-executable-path=/tmp/ic/bun-ghost.exe --outfile dist/Soul.exe
+          python3 tools/gui_subsystem.py dist/Soul.exe
+      - name: Build installer
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq nsis
+          cd installer && makensis -V2 -DVERSION=${{ steps.v.outputs.version }} soul.nsi
+      - name: Portable zip
+        run: zip -9 -j "dist/Soul-${{ steps.v.outputs.version }}-portable.zip" dist/Soul.exe README.txt icon.ico
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.v.outputs.tag }}
+          name: Soul ${{ steps.v.outputs.version }}
+          body_path: release-notes.md
+          files: |
+            dist/Soul.exe
+            dist/Soul-Setup-${{ steps.v.outputs.version }}.exe
+            dist/Soul-${{ steps.v.outputs.version }}-portable.zip

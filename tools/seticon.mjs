@@ -1,0 +1,13 @@
+import * as ResEdit from "resedit";
+import * as PE from "pe-library";
+import fs from "fs";
+const [, , exePath, icoPath, outPath] = process.argv;
+const exe = PE.NtExecutable.from(fs.readFileSync(exePath), { ignoreCert: true });
+const res = PE.NtExecutableResource.from(exe);
+const iconFile = ResEdit.Data.IconFile.from(fs.readFileSync(icoPath));
+const existing = ResEdit.Resource.IconGroupEntry.fromEntries(res.entries);
+const lang = existing[0]?.lang ?? 1033, id = existing[0]?.id ?? 1;
+ResEdit.Resource.IconGroupEntry.replaceIconsForResource(res.entries, id, lang, iconFile.icons.map((i) => i.data));
+res.outputResource(exe);
+fs.writeFileSync(outPath, Buffer.from(exe.generate()));
+console.log("sections:", exe.getAllSections().map((s) => s.info.name).join(","), "iconGroups before:", existing.length);
