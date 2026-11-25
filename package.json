@@ -1,0 +1,7 @@
+{
+  "name": "soul",
+  "private": true,
+  "dependencies": {
+    "qrcode": "1.5.4"
+  }
+}

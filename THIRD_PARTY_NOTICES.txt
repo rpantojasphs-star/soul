@@ -1,0 +1,4 @@
+openvr_api.dll — OpenVR SDK, Copyright (c) 2015, Valve Corporation. BSD 3-Clause License.
+https://github.com/ValveSoftware/openvr/blob/master/LICENSE
+
+qrcode (npm) — Copyright (c) 2012 Ryan Day. MIT License.

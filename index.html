@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d0c16">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/icon-256.png">
+<title>Soul</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20256%20256%22%3E%20%3Cdefs%3E%20%3ClinearGradient%20id%3D%22b%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23ffffff%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23e3dcff%22/%3E%3C/linearGradient%3E%20%3C/defs%3E%20%3Cg%20transform%3D%22rotate%28-8%20128%20132%29%22%3E%20%3Cpath%20d%3D%22M52%20132%20C30%20120%2022%20100%2030%2088%20C40%2096%2050%20104%2062%20108%20Z%22%20fill%3D%22url%28%23b%29%22%20stroke%3D%22%232b2342%22%20stroke-width%3D%227%22%20stroke-linejoin%3D%22round%22/%3E%20%3Cpath%20d%3D%22M204%20140%20C226%20136%20238%20120%20236%20104%20C224%20110%20212%20116%20196%20118%20Z%22%20fill%3D%22url%28%23b%29%22%20stroke%3D%22%232b2342%22%20stroke-width%3D%227%22%20stroke-linejoin%3D%22round%22/%3E%20%3Cpath%20d%3D%22M56%20214%20L56%20112%20C56%2062%2088%2030%20130%2030%20C172%2030%20202%2062%20202%20112%20L202%20214%20C192%20232%20178%20232%20170%20216%20C162%20232%20146%20234%20138%20216%20C130%20234%20114%20234%20106%20216%20C98%20232%2082%20232%2074%20216%20C68%20228%2058%20228%2056%20214%20Z%22%20fill%3D%22url%28%23b%29%22%20stroke%3D%22%232b2342%22%20stroke-width%3D%228%22%20stroke-linejoin%3D%22round%22/%3E%20%3Ccircle%20cx%3D%22104%22%20cy%3D%22104%22%20r%3D%2224%22%20fill%3D%22%23fff%22%20stroke%3D%22%232b2342%22%20stroke-width%3D%226%22/%3E%20%3Ccircle%20cx%3D%22160%22%20cy%3D%2298%22%20r%3D%2219%22%20fill%3D%22%23fff%22%20stroke%3D%22%232b2342%22%20stroke-width%3D%226%22/%3E%20%3Ccircle%20cx%3D%22112%22%20cy%3D%22112%22%20r%3D%2211%22%20fill%3D%22%232b2342%22/%3E%20%3Ccircle%20cx%3D%22154%22%20cy%3D%2292%22%20r%3D%229%22%20fill%3D%22%232b2342%22/%3E%20%3Ccircle%20cx%3D%22116%22%20cy%3D%22108%22%20r%3D%223.5%22%20fill%3D%22%23fff%22/%3E%20%3Ccircle%20cx%3D%22157%22%20cy%3D%2289%22%20r%3D%223%22%20fill%3D%22%23fff%22/%3E%20%3Cellipse%20cx%3D%2282%22%20cy%3D%22140%22%20rx%3D%2212%22%20ry%3D%227%22%20fill%3D%22%23ff8fb8%22%20opacity%3D%22.75%22/%3E%20%3Cellipse%20cx%3D%22180%22%20cy%3D%22134%22%20rx%3D%2211%22%20ry%3D%226.5%22%20fill%3D%22%23ff8fb8%22%20opacity%3D%22.75%22/%3E%20%3Cpath%20d%3D%22M108%20140%20C116%20166%20156%20164%20164%20136%20Z%22%20fill%3D%22%232b2342%22%20stroke%3D%22%232b2342%22%20stroke-width%3D%226%22%20stroke-linejoin%3D%22round%22/%3E%20%3Cpath%20d%3D%22M128%20152%20C128%20172%20152%20176%20154%20154%20C146%20150%20136%20150%20128%20152%20Z%22%20fill%3D%22%23ff6b9a%22%20stroke%3D%22%232b2342%22%20stroke-width%3D%225%22%20stroke-linejoin%3D%22round%22/%3E%20%3Cpath%20d%3D%22M141%20154%20L142%20166%22%20stroke%3D%22%23d94a7a%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22/%3E%20%3C/g%3E%20%3C/svg%3E">
+<style>
+:root{
+  --accent:#8b7cff; --accent2:#ff6ad5; --text:#ecebff; --muted:#9a98b8; --base:#0d0c16;
+  --panel-rgb:24,22,40; --panel-a:.72; --blur:18px; --radius:14px; --dim:.35;
+  --s-join:#3fa9ff; --s-active:#3ddc84; --s-ask:#ffad33; --s-busy:#ff4d5e; --s-off:#5b5a70;
+  --t-visitor:#cccccc; --t-new:#1778ff; --t-user:#2bcf5c; --t-known:#ff7b42; --t-trusted:#b18fff;
+  --on-accent:#fff; --font:"Segoe UI Variable Text","Segoe UI",system-ui,sans-serif; --gap:12px; --row:10px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--base);color:var(--text);font-family:var(--font);font-size:14px;overflow:hidden}
+::selection{background:var(--accent);color:var(--on-accent)}
+#bg{position:fixed;inset:0;z-index:0;background-size:cover;background-position:center}
+#bg video{width:100%;height:100%;object-fit:cover}
+#bgdim{position:fixed;inset:0;z-index:0;background:rgba(0,0,0,var(--dim))}
+#app{position:relative;z-index:1;display:grid;grid-template-columns:220px 1fr;height:100vh}
+.glass{background:rgba(var(--panel-rgb),var(--panel-a));backdrop-filter:blur(var(--blur)) saturate(1.2);-webkit-backdrop-filter:blur(var(--blur));border:1px solid rgba(255,255,255,.07);border-radius:var(--radius)}
+nav{margin:12px 0 12px 12px;padding:16px 10px;display:flex;flex-direction:column;gap:4px}
+.logo{font-size:22px;font-weight:800;letter-spacing:.5px;padding:2px 10px 14px;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+nav button{all:unset;cursor:pointer;display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;color:var(--muted);font-weight:600}
+nav button:hover{background:rgba(255,255,255,.06);color:var(--text)}
+nav button.on{background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 35%,transparent),transparent);color:var(--text);box-shadow:inset 3px 0 0 var(--accent)}
+nav .ico{width:18px;text-align:center}
+nav .count{margin-left:auto;font-size:11px;background:var(--accent);color:var(--on-accent);font-weight:800;border-radius:99px;padding:1px 7px}
+nav .spacer{flex:1}
+.live{font-size:12px;color:var(--muted);padding:8px 12px;display:flex;gap:8px;align-items:center;line-height:1.3}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--s-off);flex:none}
+.live.ok .dot{background:var(--s-active);box-shadow:0 0 8px var(--s-active)}
+.live.stale .dot{background:var(--s-ask)}
+main{display:flex;flex-direction:column;min-width:0;padding:12px;gap:12px;height:100vh}
+header{display:flex;align-items:center;gap:12px;padding:10px 14px}
+header h1{font-size:18px;margin:0;font-weight:700;white-space:nowrap}
+.search{flex:1;max-width:460px;margin-left:auto;position:relative}
+input,select,textarea{font:inherit;color:var(--text);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:8px 12px;outline:none}
+input:focus,select:focus{border-color:var(--accent)}
+select option{background:#1b1a2b}
+.search input{width:100%}
+#view{flex:1;overflow:auto;padding:2px 4px 40px 2px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.2) transparent}
+.btn{all:unset;cursor:pointer;padding:7px 13px;border-radius:9px;background:rgba(255,255,255,.08);font-weight:600;font-size:13px;white-space:nowrap}
+.btn:hover{background:rgba(255,255,255,.14)}
+.btn.primary{background:var(--accent);color:var(--on-accent)}
+.btn.primary:hover{filter:brightness(1.1)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{all:unset;cursor:pointer;padding:6px 12px;border-radius:99px;font-size:12.5px;font-weight:600;background:rgba(255,255,255,.06);color:var(--muted);border:1px solid transparent}
+.chip.on{background:color-mix(in srgb,var(--accent) 28%,transparent);color:var(--text);border-color:color-mix(in srgb,var(--accent) 60%,transparent)}
+.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:var(--gap)}
+.muted{color:var(--muted)}
+.small{font-size:12px}
+h2{font-size:15px;margin:0 0 10px;font-weight:700}
+.section{padding:16px;margin-bottom:var(--gap)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:var(--gap)}
+.av{width:42px;height:42px;border-radius:12px;flex:none;object-fit:cover;background:linear-gradient(135deg,var(--accent),var(--accent2));display:grid;place-items:center;font-weight:800;color:var(--on-accent);font-size:16px;position:relative}
+.av.sm{width:30px;height:30px;border-radius:9px;font-size:12px}
+.av.lg{width:84px;height:84px;border-radius:20px;font-size:32px}
+.avwrap{position:relative;flex:none}
+.avwrap .sdot{position:absolute;right:-3px;bottom:-3px;width:13px;height:13px;border-radius:50%;border:3px solid rgb(var(--panel-rgb))}
+.fcard{display:flex;gap:12px;align-items:center;padding:11px 12px;cursor:pointer;transition:transform .12s,background .12s}
+.fcard:hover{transform:translateY(-1px);background:rgba(var(--panel-rgb),calc(var(--panel-a) + .06));border-color:color-mix(in srgb,var(--accent) 45%,transparent)}
+.fcard .info{min-width:0;flex:1}
+.name{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sub{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.inst{padding:14px;margin-bottom:var(--gap)}
+.inst-h{display:flex;gap:10px;align-items:center;margin-bottom:10px;flex-wrap:wrap}
+.inst-h .w{font-weight:800;font-size:15px}
+.badge{font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;background:rgba(255,255,255,.1);color:var(--muted);white-space:nowrap}
+.badge.acc{background:color-mix(in srgb,var(--accent) 30%,transparent);color:var(--text)}
+.members{display:flex;flex-wrap:wrap;gap:8px}
+.member{display:flex;gap:8px;align-items:center;padding:6px 10px 6px 6px;border-radius:12px;background:rgba(255,255,255,.05);cursor:pointer;max-width:260px}
+.member:hover{background:rgba(255,255,255,.1)}
+.rows{display:flex;flex-direction:column}
+.row{display:flex;gap:12px;align-items:center;padding:var(--row) 14px;border-bottom:1px solid rgba(255,255,255,.05)}
+.row:last-child{border-bottom:0}
+.row:hover{background:rgba(255,255,255,.03)}
+.row .t{width:104px;flex:none;white-space:nowrap;font-size:12px;color:var(--muted);text-align:right;font-variant-numeric:tabular-nums}
+.row .k{width:84px;flex:none}
+.row .body{flex:1;min-width:0}
+.ellip{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lnk{cursor:pointer;font-weight:700}
+.lnk:hover{text-decoration:underline}
+.k-Online{color:var(--s-active)} .k-Offline{color:var(--s-off)} .k-GPS{color:var(--s-join)} .k-Status{color:var(--s-ask)} .k-Avatar{color:var(--accent2)} .k-Bio{color:var(--accent)}
+.k-Friend{color:var(--s-active)} .k-Unfriend{color:var(--s-busy)} .k-DisplayName{color:var(--s-join)} .k-TrustLevel{color:var(--t-trusted)} .k-FriendRequest,.k-CancelFriendRequest{color:var(--s-ask)}
+.kl{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px}
+.thumb{width:44px;height:33px;border-radius:6px;object-fit:cover;flex:none;background:rgba(255,255,255,.06)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:var(--gap);margin-bottom:var(--gap)}
+.stat{padding:16px}
+.stat .v{font-size:28px;font-weight:800;background:linear-gradient(90deg,var(--text),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .l{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.6px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:var(--gap)}
+@media (max-width:1100px){.cols{grid-template-columns:1fr}}
+.bar{height:8px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden}
+.bar>i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:99px}
+table{width:100%;border-collapse:collapse}
+td,th{padding:8px 10px;text-align:left;border-bottom:1px solid rgba(255,255,255,.05)}
+th{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-weight:700}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+#drawer{position:fixed;top:12px;right:12px;bottom:12px;width:min(460px,92vw);z-index:5;transform:translateX(110%);transition:transform .22s ease;overflow:auto;padding:20px}
+#drawer.open{transform:none}
+#drawer .x{position:absolute;right:14px;top:12px}
+#drawer .row{padding:8px 10px;gap:8px}#drawer .row .k{width:62px;font-size:10px}#drawer .row .body{white-space:normal}#drawer .row .t{width:70px;white-space:normal}
+.kv{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:14px 0}
+.kv>div{background:rgba(255,255,255,.05);border-radius:10px;padding:10px}
+.kv b{display:block;font-size:16px}
+.kv span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.bio{white-space:pre-wrap;background:rgba(255,255,255,.04);border-radius:10px;padding:12px;font-size:13px;line-height:1.45;max-height:260px;overflow:auto}
+.empty{padding:40px;text-align:center;color:var(--muted)}
+.more{display:block;margin:12px auto}
+/* theme editor */
+.te{display:grid;grid-template-columns:360px 1fr;gap:var(--gap)}
+@media (max-width:1100px){.te{grid-template-columns:1fr}}
+.field{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:7px 0}
+.field label{font-weight:600;font-size:13px}
+.field input[type=color]{width:44px;height:30px;padding:2px;border-radius:8px;cursor:pointer}
+.field input[type=range]{width:160px;accent-color:var(--accent);padding:0}
+.presets{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px}
+.preset{cursor:pointer;border-radius:12px;padding:10px;height:70px;display:flex;align-items:flex-end;font-weight:700;font-size:12px;border:2px solid transparent;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.6)}
+.preset:hover{border-color:var(--accent)}
+.bgs{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px}
+.bgs .b{height:70px;border-radius:10px;background-size:cover;background-position:center;cursor:pointer;border:2px solid transparent;overflow:hidden;position:relative}
+.bgs .b.on{border-color:var(--accent)}
+.bgs .b video{width:100%;height:100%;object-fit:cover}
+.drop{border:2px dashed rgba(255,255,255,.2);border-radius:12px;padding:18px;text-align:center;color:var(--muted);cursor:pointer}
+.drop.over{border-color:var(--accent);color:var(--text)}
+.sw{display:flex;gap:6px;flex-wrap:wrap}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:9;padding:10px 18px;font-weight:600}
+.compact{--row:6px}
+.hm{display:grid;grid-template-columns:34px repeat(24,1fr);gap:3px;font-size:10px;color:var(--muted)}
+.hm i{aspect-ratio:1.4;border-radius:3px;background:var(--accent)}
+
+/* poke + login modal */
+#modal{position:fixed;inset:0;z-index:8;background:rgba(0,0,0,.45);display:none;place-items:center}
+#modal.open{display:grid}
+#modal .box{width:min(560px,94vw);max-height:88vh;overflow:auto;padding:22px;background:rgba(var(--panel-rgb),.95);backdrop-filter:blur(20px)}
+#drawer{background:rgba(var(--panel-rgb),max(var(--panel-a),.9))}
+.emojis{display:grid;grid-template-columns:repeat(auto-fill,minmax(76px,1fr));gap:6px;margin:12px 0}
+.emo{all:unset;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 4px;border-radius:12px;border:2px solid transparent;font-size:11px;color:var(--muted);text-align:center}
+.emo:hover{background:rgba(255,255,255,.07)}
+.emo.on{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--text)}
+.emo .g{font-size:28px;line-height:1}
+.emo img{width:44px;height:44px;object-fit:contain}
+.pokebtn{all:unset;cursor:pointer;opacity:0;font-size:18px;padding:4px 6px;border-radius:8px;transition:opacity .12s}
+.fcard:hover .pokebtn{opacity:.85}
+.pokebtn:hover{opacity:1!important;background:rgba(255,255,255,.1)}
+.form{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+.err{color:var(--s-busy);font-size:13px;min-height:18px}
+.acct{font-size:12px;color:var(--muted);padding:6px 12px;cursor:pointer;border-radius:8px}
+.acct:hover{background:rgba(255,255,255,.06);color:var(--text)}
+
+.acctcard{display:flex;gap:10px;align-items:center;padding:10px;margin:4px 0;border-radius:12px;background:rgba(255,255,255,.05);cursor:pointer}
+.acctcard:hover{background:rgba(255,255,255,.1)}
+.acctcard .av{width:36px;height:36px;border-radius:10px}
+.signin{all:unset;cursor:pointer;text-align:center;padding:10px;border-radius:12px;font-weight:700;background:linear-gradient(90deg,var(--accent),var(--accent2));color:var(--on-accent);margin:4px 0}
+.signin:hover{filter:brightness(1.1)}
+.pw{position:relative}.pw input{width:100%}.pw button{all:unset;cursor:pointer;position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--muted)}
+body.clearglass #app,body.clearglass #drawer,body.clearglass #modal{text-shadow:0 1px 2px rgba(0,0,0,.85),0 0 6px rgba(0,0,0,.5)}
+body.clearglass .btn.primary,body.clearglass .signin,body.clearglass nav .count{text-shadow:none}
+
+.animemo{background-repeat:no-repeat;image-rendering:auto}
+.emo .del{position:absolute;top:2px;right:4px;font-size:12px;opacity:0;color:var(--muted)}
+.emo{position:relative}.emo:hover .del{opacity:1}.emo .del:hover{color:var(--s-busy)}
+.emo.add .g{font-size:30px;color:var(--accent)}
+.eprev{width:180px;height:180px;border-radius:16px;background:repeating-conic-gradient(rgba(255,255,255,.06) 0 25%,transparent 0 50%) 0 0/20px 20px;display:grid;place-items:center;overflow:hidden;flex:none}
+.erow{display:flex;gap:16px;align-items:flex-start;margin-top:12px}
+
+/* ---------- clean pass ---------- */
+html,body{font-size:13.5px;letter-spacing:.005em}
+.glass{border:1px solid rgba(255,255,255,.055);box-shadow:0 1px 0 rgba(255,255,255,.03) inset,0 8px 30px rgba(0,0,0,.18)}
+#app{grid-template-columns:208px 1fr}
+nav{margin:14px 0 14px 14px;padding:18px 10px 12px;gap:2px}
+.logo{font-size:18px;font-weight:700;letter-spacing:.2px;padding:0 10px 18px;color:var(--text);background:none;-webkit-background-clip:initial;background-clip:initial}
+.logo .mark{color:var(--accent)}
+nav button{padding:8px 10px;font-weight:500;gap:11px;border-radius:9px}
+nav button .ico{width:18px;height:18px;flex:none;opacity:.85}
+nav button.on{background:rgba(255,255,255,.07);box-shadow:none;color:var(--text)}
+nav button.on .ico{color:var(--accent);opacity:1}
+nav .count{background:transparent;color:var(--muted);font-weight:600;padding:0;font-size:12px}
+nav button.on .count{color:var(--accent)}
+.live{padding:6px 10px;font-size:11.5px}
+main{padding:14px 14px 0 14px;gap:14px}
+header{background:none!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important;padding:6px 4px 0}
+header h1{font-size:22px;font-weight:650;letter-spacing:-.2px}
+.search input{border-radius:99px;padding:8px 16px;background:rgba(var(--panel-rgb),max(var(--panel-a),.5));border-color:rgba(255,255,255,.06)}
+.chip{padding:5px 12px;font-weight:500;font-size:12.5px;background:transparent;border-color:rgba(255,255,255,.08)}
+.chip:hover{color:var(--text);border-color:rgba(255,255,255,.16)}
+.chip.on{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.14);color:var(--text)}
+.toolbar{margin-bottom:14px}
+.btn{font-weight:500;border-radius:8px;padding:6px 12px}
+.btn.primary{font-weight:600}
+.badge{background:transparent;padding:0;font-weight:500;font-size:12px;color:var(--muted);border-radius:0}
+.badge.acc{background:transparent;color:var(--muted)}
+.inst{padding:16px 18px;margin-bottom:12px}
+.inst-h{gap:8px;margin-bottom:12px}
+.inst-h .w{font-weight:650;font-size:15px}
+.inst-h .meta{color:var(--muted);font-size:12px}
+.inst-h .btn.primary{background:transparent;color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 55%,transparent)}
+.inst-h .btn.primary:hover{background:var(--accent);color:var(--on-accent)}
+.members{gap:4px 6px}
+.member{background:transparent;padding:5px 10px 5px 5px;border-radius:10px}
+.member:hover{background:rgba(255,255,255,.06)}
+.name{font-weight:600}
+.fcard{padding:12px 14px}
+.fcard:hover{transform:none}
+.grid{gap:10px}
+.row{border-bottom-color:rgba(255,255,255,.04)}
+.kl{font-size:12px;font-weight:500;text-transform:none;letter-spacing:0;display:flex;align-items:center;gap:7px}
+.kl::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;flex:none}
+.row .t{font-size:11.5px}
+.stat .v{font-weight:700;font-size:26px;background:none;-webkit-background-clip:initial;background-clip:initial;color:var(--text)}
+.stat .l{font-weight:500;text-transform:none;letter-spacing:0;font-size:12.5px}
+h2{font-size:14px;font-weight:600}
+th{font-weight:500;text-transform:none;letter-spacing:0;font-size:12px}
+.kv span{text-transform:none;letter-spacing:0;font-size:12px}
+.kv>div{background:rgba(255,255,255,.04)}
+.av{font-weight:700}
+.acctcard{background:transparent;padding:8px}
+.acctcard:hover{background:rgba(255,255,255,.06)}
+.signin{padding:9px;border-radius:10px;font-weight:600;background:var(--accent)}
+.fcard.off{opacity:.6}.fcard.off:hover{opacity:1}
+.bar>i{background:var(--accent)}
+.logo{display:flex;align-items:center;gap:8px}
+.logo .ghost{width:30px;height:30px;flex:none;filter:drop-shadow(0 2px 4px rgba(0,0,0,.35));transition:transform .3s}
+.logo:hover .ghost{transform:rotate(-12deg) translateY(-2px)}
+.avcard{display:flex;gap:14px;padding:12px;margin-bottom:16px;align-items:center}
+.avimg{width:150px;aspect-ratio:4/3;border-radius:10px;overflow:hidden;flex:none;background:rgba(255,255,255,.05)}
+.avimg img{width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;transition:transform .2s}
+.avimg img:hover{transform:scale(1.04)}
+.avinfo{min-width:0;display:flex;flex-direction:column;gap:3px}
+.details{padding:4px 14px;margin-bottom:16px}
+.drow{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:13px}
+.drow:last-child{border-bottom:0}
+.avgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+.avtile{min-width:0}
+.avtile img,.avtile .img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;background:rgba(255,255,255,.05);display:block;margin-bottom:4px}
+#zoom{position:fixed;inset:0;z-index:9;background:rgba(0,0,0,.75);display:grid;place-items:center;cursor:zoom-out}
+#zoom img{max-width:86vw;max-height:86vh;border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+
+#toasts{position:fixed;right:18px;bottom:18px;z-index:9;display:flex;flex-direction:column;gap:10px;align-items:flex-end;pointer-events:none}
+.atoast{pointer-events:auto;display:flex;gap:12px;align-items:center;min-width:280px;max-width:380px;padding:12px 14px;cursor:pointer;background:rgba(var(--panel-rgb),.96)!important;animation:tin .25s ease}
+.atoast .t1{font-weight:600}.atoast .t2{font-size:12px;color:var(--muted)}
+.atoast .x{margin-left:auto;color:var(--muted);font-size:12px;align-self:flex-start}
+@keyframes tin{from{transform:translateY(12px);opacity:0}to{transform:none;opacity:1}}
+.toggle{position:relative;width:38px;height:22px;flex:none;appearance:none;-webkit-appearance:none;background:rgba(255,255,255,.15);border-radius:99px;cursor:pointer;transition:background .15s;border:0;padding:0}
+.toggle::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .15s}
+.toggle:checked{background:var(--accent)}.toggle:checked::after{transform:translateX(16px)}
+.setrow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.setrow:last-child{border-bottom:0}.setrow .d{font-size:12px;color:var(--muted);margin-top:2px}
+
+.star{all:unset;cursor:pointer;font-size:16px;line-height:1;color:var(--muted);opacity:0;transition:opacity .12s,transform .12s;padding:4px}
+.star.on{color:#ffc94d;opacity:1}
+.fcard:hover .star{opacity:.85}.star:hover{transform:scale(1.2);opacity:1!important}
+.mstar{color:#ffc94d;font-size:11px;margin-left:3px}
+.noteedit{display:flex;gap:8px;align-items:flex-start;margin:-4px 0 16px}
+.noteedit textarea{flex:1;resize:vertical;min-height:38px;font-size:13px}
+
+.youcard{padding:16px 18px;margin-bottom:14px;border-color:color-mix(in srgb,var(--accent) 35%,transparent)!important}
+.youcard .w{font-weight:650;font-size:16px}
+.wgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.wcard{padding:10px;cursor:pointer;transition:transform .12s}.wcard:hover{transform:translateY(-2px)}
+.wcard img,.wcard .ph{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px;display:block;background:rgba(255,255,255,.05)}
+.wcard .name{margin-top:8px}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.pgrid .ph{aspect-ratio:16/9;border-radius:10px;overflow:hidden;cursor:zoom-in;background:rgba(255,255,255,.05);content-visibility:auto;contain-intrinsic-size:220px 124px}
+.pgrid .ph img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .2s}.pgrid .ph:hover img{transform:scale(1.04)}
+.lb{position:fixed;inset:0;z-index:9;background:rgba(0,0,0,.85);display:grid;grid-template-columns:1fr 320px;gap:0}
+.lb>img{max-width:100%;max-height:100vh;margin:auto;object-fit:contain;align-self:center;justify-self:center}
+.lb aside{background:rgba(var(--panel-rgb),.96);padding:20px;overflow:auto}
+.radio{display:flex;gap:10px;align-items:flex-start;padding:9px 10px;border-radius:10px;cursor:pointer}
+.radio:hover{background:rgba(255,255,255,.05)}.radio input{margin-top:3px;accent-color:var(--accent)}
+
+/* ---------- phone layout ---------- */
+@media (max-width: 760px) {
+  html,body{font-size:14px}
+  #app{grid-template-columns:1fr;grid-template-rows:1fr auto;height:100dvh}
+  main{padding:10px 10px 0;height:auto;min-height:0;order:1;gap:8px}
+  nav{order:2;margin:0;border-radius:0;flex-direction:row;overflow-x:auto;padding:6px 6px calc(6px + env(safe-area-inset-bottom));gap:2px;scrollbar-width:none;border-left:0;border-right:0;border-bottom:0}
+  nav::-webkit-scrollbar{display:none}
+  nav .logo,nav .spacer,nav .live,#acct{display:none}
+  nav button{flex-direction:column;gap:3px;padding:6px 10px;font-size:10.5px;min-width:62px;justify-content:center;text-align:center}
+  nav button .ico{width:21px;height:21px}
+  nav .count{position:absolute;margin:0 0 0 18px;font-size:10px}
+  nav button{position:relative}
+  header{padding:2px 2px 0;flex-wrap:wrap;gap:8px}
+  header h1{font-size:19px}
+  .search{max-width:none;flex-basis:100%;margin-left:0}
+  #view{padding-bottom:20px}
+  .grid,.wgrid{grid-template-columns:1fr}
+  .pgrid{grid-template-columns:1fr 1fr}
+  .cols,.te{grid-template-columns:1fr!important}
+  .stats{grid-template-columns:1fr 1fr}
+  #drawer{top:0;right:0;bottom:0;width:100vw;border-radius:0}
+  #modal .box{width:100vw;max-height:92dvh;border-radius:18px 18px 0 0;align-self:end}
+  #modal{place-items:end center}
+  .lb{grid-template-columns:1fr;grid-template-rows:auto 1fr}
+  .row .t{width:64px;white-space:normal;font-size:11px}
+  .row .k{width:auto}
+  .inst-h .btn{padding:5px 10px}
+  .fcard .pokebtn,.fcard .star{opacity:.7}
+  #toasts{top:10px;bottom:auto;right:10px;left:10px;align-items:stretch}
+  .atoast{min-width:0;max-width:none}
+  .hm{font-size:8px}
+}
+</style>
+</head>
+<body>
+<div id="bg"></div><div id="bgdim"></div>
+<div id="app">
+  <nav class="glass">
+    <div class="logo"><svg class="ghost" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"> <defs> <linearGradient id="gb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e3dcff"/></linearGradient> </defs> <g transform="rotate(-8 128 132)"> <path d="M52 132 C30 120 22 100 30 88 C40 96 50 104 62 108 Z" fill="url(#gb)" stroke="#2b2342" stroke-width="7" stroke-linejoin="round"/> <path d="M204 140 C226 136 238 120 236 104 C224 110 212 116 196 118 Z" fill="url(#gb)" stroke="#2b2342" stroke-width="7" stroke-linejoin="round"/> <path d="M56 214 L56 112 C56 62 88 30 130 30 C172 30 202 62 202 112 L202 214 C192 232 178 232 170 216 C162 232 146 234 138 216 C130 234 114 234 106 216 C98 232 82 232 74 216 C68 228 58 228 56 214 Z" fill="url(#gb)" stroke="#2b2342" stroke-width="8" stroke-linejoin="round"/> <circle cx="104" cy="104" r="24" fill="#fff" stroke="#2b2342" stroke-width="6"/> <circle cx="160" cy="98" r="19" fill="#fff" stroke="#2b2342" stroke-width="6"/> <circle cx="112" cy="112" r="11" fill="#2b2342"/> <circle cx="154" cy="92" r="9" fill="#2b2342"/> <circle cx="116" cy="108" r="3.5" fill="#fff"/> <circle cx="157" cy="89" r="3" fill="#fff"/> <ellipse cx="82" cy="140" rx="12" ry="7" fill="#ff8fb8" opacity=".75"/> <ellipse cx="180" cy="134" rx="11" ry="6.5" fill="#ff8fb8" opacity=".75"/> <path d="M108 140 C116 166 156 164 164 136 Z" fill="#2b2342" stroke="#2b2342" stroke-width="6" stroke-linejoin="round"/> <path d="M128 152 C128 172 152 176 154 154 C146 150 136 150 128 152 Z" fill="#ff6b9a" stroke="#2b2342" stroke-width="5" stroke-linejoin="round"/> <path d="M141 154 L142 166" stroke="#d94a7a" stroke-width="3" stroke-linecap="round"/> </g> </svg><span>Soul</span></div>
+    <button data-v="friends"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14.8c1.8.7 3 2.4 3.5 5.2"/></svg>Friends<span class="count" id="c-online" hidden></span></button>
+    <button data-v="feed"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h3l2.5-6 5 12 2.5-6h3"/></svg>Feed</button>
+    <button data-v="friendlog"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3.5" width="14" height="17" rx="2.5"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>Friend Log</button>
+    <button data-v="worlds"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.4 2.6 3.5 5.4 3.5 8.5s-1.1 5.9-3.5 8.5c-2.4-2.6-3.5-5.4-3.5-8.5s1.1-5.9 3.5-8.5z"/></svg>My Worlds</button>
+    <button data-v="notifications"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg>Notifications</button>
+    <button data-v="explore"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg>Explore Worlds</button>
+    <button data-v="groups"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20v-1.5A4.5 4.5 0 0 1 8.5 14h7a4.5 4.5 0 0 1 4.5 4.5V20"/><circle cx="12" cy="7.5" r="3.5"/><path d="M3 11.5a2.5 2.5 0 0 1 3-2.4M21 11.5a2.5 2.5 0 0 0-3-2.4"/></svg>Groups</button>
+    <button data-v="photos"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><circle cx="9" cy="10" r="1.8"/><path d="M21 16l-5-5-8 8"/></svg>Photos</button>
+    <button data-v="avatars"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="3.5"/><path d="M6 21v-3.5A4.5 4.5 0 0 1 10.5 13h3a4.5 4.5 0 0 1 4.5 4.5V21"/><path d="M4 10l2-1M20 10l-2-1"/></svg>Avatars</button>
+    <div class="spacer"></div>
+    <button data-v="theme"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5a8.5 8.5 0 1 0 0 17c1.2 0 1.8-.9 1.4-1.9-.5-1.2.3-2.6 1.6-2.6h1.8a3.7 3.7 0 0 0 3.7-3.7c0-4.9-3.8-8.8-8.5-8.8z"/><circle cx="7.8" cy="11" r="1"/><circle cx="10.5" cy="7.5" r="1"/><circle cx="15" cy="7.8" r="1"/></svg>Theme</button>
+    <button data-v="settings"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>Settings</button>
+    <div id="acct"></div>
+    <div class="live" id="live"><span class="dot"></span><span id="live-t">Connecting…</span></div>
+  </nav>
+  <main>
+    <header class="glass">
+      <h1 id="title">Friends</h1>
+      <div class="search"><input id="q" placeholder="Search…  (Ctrl+K)" autocomplete="off"></div>
+    </header>
+    <div id="view"></div>
+  </main>
+</div>
+<aside id="drawer" class="glass"></aside>
+<div id="toasts"></div>
+<div id="modal" onclick="if(event.target===this)closeModal()"><div class="box glass" id="mbox"></div></div>
+
+<script>
+// ================= utils =================
+const $ = (s, el = document) => el.querySelector(s);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const api = (p) => fetch(p).then((r) => r.json());
+const fmtDur = (ms) => { ms = +ms || 0; const m = Math.round(ms / 60000); if (m < 1) return "<1m"; if (m < 60) return m + "m"; const h = Math.floor(m / 60); if (h < 48) return h + "h " + (m % 60) + "m"; return Math.round(h) + "h"; };
+const fmtHours = (ms) => (ms / 3600000).toFixed(ms > 36e6 ? 0 : 1);
+function ago(iso) {
+  if (!iso) return "never"; const s = (Date.now() - new Date(iso)) / 1000;
+  if (s < 45) return "just now"; if (s < 3600) return Math.round(s / 60) + "m ago"; if (s < 86400) return Math.round(s / 3600) + "h ago";
+  if (s < 86400 * 30) return Math.round(s / 86400) + "d ago"; if (s < 86400 * 365) return Math.round(s / 86400 / 30) + "mo ago"; return (s / 86400 / 365).toFixed(1) + "y ago";
+}
+const fmtTime = (iso) => { const d = new Date(iso), n = new Date(); const t = d.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }); return d.toDateString() === n.toDateString() ? t : d.toLocaleDateString([], { month: "short", day: "numeric" }) + " " + t; };
+const fmtDate = (iso) => iso ? new Date(iso).toLocaleDateString([], { year: "numeric", month: "short", day: "numeric" }) : "—";
+function toast(msg) { const t = document.createElement("div"); t.className = "toast glass"; t.textContent = msg; document.body.append(t); setTimeout(() => t.remove(), 2200); }
+const debounce = (fn, ms) => { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; };
+
+function parseLoc(loc) {
+  if (!loc || loc === "offline") return { kind: "offline", label: "Offline" };
+  if (loc === "private") return { kind: "private", label: "Private world" };
+  if (loc === "web") return { kind: "web", label: "On the VRChat website / app" };
+  if (loc.startsWith("traveling")) return { kind: "traveling", label: "Traveling" };
+  const i = loc.indexOf(":"); const wid = i > 0 ? loc.slice(0, i) : loc; const rest = i > 0 ? loc.slice(i + 1) : "";
+  const parts = rest.split("~"); const num = parts[0];
+  let type = "Public";
+  if (rest.includes("~private(")) type = rest.includes("~canRequestInvite") ? "Invite+" : "Invite";
+  else if (rest.includes("~friends(")) type = "Friends";
+  else if (rest.includes("~hidden(")) type = "Friends+";
+  else if (rest.includes("~group(")) { const g = (rest.match(/groupAccessType\((\w+)\)/) || [])[1]; type = g === "public" ? "Group Public" : g === "plus" ? "Group+" : "Group"; }
+  const region = ((rest.match(/region\((\w+)\)/) || [])[1] || "us").toUpperCase().replace("USE", "US-E").replace("USW", "US-W");
+  return { kind: "world", wid, num, type, region, loc };
+}
+const launchUrl = (loc) => "vrchat://launch?ref=vrchat.com&id=" + encodeURIComponent(loc);
+const STATUS = { "join me": "--s-join", active: "--s-active", "ask me": "--s-ask", busy: "--s-busy" };
+const statusColor = (f) => f && f.online ? `var(${STATUS[f.status] || "--s-active"})` : "var(--s-off)";
+function trustVar(t) { t = (t || "").toLowerCase(); if (t.includes("trusted")) return "var(--t-trusted)"; if (t.includes("known")) return "var(--t-known)"; if (t.includes("new")) return "var(--t-new)"; if (t.includes("user")) return "var(--t-user)"; return "var(--t-visitor)"; }
+function initials(n) { const s = [...String(n || "?").replace(/[^\p{L}\p{N}]/gu, "")]; return esc((s[0] || "?").toUpperCase()); }
+function avatar(name, url, cls = "") {
+  const ini = initials(name);
+  if (!url) return `<div class="av ${cls}">${ini}</div>`;
+  return `<img class="av ${cls}" loading="lazy" referrerpolicy="no-referrer" src="${esc(url)}" onerror="this.outerHTML='<div class=&quot;av ${cls}&quot;>${ini}</div>'">`;
+}
+const uname = (id, name, color) => `<span class="lnk" style="${color ? "color:" + color : ""}" onclick="openUser('${esc(id)}')">${esc(name)}</span>`;
+
+// ================= state =================
+const S = { view: "friends", meta: {}, friends: [], friendMap: new Map(), dv: -1, q: "" };
+const prefs = JSON.parse(localStorage.getItem("soul-prefs") || "{}");
+const savePrefs = () => localStorage.setItem("soul-prefs", JSON.stringify(prefs));
+
+// ================= theme =================
+const PRESETS = {
+  Midnight: { accent: "#8b7cff", accent2: "#ff6ad5", text: "#ecebff", muted: "#9a98b8", base: "#0d0c16", panel: "#181628", panelA: .72, blur: 18, dim: .35, bgType: "gradient", g1: "#1a1035", g2: "#070612", gAngle: 145 },
+  Sakura: { accent: "#ff7eb6", accent2: "#ffc2d9", text: "#fff2f7", muted: "#d9a7bb", base: "#1e0f17", panel: "#2b1420", panelA: .68, blur: 20, dim: .25, bgType: "gradient", g1: "#4a1832", g2: "#12070d", gAngle: 160 },
+  "Neon Cyber": { accent: "#00f0ff", accent2: "#ff00a8", text: "#e8fdff", muted: "#7fb3c0", base: "#05060d", panel: "#0b1020", panelA: .7, blur: 14, dim: .3, bgType: "gradient", g1: "#0a1a3a", g2: "#1a0230", gAngle: 120 },
+  Forest: { accent: "#5bd68a", accent2: "#c8f169", text: "#eefaf1", muted: "#96b8a2", base: "#08130d", panel: "#102219", panelA: .72, blur: 16, dim: .3, bgType: "gradient", g1: "#11331f", g2: "#050c08", gAngle: 160 },
+  Sunset: { accent: "#ff8a4c", accent2: "#ff4f81", text: "#fff3ec", muted: "#d0a596", base: "#160a0c", panel: "#26121a", panelA: .7, blur: 18, dim: .25, bgType: "gradient", g1: "#4a1a2a", g2: "#1a0b06", gAngle: 135 },
+  OLED: { accent: "#ffffff", accent2: "#8a8a8a", text: "#f2f2f2", muted: "#8a8a8a", base: "#000000", panel: "#0a0a0a", panelA: .95, blur: 0, dim: 0, bgType: "none" },
+  "Clean Light": { accent: "#5b5bf0", accent2: "#c04bf2", text: "#1b1b2b", muted: "#6b6b85", base: "#eef0f7", panel: "#ffffff", panelA: .82, blur: 18, dim: 0, bgType: "gradient", g1: "#e5e8ff", g2: "#f8eefe", gAngle: 135 },
+};
+const THEME_DEFAULT = { ...PRESETS.Midnight, radius: 14, font: "Segoe UI", density: "comfy", bgUrl: "", sJoin: "#3fa9ff", sActive: "#3ddc84", sAsk: "#ffad33", sBusy: "#ff4d5e",
+  tVisitor: "#cccccc", tNew: "#1778ff", tUser: "#2bcf5c", tKnown: "#ff7b42", tTrusted: "#b18fff" };
+let theme = { ...THEME_DEFAULT };
+const hexRgb = (h) => { h = h.replace("#", ""); if (h.length === 3) h = [...h].map((c) => c + c).join(""); const n = parseInt(h, 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255].join(","); };
+const isVideo = (u) => /\.(mp4|webm)(\?|$)/i.test(u || "");
+let lastBg = "";
+function applyTheme() {
+  const r = document.documentElement.style, t = theme;
+  const set = (k, v) => r.setProperty(k, v);
+  const lum = (hex) => { const [r, g, b] = hexRgb(hex).split(",").map((v) => { v /= 255; return v <= .03928 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4; }); return .2126 * r + .7152 * g + .0722 * b; };
+  set("--on-accent", lum(t.accent) > .45 ? "#111111" : "#ffffff");
+  set("--accent", t.accent); set("--accent2", t.accent2); set("--text", t.text); set("--muted", t.muted); set("--base", t.base);
+  set("--panel-rgb", hexRgb(t.panel)); set("--panel-a", t.panelA); set("--blur", t.blur + "px"); set("--dim", t.dim); set("--radius", t.radius + "px");
+  set("--font", `"${t.font}", "Segoe UI", system-ui, sans-serif`);
+  set("--s-join", t.sJoin); set("--s-active", t.sActive); set("--s-ask", t.sAsk); set("--s-busy", t.sBusy);
+  set("--t-visitor", t.tVisitor); set("--t-new", t.tNew); set("--t-user", t.tUser); set("--t-known", t.tKnown); set("--t-trusted", t.tTrusted);
+  document.body.classList.toggle("compact", t.density === "compact");
+  document.body.classList.toggle("clearglass", t.panelA < .45 && t.bgType !== "none");
+  const bg = $("#bg"); const key = t.bgType + "|" + t.bgUrl + "|" + t.g1 + t.g2 + t.gAngle;
+  if (key !== lastBg) {
+    lastBg = key; bg.innerHTML = ""; bg.style.background = "";
+    if (t.bgType === "gradient") bg.style.background = `linear-gradient(${t.gAngle}deg, ${t.g1}, ${t.g2})`;
+    else if (t.bgType === "image" && t.bgUrl) {
+      if (isVideo(t.bgUrl)) bg.innerHTML = `<video autoplay muted loop playsinline src="${esc(t.bgUrl)}"></video>`;
+      else bg.style.background = `center/cover no-repeat url("${t.bgUrl.replace(/"/g, "%22")}")`;
+    }
+  }
+}
+const saveTheme = debounce(() => {
+  localStorage.setItem("soul-theme", JSON.stringify(theme));
+  fetch("/api/theme", { method: "POST", body: JSON.stringify(theme) }).catch(() => {});
+}, 400);
+function setTheme(patch) { Object.assign(theme, patch); applyTheme(); saveTheme(); }
+
+// ================= navigation =================
+const TITLES = { friends: "Friends", feed: "Feed", friendlog: "Friend Log", worlds: "My Worlds", notifications: "Notifications", explore: "Explore Worlds", groups: "Groups", photos: "Photos", avatars: "Avatars", theme: "Theme", settings: "Settings" };
+function go(v) {
+  S.view = v; prefs.view = v; savePrefs();
+  document.querySelectorAll("nav button").forEach((b) => b.classList.toggle("on", b.dataset.v === v));
+  $("#title").textContent = TITLES[v];
+  $("#q").value = S.q = ""; $("#q").parentElement.style.visibility = ["theme", "settings", "groups"].includes(v) ? "hidden" : "";
+  $("#view").scrollTop = 0;
+  render(true);
+}
+document.querySelectorAll("nav button").forEach((b) => (b.onclick = () => go(b.dataset.v)));
+$("#q").addEventListener("input", debounce((e) => { S.q = e.target.value.trim(); render(true); }, 350));
+addEventListener("keydown", (e) => {
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") { e.preventDefault(); $("#q").focus(); $("#q").select(); }
+  if (e.key === "Escape") { if ($("#lightbox")) $("#lightbox").remove(); else if ($("#zoom")) $("#zoom").remove(); else if ($("#modal").classList.contains("open")) closeModal(); else closeUser(); }
+  if (e.altKey && /^[1-9]$/.test(e.key)) go(Object.keys(TITLES)[+e.key - 1]);
+});
+
+const VIEWS = {};
+async function render(fresh) {
+  const v = S.view;
+  try { await VIEWS[v](fresh); } catch (e) { console.error(e); $("#view").innerHTML = `<div class="empty glass">Something went wrong: ${esc(e.message)}</div>`; }
+}
+
+// ================= friends =================
+async function loadFriends() {
+  S.friends = await api("/api/friends");
+  S.friendMap = new Map(S.friends.map((f) => [f.id, f]));
+  const n = S.friends.filter((f) => f.online).length;
+  const c = $("#c-online"); c.hidden = !n; c.textContent = n;
+}
+VIEWS.friends = async () => {
+  await loadFriends();
+  const mode = prefs.fMode || "instances", sort = prefs.fSort || "status";
+  const q = S.q.toLowerCase();
+  let list = S.friends.filter((f) => !q || (f.name + " " + f.world + " " + f.statusText + " " + f.note + " " + f.avatar).toLowerCase().includes(q));
+  const online = list.filter((f) => f.online);
+  const tb = `<div class="toolbar">
+    <div class="chips">
+      ${[["instances", "Where they are"], ["favorites", "★ Favorites (" + list.filter((f) => f.fav).length + ")"], ["online", "Online (" + online.length + ")"], ["all", "Everyone (" + list.length + ")"]].map(([k, l]) => `<button class="chip ${mode === k ? "on" : ""}" onclick="prefs.fMode='${k}';savePrefs();render()">${l}</button>`).join("")}
+    </div>
+    ${mode !== "instances" ? `<select style="margin-left:auto" onchange="prefs.fSort=this.value;savePrefs();render()">
+      ${[["status", "Sort: online first"], ["name", "Sort: name"], ["seen", "Sort: last seen"], ["together", "Sort: time together"], ["num", "Sort: newest friends"]].map(([k, l]) => `<option value="${k}" ${sort === k ? "selected" : ""}>${l}</option>`).join("")}
+    </select>` : ""}
+  </div>`;
+  let body = "";
+  if (mode === "instances") {
+    body = await youCard();
+    const myLoc = S.whereLoc || "";
+    const groups = new Map();
+    for (const f of online) { const key = parseLoc(f.location).kind === "world" ? f.location : "~" + parseLoc(f.location).kind; if (key === myLoc) continue; (groups.get(key) || groups.set(key, []).get(key)).push(f); }
+    for (const fs of groups.values()) fs.sort((a, b) => b.fav - a.fav || (a.name || "").localeCompare(b.name || ""));
+    const favIn = (fs) => fs.some((f) => f.fav);
+    const order = [...groups.entries()].sort((a, b) => (a[0][0] === "~") - (b[0][0] === "~") || favIn(b[1]) - favIn(a[1]) || b[1].length - a[1].length);
+    body += order.map(([key, fs]) => {
+      const L = parseLoc(fs[0].location);
+      const head = L.kind === "world"
+        ? `<div style="min-width:0"><div class="w ellip lnk" onclick="openWorld('${esc(L.wid)}')">${esc(fs[0].world || "Unknown world")}</div><div class="meta">${[L.type, L.region, fs[0].group, "#" + L.num].filter(Boolean).map(esc).join(" · ")}</div></div>
+           <span style="margin-left:auto" class="muted small">${fs.length} friend${fs.length > 1 ? "s" : ""}</span><a class="btn primary" href="${launchUrl(L.loc)}">Join</a>`
+        : `<div class="w">${esc(L.label)}</div><span style="margin-left:auto" class="muted small">${fs.length} friend${fs.length > 1 ? "s" : ""}</span>`;
+      return `<div class="inst glass"><div class="inst-h">${head}</div><div class="members">${fs.map(memberChip).join("")}</div></div>`;
+    }).join("") || (body ? "" : `<div class="empty glass">None of your friends are online right now.</div>`);
+  } else {
+    const arr = mode === "online" ? online : mode === "favorites" ? list.filter((f) => f.fav) : list;
+    const sorters = {
+      status: (a, b) => b.online - a.online || b.fav - a.fav || (a.name || "").localeCompare(b.name || ""),
+      name: (a, b) => (a.name || "").localeCompare(b.name || ""),
+      seen: (a, b) => (b.online - a.online) || ((b.since || "") > (a.since || "") ? 1 : -1),
+      together: (a, b) => b.together - a.together, num: (a, b) => (b.num || 0) - (a.num || 0),
+    };
+    arr.sort(sorters[sort]);
+    body = arr.length ? `<div class="grid">${arr.map(friendCard).join("")}</div>` : mode === "favorites"
+      ? `<div class="empty glass">No favorites yet. Hover over a friend and click ☆ to star them${VRC.loggedIn ? `, or <button class="btn primary" onclick="importFavs()">Import my VRChat favorites</button>` : "."}</div>`
+      : `<div class="empty glass">No friends match.</div>`;
+  }
+  $("#view").innerHTML = tb + body;
+};
+function friendCard(f) {
+  const L = parseLoc(f.location);
+  const where = f.online ? (L.kind === "world" ? esc(f.world || "In a world") + ` · ${esc(L.type)}` : esc(L.label)) : "Last seen " + ago(f.since);
+  return `<div class="fcard glass ${f.online ? "" : "off"}" onclick="openUser('${esc(f.id)}')">
+    <div class="avwrap">${avatar(f.name, f.thumb)}<span class="sdot" style="background:${statusColor(f)}"></span></div>
+    <div class="info"><div class="name" style="color:${trustVar(f.trust)}">${esc(f.name)}</div>
+      <div class="sub">${f.statusText ? esc(f.statusText) : f.online ? esc(f.status || "online") : ""}</div>
+      <div class="sub">${where}</div></div><button class="star ${f.fav ? "on" : ""}" title="${f.fav ? "Remove from favorites" : "Add to favorites"}" onclick="event.stopPropagation();toggleFav('${esc(f.id)}', ${!f.fav})">${f.fav ? "★" : "☆"}</button><button class="pokebtn" title="Poke (Shift+click: repeat last poke)" onclick="event.stopPropagation();pokeClick(event,'${esc(f.id)}','${esc(jsq(f.name))}')">👉</button></div>`;
+}
+function memberChip(f) {
+  return `<div class="member" onclick="openUser('${esc(f.id)}')"><div class="avwrap">${avatar(f.name, f.thumb, "sm")}<span class="sdot" style="background:${statusColor(f)};width:11px;height:11px"></span></div>
+    <div style="min-width:0"><div class="name small" style="color:${trustVar(f.trust)}">${esc(f.name)}${f.fav ? '<span class="mstar">★</span>' : ""}</div>${f.statusText ? `<div class="sub" style="font-size:11px">${esc(f.statusText)}</div>` : ""}</div></div>`;
+}
+
+// ================= feed =================
+const FEED_KINDS = [["online", "Online / Offline"], ["gps", "Location"], ["status", "Status"], ["avatar", "Avatar"], ["bio", "Bio"]];
+let feedRows = [], feedDone = false, feedLoading = false;
+VIEWS.feed = async (fresh) => {
+  const kinds = prefs.feedKinds || FEED_KINDS.map((k) => k[0]);
+  const friendsOnly = prefs.feedFriendsOnly;
+  if (!S.friends.length) await loadFriends();
+  feedRows = []; feedDone = false;
+  $("#view").innerHTML = `<div class="toolbar"><div class="chips">${FEED_KINDS.map(([k, l]) => `<button class="chip ${kinds.includes(k) ? "on" : ""}" onclick="toggleKind('${k}')">${l}</button>`).join("")}</div></div>
+    <div class="glass"><div class="rows" id="feedrows"></div></div><div id="sentinel" style="height:40px"></div>`;
+  await moreFeed();
+  const io = new IntersectionObserver((e) => { if (e[0].isIntersecting) moreFeed(); }, { root: $("#view"), rootMargin: "600px" });
+  io.observe($("#sentinel"));
+};
+window.toggleKind = (k) => { let ks = prefs.feedKinds || FEED_KINDS.map((x) => x[0]); ks = ks.includes(k) ? ks.filter((x) => x !== k) : [...ks, k]; if (!ks.length) ks = [k]; prefs.feedKinds = ks; savePrefs(); render(); };
+async function moreFeed() {
+  if (feedLoading || feedDone || S.view !== "feed") return; feedLoading = true;
+  const kinds = (prefs.feedKinds || FEED_KINDS.map((k) => k[0])).join(",");
+  const before = feedRows.length ? feedRows[feedRows.length - 1].at : "";
+  const rows = await api(`/api/feed?kinds=${kinds}&limit=120&q=${encodeURIComponent(S.q)}&before=${encodeURIComponent(before)}`);
+  if (rows.length < 120) feedDone = true;
+  feedRows.push(...rows);
+  const el = $("#feedrows"); if (el) el.insertAdjacentHTML("beforeend", rows.map(feedRow).join("") || (feedRows.length ? "" : `<div class="empty">Nothing here.</div>`));
+  feedLoading = false;
+}
+function feedRow(r) {
+  const f = S.friendMap.get(r.uid); const color = f ? trustVar(f.trust) : "";
+  let k = r.kind, txt = "";
+  if (k === "Online") { const L = parseLoc(r.a); txt = "came online" + (L.kind === "world" ? ` in <b>${esc(r.b || "a world")}</b>` : ""); }
+  else if (k === "Offline") txt = "went offline" + (r.d ? ` <span class="muted">after ${fmtDur(r.d)}</span>` : "");
+  else if (k === "GPS") { const L = parseLoc(r.a); txt = L.kind === "world" ? `→ <b>${esc(r.b || "a world")}</b> <span class="badge">${esc(L.type)}</span>` : "→ " + esc(L.label); if (r.d) txt += ` <span class="muted small">(was there ${fmtDur(r.d)})</span>`; if (L.kind === "world") txt += ` <a class="small muted" href="${launchUrl(L.loc)}">launch</a>`; }
+  else if (k === "Status") txt = `<span style="color:var(${STATUS[r.a] || "--s-active"})">●</span> ${esc(r.b || r.a)}` + (r.d && r.d !== r.b ? ` <span class="muted small">was “${esc(r.d)}”</span>` : "");
+  else if (k === "Avatar") txt = `switched to <b>${esc(r.a || "an avatar")}</b>`;
+  else if (k === "Bio") txt = `updated bio: <span class="muted">${esc((r.a || "").slice(0, 140))}</span>`;
+  return `<div class="row"><div class="t" title="${esc(new Date(r.at).toLocaleString())}">${fmtTime(r.at)}</div>
+    <div class="k kl k-${k}">${k === "GPS" ? "Location" : k}</div>
+    ${r.img ? `<img class="thumb" loading="lazy" referrerpolicy="no-referrer" src="${esc(r.img)}" onerror="this.style.visibility='hidden'">` : ""}
+    <div class="body ellip">${uname(r.uid, r.name, color)} ${txt}</div></div>`;
+}
+
+// ================= friend log =================
+VIEWS.friendlog = async () => {
+  const rows = await api("/api/friendlog");
+  const types = [["all", "All"], ["Friend", "Added"], ["Unfriend", "Unfriended"], ["DisplayName", "Name changes"], ["TrustLevel", "Trust rank"], ["FriendRequest", "Requests"]];
+  const t = prefs.flType || "all", q = S.q.toLowerCase();
+  const list = rows.filter((r) => (t === "all" || r.type === t || (t === "FriendRequest" && r.type === "CancelFriendRequest")) && (!q || ((r.name || "") + (r.prevName || "")).toLowerCase().includes(q)));
+  const label = { Friend: "Added", Unfriend: "Unfriended", DisplayName: "Renamed", TrustLevel: "Rank", FriendRequest: "Request", CancelFriendRequest: "Cancelled" };
+  $("#view").innerHTML = `<div class="toolbar"><div class="chips">${types.map(([k, l]) => `<button class="chip ${t === k ? "on" : ""}" onclick="prefs.flType='${k}';savePrefs();render()">${l} <span class="muted">${k === "all" ? rows.length : rows.filter((r) => r.type === k || (k === "FriendRequest" && r.type === "CancelFriendRequest")).length}</span></button>`).join("")}</div></div>
+  <div class="glass"><div class="rows">${list.map((r) => {
+    let d = "";
+    if (r.type === "DisplayName") d = `<span class="muted">${esc(r.prevName)}</span> → `;
+    let tail = r.type === "TrustLevel" ? ` <span class="muted">${esc(r.prevTrust)} → </span><b style="color:${trustVar(r.trust)}">${esc(r.trust)}</b>` : "";
+    return `<div class="row"><div class="t">${fmtDate(r.at)}</div><div class="k kl k-${r.type}">${label[r.type] || r.type}</div><div class="body ellip">${d}${uname(r.uid, r.name)}${tail}${r.num && r.type === "Friend" ? ` <span class="muted small">friend #${r.num}</span>` : ""}</div><div class="small muted">${ago(r.at)}</div></div>`;
+  }).join("") || `<div class="empty">Nothing here.</div>`}</div></div>`;
+};
+
+// ================= my worlds =================
+let W = null;
+VIEWS.worlds = async () => {
+  W = await api("/api/worlds");
+  const tab = prefs.wTab || "overview", q = S.q.toLowerCase();
+  const visits = W.visits.filter((v) => !q || (v.name || "").toLowerCase().includes(q));
+  const total = W.visits.reduce((s, v) => s + (+v.time || 0), 0);
+  const byWorld = new Map();
+  for (const v of visits) { const k = v.wid || v.name; const o = byWorld.get(k) || { name: v.name, wid: v.wid, time: 0, n: 0, last: v.at }; o.time += +v.time || 0; o.n++; if (v.at > o.last) o.last = v.at; byWorld.set(k, o); }
+  const top = [...byWorld.values()].sort((a, b) => b.time - a.time);
+  const tabs = [["overview", "Overview"], ["visits", "Visit history"], ["people", "People"], ["worlds", "Worlds"], ["avatars", "Avatars I've worn"], ...(VRC.loggedIn ? [["uploads", "My uploads"]] : []), ["videos", "Videos"]];
+  let body = "";
+  if (tab === "overview") {
+    const first = W.visits.length ? W.visits[W.visits.length - 1].at : null;
+    body = `<div class="stats">
+      ${stat(fmtHours(total), "hours in VRChat")}${stat(W.visits.length.toLocaleString(), "world visits")}${stat(byWorld.size.toLocaleString(), "different worlds")}${stat(W.uniquePeople.toLocaleString(), "people seen")}
+    </div>
+    <div class="section glass"><h2>Hours per day <span class="muted small">· last 60 days</span></h2>${dailyChart(W.visits)}</div>
+    <div class="cols">
+      <div class="section glass"><h2>When you play</h2>${heatmap(W.visits)}</div>
+      <div class="section glass"><h2>Top worlds</h2>${topWorlds(top.slice(0, 8), top[0]?.time)}</div>
+    </div>
+    <div class="section glass"><h2>People you've spent the most time with</h2>${peopleTable(W.people.slice(0, 10))}</div>
+    <div class="muted small">Tracking since ${fmtDate(first)}.</div>`;
+  } else if (tab === "visits") {
+    const shown = visits.slice(0, prefs.wLimit || 150);
+    body = `<div class="glass"><div class="rows">${shown.map((v) => { const L = parseLoc(v.location); return `<div class="row" style="cursor:pointer" onclick="toggleVisit(this, ${v.id})">
+      <div class="t">${fmtTime(v.at)}</div><div class="body ellip"><b>${esc(v.name)}</b> <span class="badge">${esc(L.type || "")}</span> ${v.grp ? `<span class="badge">${esc(v.grp)}</span>` : ""}</div>
+      <div class="small muted">${fmtDur(v.time)}</div></div><div hidden data-visit="${v.id}"></div>`; }).join("")}</div></div>
+      ${visits.length > shown.length ? `<button class="btn more" onclick="prefs.wLimit=${shown.length + 300};render()">Show more</button>` : ""}`;
+  } else if (tab === "people") {
+    body = `<div class="section glass"><h2>Top 100 people by time together</h2>${peopleTable(W.people.filter((p) => !q || (p.name || "").toLowerCase().includes(q)))}</div>`;
+  } else if (tab === "worlds") {
+    body = `<div class="section glass">${topWorlds(top, top[0]?.time, true)}</div>`;
+  } else if (tab === "avatars") {
+    body = `<div class="grid">${W.avatars.filter((a) => !q || (a.name || "").toLowerCase().includes(q)).map((a) => `<div class="fcard glass">${avatar(a.name || "?", a.thumb)}<div class="info"><div class="name">${esc(a.name || a.id)}</div><div class="sub">by ${esc(a.author || "unknown")}</div><div class="sub">worn ${fmtDur(a.time)} · ${ago(a.at)}</div></div></div>`).join("") || `<div class="empty glass">No avatar history yet.</div>`}</div>`;
+  } else if (tab === "uploads") {
+    const av = await api("/api/vrc/avatars");
+    body = av.error ? `<div class="empty glass">${esc(av.error)}</div>` : `<div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(200px,1fr))">${av.filter((a) => !q || a.name.toLowerCase().includes(q)).map((a) => `<div class="glass" style="padding:10px">
+      <img src="${proxied(a.thumb)}" loading="lazy" onerror="this.style.opacity=0" style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px;display:block;cursor:zoom-in;background:rgba(255,255,255,.05)" onclick="zoomImg('${proxied(a.image)}')">
+      <div class="name ellip" style="margin-top:8px">${esc(a.name)}</div>
+      <div class="sub">${a.status === "public" ? "Public" : "Private"} · ${a.platforms.map((p) => ({ standalonewindows: "PC", android: "Quest", ios: "iOS" })[p] || p).join(", ") || "—"} · ${ago(a.updated)}</div>
+      <button class="btn ${a.current ? "" : "primary"}" style="margin-top:8px;width:100%;box-sizing:border-box;text-align:center" ${a.current ? "disabled" : ""} onclick="wearAvatar('${esc(a.id)}','${esc(jsq(a.name))}')">${a.current ? "Wearing now" : "Wear this"}</button></div>`).join("") || `<div class="empty glass">You haven't uploaded any avatars.</div>`}</div>`;
+  } else if (tab === "videos") {
+    body = `<div class="glass"><div class="rows">${W.videos.filter((v) => !q || (v.url + v.name).toLowerCase().includes(q)).map((v) => `<div class="row"><div class="t">${fmtTime(v.at)}</div><div class="body ellip"><a href="${esc(v.url)}" target="_blank" style="color:var(--text)">${esc(v.name || v.url)}</a></div>${v.by ? `<div class="small muted">${esc(v.by)}</div>` : ""}</div>`).join("") || `<div class="empty">No videos.</div>`}</div></div>`;
+  }
+  $("#view").innerHTML = `<div class="toolbar"><div class="chips">${tabs.map(([k, l]) => `<button class="chip ${tab === k ? "on" : ""}" onclick="prefs.wTab='${k}';savePrefs();render()">${l}</button>`).join("")}</div></div>` + body;
+};
+const stat = (v, l) => `<div class="stat glass"><div class="v">${v}</div><div class="l">${l}</div></div>`;
+function topWorlds(list, max, full) {
+  return `<table><tr><th>World</th><th class="n">Visits</th><th class="n">Time</th>${full ? `<th class="n">Last</th>` : ""}<th style="width:30%"></th></tr>${list.map((w) => `<tr><td class="ellip" style="max-width:260px">${esc(w.name)}</td><td class="n">${w.n}</td><td class="n">${fmtDur(w.time)}</td>${full ? `<td class="n muted">${ago(w.last)}</td>` : ""}<td><div class="bar"><i style="width:${Math.max(2, (w.time / (max || 1)) * 100)}%"></i></div></td></tr>`).join("")}</table>`;
+}
+function peopleTable(list) {
+  const max = list[0]?.time || 1;
+  return `<table><tr><th>Name</th><th class="n">Times met</th><th class="n">Together</th><th class="n">Last seen</th><th style="width:25%"></th></tr>${list.map((p) => { const f = S.friendMap.get(p.id); return `<tr><td>${uname(p.id, p.name, f ? trustVar(f.trust) : "")} ${f ? `<span class="badge acc">friend</span>` : ""}</td><td class="n">${p.meets}</td><td class="n">${fmtDur(p.time)}</td><td class="n muted">${ago(p.last)}</td><td><div class="bar"><i style="width:${Math.max(2, (p.time / max) * 100)}%"></i></div></td></tr>`; }).join("")}</table>`;
+}
+function spread(visits, cb) { // walk each session hour by hour in local time
+  for (const v of visits) { let t = new Date(v.at).getTime(); let left = +v.time || 0; while (left > 0) { const d = new Date(t); const next = new Date(d); next.setMinutes(60, 0, 0); const chunk = Math.min(left, next - d); cb(d, chunk); t += chunk; left -= chunk; } }
+}
+function dailyChart(visits) {
+  const days = 60, buckets = new Array(days).fill(0); const today = new Date(); today.setHours(0, 0, 0, 0);
+  spread(visits, (d, ms) => { const day = new Date(d); day.setHours(0, 0, 0, 0); const i = days - 1 - Math.round((today - day) / 864e5); if (i >= 0 && i < days) buckets[i] += ms; });
+  const max = Math.max(...buckets, 36e5); const W_ = 1000, H = 140, bw = W_ / days;
+  const bars = buckets.map((ms, i) => { const h = (ms / max) * (H - 18); const d = new Date(today - (days - 1 - i) * 864e5); return `<rect x="${i * bw + 1.5}" y="${H - 16 - h}" width="${bw - 3}" height="${Math.max(h, ms ? 2 : 0)}" rx="3" fill="url(#gr)"><title>${d.toLocaleDateString()} — ${fmtDur(ms)}</title></rect>`; }).join("");
+  const labels = [0, 15, 30, 45, 59].map((i) => `<text x="${i === 0 ? 0 : i === 59 ? W_ : i * bw + bw / 2}" y="${H - 2}" fill="var(--muted)" font-size="11" text-anchor="${i === 0 ? "start" : i === 59 ? "end" : "middle"}">${new Date(today - (days - 1 - i) * 864e5).toLocaleDateString([], { month: "short", day: "numeric" })}</text>`).join("");
+  return `<svg viewBox="0 0 ${W_} ${H}" style="width:100%;height:auto"><defs><linearGradient id="gr" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="var(--accent)" stop-opacity=".75"/><stop offset="1" stop-color="var(--accent)"/></linearGradient></defs>${bars}${labels}</svg>`;
+}
+function heatmap(visits) {
+  const g = [...Array(7)].map(() => new Array(24).fill(0));
+  spread(visits, (d, ms) => (g[d.getDay()][d.getHours()] += ms));
+  const max = Math.max(...g.flat(), 1); const names = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  let h = `<div class="hm"><span></span>${[...Array(24)].map((_, i) => `<span style="text-align:center">${i % 6 === 0 ? (i === 0 ? "12a" : i === 12 ? "12p" : i < 12 ? i + "a" : i - 12 + "p") : ""}</span>`).join("")}`;
+  for (let d = 0; d < 7; d++) h += `<span>${names[d]}</span>` + g[d].map((ms, hr) => `<i title="${names[d]} ${hr}:00 — ${fmtDur(ms)}" style="opacity:${ms ? 0.12 + (ms / max) * 0.88 : 0.05}"></i>`).join("");
+  return h + "</div>";
+}
+window.toggleVisit = async (row, id) => {
+  const box = row.nextElementSibling; if (!box.hidden) { box.hidden = true; return; }
+  const v = W.visits.find((x) => x.id === id);
+  box.hidden = false; box.innerHTML = `<div class="muted small" style="padding:8px 14px">Loading…</div>`;
+  const ppl = await api(`/api/instance?location=${encodeURIComponent(v.location)}&from=${encodeURIComponent(v.at)}&ms=${v.time || 0}`);
+  const L = parseLoc(v.location);
+  box.innerHTML = `<div style="padding:6px 14px 14px 112px"><div class="members">${ppl.map((p) => { const f = S.friendMap.get(p.id); return `<div class="member" onclick="openUser('${esc(p.id)}')"><div style="min-width:0"><div class="name small" style="color:${f ? trustVar(f.trust) : "var(--text)"}">${esc(p.name)}</div><div class="sub" style="font-size:11px">${fmtDur(p.time)}</div></div></div>`; }).join("") || `<span class="muted small">Nobody else logged.</span>`}</div>
+    ${L.kind === "world" ? `<div style="margin-top:10px"><a class="btn" href="https://vrchat.com/home/world/${esc(L.wid)}" target="_blank">World page</a></div>` : ""}</div>`;
+};
+
+// ================= notifications =================
+const NGROUPS = { friendreq: ["friendRequest"], invites: ["invite", "inviteResponse"], requests: ["requestInvite", "requestInviteResponse"], boops: ["boop"], groups: ["groupChange", "group.announcement", "group.event.created", "group.invite", "group.joinRequest", "instance.announcement"], other: null };
+VIEWS.notifications = async () => {
+  const rows = await api("/api/notifications");
+  const g = prefs.nGroup || "friendreq", q = S.q.toLowerCase();
+  const known = Object.values(NGROUPS).flat().filter(Boolean);
+  const inGroup = (r, k) => k === "all" ? true : k === "other" ? !known.includes(r.type) : NGROUPS[k].includes(r.type);
+  const list = rows.filter((r) => inGroup(r, g) && (!q || [r.name, r.message, r.title, r.world].join(" ").toLowerCase().includes(q))).slice(0, 600);
+  const pendingFR = rows.filter((r) => r.type === "friendRequest" && r.state === "pending").length;
+  const tabs = [["friendreq", "Friend requests" + (pendingFR ? ` • ${pendingFR} new` : "")], ["invites", "Invites"], ["requests", "Invite requests"], ["boops", "Boops"], ["groups", "Groups"], ["other", "Other"], ["all", "All"]];
+  $("#view").innerHTML = `<div class="toolbar"><div class="chips">${tabs.map(([k, l]) => `<button class="chip ${g === k ? "on" : ""}" onclick="prefs.nGroup='${k}';savePrefs();render()">${l} <span class="muted">${rows.filter((r) => inGroup(r, k)).length}</span></button>`).join("")}</div></div>
+  <div class="glass"><div class="rows">${list.map((r) => {
+    const who = r.uid ? uname(r.uid, r.name, S.friendMap.get(r.uid) ? trustVar(S.friendMap.get(r.uid).trust) : "") : `<b>${esc(r.title || r.name || "")}</b>`;
+    let what = esc(r.type);
+    if (r.type === "invite") what = `invited you to <b>${esc(r.world)}</b>` + (r.location && parseLoc(r.location).kind === "world" ? ` <a class="small muted" href="${launchUrl(r.location)}">launch</a>${VRC.loggedIn ? ` · <a class="small muted" style="cursor:pointer" onclick="selfInvite('${esc(r.location)}')">invite me in-game</a>` : ""}` : "");
+    else if (r.type === "friendRequest") what = "sent you a friend request" + (r.state === "pending" && VRC.loggedIn ? ` <button class="btn primary" style="padding:3px 10px;margin-left:6px" onclick="answerFR('${esc(r.id)}', true, '${esc(jsq(r.name))}')">Accept</button> <button class="btn" style="padding:3px 10px" onclick="answerFR('${esc(r.id)}', false, '${esc(jsq(r.name))}')">Decline</button>` : r.state === "accepted" ? ' <span class="badge" style="color:var(--s-active)">accepted</span>' : r.state === "declined" ? ' <span class="badge">declined</span>' : "");
+    else if (r.type === "requestInvite") what = "asked for an invite" + (VRC.loggedIn && r.uid ? ` · <a class="small muted" style="cursor:pointer" onclick="inviteUser('${esc(r.uid)}','${esc(jsq(r.name))}')">invite them</a>` : "");
+    else if (r.type === "boop") what = "booped you";
+    else if (r.type.endsWith("Response")) what = "replied" + (r.responseMsg ? `: ${esc(r.responseMsg)}` : "");
+    else if (r.message) what = `<span class="muted">${esc(r.message)}</span>`;
+    const extra = r.inviteMsg || r.requestMsg ? ` <span class="muted">“${esc(r.inviteMsg || r.requestMsg)}”</span>` : "";
+    return `<div class="row"><div class="t">${fmtTime(r.at)}</div>${r.img ? `<img class="thumb" loading="lazy" referrerpolicy="no-referrer" src="${esc(r.img)}" onerror="this.style.visibility='hidden'">` : ""}<div class="body ellip">${who} ${what}${extra}</div></div>`;
+  }).join("") || `<div class="empty">Nothing here.</div>`}</div></div>`;
+};
+
+// ================= user drawer =================
+window.openUser = async (id) => {
+  if (!id) return;
+  const d = $("#drawer"); d.classList.add("open"); d.innerHTML = `<div class="muted">Loading…</div>`;
+  const u = await api("/api/user?id=" + encodeURIComponent(id));
+  const f = u.friend; const name = f?.name || u.met?.name || u.recent[0]?.name || "Unknown";
+  const L = f ? parseLoc(f.location) : null;
+  d.innerHTML = `<button class="btn x" onclick="closeUser()">✕</button>
+    <div style="display:flex;gap:16px;align-items:center">
+      <div class="avwrap">${avatar(name, f?.thumb, "lg")}<span class="sdot" style="background:${statusColor(f)};width:18px;height:18px"></span></div>
+      <div style="min-width:0"><div class="name" style="font-size:20px;color:${f ? trustVar(f.trust) : "var(--text)"}">${esc(name)}</div>
+        <div class="sub">${f ? esc(f.trust) + (f.num ? ` · friend #${f.num}` : "") : "Not on your friends list"}</div>
+        ${f?.statusText ? `<div class="sub" style="color:var(--text)">${esc(f.statusText)}</div>` : ""}
+        <div class="sub">${f ? (f.online ? (L.kind === "world" ? "In " + esc(f.world) + " · " + esc(L.type) : esc(L.label)) : "Last seen " + ago(f.since)) : ""}</div></div></div>
+    <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
+      ${f?.online && L.kind === "world" ? `<a class="btn primary" href="${launchUrl(L.loc)}">Launch to their world</a>` : ""}
+      ${f ? `<button class="btn" onclick="toggleFav('${esc(id)}', ${!f.fav}).then(()=>openUser('${esc(id)}'))">${f.fav ? "★ Favorite" : "☆ Add to favorites"}</button>` : ""}
+      ${f ? `<button class="btn primary" onclick="openPoke('${esc(id)}','${esc(jsq(name))}')">👉 Poke</button>` : ""}
+      ${f && VRC.loggedIn ? `<button class="btn" onclick="inviteUser('${esc(id)}','${esc(jsq(name))}')">Invite to my world</button>` : ""}
+      ${f?.online && VRC.loggedIn ? `<button class="btn" onclick="requestInvite('${esc(id)}','${esc(jsq(name))}')">Ask to join</button>` : ""}
+      <a class="btn" href="https://vrchat.com/home/user/${esc(id)}" target="_blank">VRChat profile</a>
+      <button class="btn" onclick="navigator.clipboard.writeText('${esc(id)}');toast('User ID copied')">Copy ID</button></div>
+    <div class="kv">
+      <div><b>${u.met?.meets ? fmtDur(u.met.time || 0) : "—"}</b><span>Time together</span></div>
+      <div><b>${u.met?.meets || 0}</b><span>Times met</span></div>
+      <div><b>${u.met?.first ? fmtDate(u.met.first) : "—"}</b><span>First met</span></div>
+      <div><b>${u.met?.last ? ago(u.met.last) : "—"}</b><span>Last met</span></div>
+      ${u.mutuals ? `<div><b>${u.mutuals}</b><span>Mutual friends</span></div>` : ""}
+    </div>
+    ${f ? `<div class="noteedit"><textarea id="d-note" rows="2" maxlength="256" placeholder="Add a note about ${esc(name)}… (only you can see it)">${esc(f.note || "")}</textarea><button class="btn" id="d-note-save" onclick="saveNote('${esc(id)}')">Save note</button></div>` : ""}
+    <div id="d-avatar">${avatarSection({ name: f?.avatar || u.avatars?.[0]?.name || "", thumb: u.avatars?.[0]?.thumb || f?.thumb || "" }, null)}</div>
+    <div id="d-details"></div>
+    <div id="d-mutuals"></div>
+    <div id="d-bio">${u.bio ? `<h2>Bio</h2><div class="bio">${esc(u.bio)}</div><div class="muted small" style="margin:4px 0 14px">updated ${ago(u.bioUpdated)}</div>` : ""}</div>
+    ${u.names.length ? `<h2>Past names</h2><div class="rows glass" style="margin-bottom:14px">${u.names.map((n) => `<div class="row"><div class="body ellip">${esc(n.prev)} → ${esc(n.name)}</div><div class="small muted">${fmtDate(n.at)}</div></div>`).join("")}</div>` : ""}
+    ${u.log.length ? `<h2>Friendship</h2><div class="rows glass" style="margin-bottom:14px">${u.log.map((n) => `<div class="row"><div class="body kl k-${n.type}">${esc(n.type)}</div><div class="small muted">${fmtDate(n.at)}</div></div>`).join("")}</div>` : ""}
+    ${u.avatars?.length > 1 ? `<h2>Avatars they've worn <span class="muted small">· ${u.avatars.length}${u.avatars.length >= 24 ? "+" : ""}</span></h2><div class="avgrid">${u.avatars.map((a) => `<div class="avtile" title="${esc(a.name)} — last worn ${ago(a.at)}${a.times > 1 ? ", " + a.times + " times" : ""}">${a.thumb ? `<img loading="lazy" referrerpolicy="no-referrer" style="cursor:zoom-in" onclick="zoomImg(this.src.replace(/%2F256$/, '%2F1024'))" src="${proxied(a.thumb)}" onerror="this.style.visibility='hidden'">` : "<div class=img></div>"}<div class="ellip small">${esc(a.name || "Unknown")}</div><div class="muted" style="font-size:11px">${ago(a.at)}</div></div>`).join("")}</div>` : ""}
+    <h2>Recent activity</h2><div class="rows glass">${u.recent.map(feedRow).join("") || `<div class="empty">No activity logged.</div>`}</div>`;
+  if (VRC.loggedIn) {
+    loadMutuals(id);
+    const live = await api("/api/vrc/user?id=" + encodeURIComponent(id)).catch(() => null);
+    if (!live || live.error || !$("#d-avatar")) return;
+    if (live.avatar) $("#d-avatar").innerHTML = avatarSection(live.avatar, live);
+    $("#d-details").innerHTML = detailsSection(live);
+    if (live.bio) $("#d-bio").innerHTML = `<h2>Bio</h2><div class="bio">${esc(live.bio)}</div><div style="height:14px"></div>`;
+  }
+};
+const proxied = (u) => (/^https:\/\/([a-z0-9-]+\.)*vrchat\.(cloud|com)\//i.test(u || "") ? "/api/vrc/img?u=" + encodeURIComponent(u) : u);
+const CONTENT = { content_sex: "Sexual", content_adult: "Adult", content_violence: "Violence", content_gore: "Gore", content_horror: "Horror", content_other: "Other mature" };
+const PLATFORM = { standalonewindows: "PC", android: "Quest / Android", ios: "iPhone / iPad", web: "Website" };
+const LANG = { eng: "English", spa: "Spanish", fra: "French", deu: "German", jpn: "Japanese", kor: "Korean", zho: "Chinese", por: "Portuguese", rus: "Russian", ita: "Italian", nld: "Dutch", pol: "Polish", tur: "Turkish", ara: "Arabic", hin: "Hindi", tha: "Thai", vie: "Vietnamese", ind: "Indonesian", swe: "Swedish", fin: "Finnish", ase: "ASL", bfi: "BSL", jsl: "JSL" };
+function avatarSection(a, live) {
+  if (!a || (!a.name && !a.thumb && !a.image)) return "";
+  const img = proxied(a.image || a.thumb);
+  const warn = (a.tags || []).filter((t) => CONTENT[t]).map((t) => CONTENT[t]);
+  const ctags = (a.tags || []).filter((t) => t.startsWith("author_tag_")).map((t) => t.slice(11));
+  return `<h2 style="margin-top:6px">Current avatar</h2>
+    <div class="avcard glass">
+      <div class="avimg">${img ? `<img src="${img}" referrerpolicy="no-referrer" onclick="zoomImg(this.src)" onerror="this.parentElement.classList.add('noimg');this.remove()">` : ""}</div>
+      <div class="avinfo">
+        <div class="name" style="font-size:16px;white-space:normal">${esc(a.name || "Unknown avatar")}</div>
+        ${a.author ? `<div class="sub" style="white-space:normal">by ${a.authorId ? uname(a.authorId, a.author) : esc(a.author)}${a.own ? " · their own upload" : ""}</div>` : live || VRC.loggedIn ? "" : `<div class="sub">Sign in to VRChat to see who made it</div>`}
+        ${a.created ? `<div class="sub">Uploaded ${fmtDate(a.created)}</div>` : ""}
+        ${warn.length ? `<div class="sub" style="color:var(--s-ask)">Content: ${warn.join(", ")}</div>` : ""}
+        ${ctags.length ? `<div class="sub">${ctags.map((t) => "#" + esc(t)).join(" ")}</div>` : ""}
+      </div></div>`;
+}
+function detailsSection(v) {
+  const rows = [
+    v.pronouns && ["Pronouns", esc(v.pronouns)],
+    v.platform && ["Plays on", PLATFORM[v.platform] || esc(v.platform)],
+    v.languages?.length && ["Languages", v.languages.map((l) => LANG[l] || l.toUpperCase()).join(", ")],
+    v.joined && ["Joined VRChat", fmtDate(v.joined)],
+    v.lastLogin && ["Last login", ago(v.lastLogin)],
+    ["Trust rank", `<span style="color:${trustVar(v.trust)}">${esc(v.trust)}</span>`],
+    (v.vrcPlus || v.ageVerified) && ["Badges", [v.vrcPlus && "VRC+", v.ageVerified && "18+ verified"].filter(Boolean).join(" · ")],
+  ].filter(Boolean);
+  return `<h2>Profile</h2><div class="details glass">${rows.map(([k, val]) => `<div class="drow"><span class="muted">${k}</span><span>${val}</span></div>`).join("")}</div>
+    ${v.links?.length ? `<div style="display:flex;gap:6px;flex-wrap:wrap;margin:-4px 0 14px">${v.links.map((l) => `<a class="btn" style="font-size:12px" href="${esc(l)}" target="_blank" rel="noreferrer">${esc(l.replace(/^https?:\/\/(www\.)?/, "").slice(0, 34))}</a>`).join("")}</div>` : ""}`;
+}
+window.closeUser = () => $("#drawer").classList.remove("open");
+$("#view").addEventListener("click", (e) => { if (!e.target.closest(".fcard,.member,.lnk,#drawer")) closeUser(); });
+
+window.zoomImg = (src) => { const z = document.createElement("div"); z.id = "zoom"; z.innerHTML = `<img src="${src}">`; z.onclick = () => z.remove(); document.body.append(z); };
+// ================= theme editor =================
+VIEWS.theme = async () => {
+  const bgs = await api("/api/backgrounds").catch(() => []);
+  const t = theme;
+  const color = (k, l) => `<div class="field"><label>${l}</label><input type="color" value="${t[k]}" oninput="setTheme({${k}:this.value})"></div>`;
+  const range = (k, l, min, max, step, fmt = (v) => v) => `<div class="field"><label>${l} <span class="muted small" id="rv-${k}">${fmt(t[k])}</span></label><input type="range" min="${min}" max="${max}" step="${step}" value="${t[k]}" oninput="setTheme({${k}:+this.value});$('#rv-${k}').textContent=(${fmt.toString()})(+this.value)"></div>`;
+  const fonts = ["Segoe UI", "Segoe UI Variable Display", "Bahnschrift", "Trebuchet MS", "Verdana", "Tahoma", "Georgia", "Consolas", "Comic Sans MS", "Impact"];
+  $("#view").innerHTML = `<div class="te">
+  <div>
+    <div class="section glass"><h2>Presets</h2><div class="presets">${Object.entries(PRESETS).map(([n, p]) => `<div class="preset" style="background:linear-gradient(${p.gAngle || 135}deg,${p.g1 || p.base},${p.g2 || p.base});box-shadow:inset 0 -26px 0 ${p.accent}55" onclick="usePreset('${n}')">${n}</div>`).join("")}</div></div>
+    <div class="section glass"><h2>Colors</h2>${color("accent", "Accent")}${color("accent2", "Second accent")}${color("text", "Text")}${color("muted", "Dim text")}${color("panel", "Panels")}${color("base", "Window base")}</div>
+    <div class="section glass"><h2>Glass & shape</h2>
+      <div class="muted small" style="margin-bottom:8px">How much of your background shows through the panels:</div>
+      <div class="chips" style="margin-bottom:8px">${[["Solid", .92, 18, .3], ["Frosted", .55, 16, .2], ["Clear", .22, 0, .05], ["Barely there", .08, 0, 0]].map(([n, a, bl, d]) => `<button class="chip ${Math.abs(t.panelA - a) < .01 && t.blur === bl ? "on" : ""}" onclick="setTheme({panelA:${a},blur:${bl},dim:${d}});render()">${n}</button>`).join("")}</div>
+      ${range("panelA", "Panel opacity", 0, 1, .01, (v) => Math.round(v * 100) + '%')}
+      ${range("blur", "Blur", 0, 40, 1, (v) => v + 'px')}
+      ${range("dim", "Darken background", 0, .9, .01, (v) => Math.round(v * 100) + '%')}
+      ${range("radius", "Corner roundness", 0, 28, 1, (v) => v + 'px')}
+      <div class="field"><label>Font</label><select onchange="setTheme({font:this.value})">${fonts.map((f) => `<option ${t.font === f ? "selected" : ""} style="font-family:'${f}'">${f}</option>`).join("")}</select></div>
+      <div class="field"><label>Density</label><select onchange="setTheme({density:this.value})"><option value="comfy" ${t.density !== "compact" ? "selected" : ""}>Comfortable</option><option value="compact" ${t.density === "compact" ? "selected" : ""}>Compact</option></select></div>
+    </div>
+    <div class="section glass"><h2>Status & trust colors</h2>
+      ${color("sJoin", "Join me")}${color("sActive", "Online")}${color("sAsk", "Ask me")}${color("sBusy", "Busy")}
+      ${color("tVisitor", "Visitor")}${color("tNew", "New user")}${color("tUser", "User")}${color("tKnown", "Known")}${color("tTrusted", "Trusted")}
+    </div>
+  </div>
+  <div>
+    <div class="section glass"><h2>Background</h2>
+      <div class="chips" style="margin-bottom:12px">${[["none", "Solid"], ["gradient", "Gradient"], ["image", "Image / video"]].map(([k, l]) => `<button class="chip ${t.bgType === k ? "on" : ""}" onclick="setTheme({bgType:'${k}'});render()">${l}</button>`).join("")}</div>
+      ${t.bgType === "gradient" ? `${color("g1", "From")}${color("g2", "To")}${range("gAngle", "Angle", 0, 360, 1, (v) => v + '°')}` : ""}
+      ${t.bgType === "image" ? `
+        <div class="drop" id="drop">Drop an image, GIF or video here, or click to pick one<br><span class="small">png · jpg · gif · webp · mp4 · webm</span></div>
+        <input type="file" id="file" accept="image/*,video/mp4,video/webm" hidden>
+        <div class="field"><input id="bgurl" placeholder="…or paste an image URL" style="flex:1" value="${t.bgUrl && !t.bgUrl.startsWith("/bg/") ? esc(t.bgUrl) : ""}"><button class="btn" onclick="setTheme({bgUrl:$('#bgurl').value.trim()});render()">Use</button></div>
+        ${bgs.length ? `<h2 style="margin-top:14px">Your backgrounds</h2><div class="bgs">${bgs.map((u) => `<div class="b ${t.bgUrl === u ? "on" : ""}" style="${isVideo(u) ? "" : `background-image:url('${u}')`}" onclick="setTheme({bgUrl:'${u}'});render()">${isVideo(u) ? `<video muted loop autoplay src="${u}"></video>` : ""}</div>`).join("")}</div>` : ""}` : ""}
+    </div>
+    <div class="section glass"><h2>Preview</h2>
+      <div class="grid">${(S.friends.filter((f) => f.online).slice(0, 4).length ? S.friends.filter((f) => f.online).slice(0, 4) : S.friends.slice(0, 4)).map(friendCard).join("")}</div>
+      <div style="display:flex;gap:8px;margin-top:12px"><button class="btn primary">Primary button</button><button class="btn">Button</button><span class="chip on">Chip</span><span class="badge acc">Badge</span></div>
+    </div>
+    <div class="section glass"><h2>Share your theme</h2>
+      <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" onclick="exportTheme()">Copy theme code</button><button class="btn" onclick="importTheme()">Paste theme code</button><button class="btn" onclick="if(confirm('Reset to the default theme?')){theme={...THEME_DEFAULT};applyTheme();saveTheme();render()}">Reset</button></div>
+      <div class="muted small" style="margin-top:8px">Uploaded images live on your PC, so a shared theme code only carries colors and image URLs.</div>
+    </div>
+</div>
+  </div></div>`;
+  if (t.bgType === "image") {
+    const drop = $("#drop"), file = $("#file");
+    drop.onclick = () => file.click();
+    file.onchange = () => file.files[0] && upload(file.files[0]);
+    drop.ondragover = (e) => { e.preventDefault(); drop.classList.add("over"); };
+    drop.ondragleave = () => drop.classList.remove("over");
+    drop.ondrop = (e) => { e.preventDefault(); drop.classList.remove("over"); e.dataTransfer.files[0] && upload(e.dataTransfer.files[0]); };
+  }
+};
+async function upload(f) {
+  toast("Uploading " + f.name + "…");
+  const r = await fetch("/api/bg", { method: "POST", headers: { "x-filename": encodeURIComponent(f.name) }, body: f }).then((r) => r.json());
+  if (r.error) return toast(r.error);
+  setTheme({ bgType: "image", bgUrl: r.url }); render();
+}
+window.usePreset = (n) => { const keep = { font: theme.font, density: theme.density, radius: theme.radius }; theme = { ...THEME_DEFAULT, ...PRESETS[n], ...keep }; if (PRESETS[n].bgType !== "image") theme.bgUrl = ""; applyTheme(); saveTheme(); render(); };
+window.exportTheme = () => { const code = "SOUL:" + btoa(unescape(encodeURIComponent(JSON.stringify(theme)))); navigator.clipboard.writeText(code); toast("Theme code copied"); };
+window.importTheme = () => { const c = prompt("Paste a Soul theme code:"); if (!c) return; try { const t = JSON.parse(decodeURIComponent(escape(atob(c.replace(/^(SOUL|LUMEN):/, ""))))); theme = { ...THEME_DEFAULT, ...t }; applyTheme(); saveTheme(); render(); toast("Theme applied"); } catch { toast("That code didn't work"); } };
+
+
+// ================= pokes (VRChat boops) =================
+const jsq = (s) => String(s ?? "").replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+const EMOJI = { angry:"😠", arrowpoint:"👉", bats:"🦇", beachball:"🏐", beer:"🍺", blushing:"😊", boo:"👻", broken_heart:"💔", candy:"🍬", candy_cane:"🍭", candy_corn:"🌽", cantsee:"🙈", champagne:"🍾", cloud:"☁️", coal:"⚫", confetti:"🎊", crying:"😢", drink:"🍹", exclamation:"❗", fire:"🔥", frown:"🙁", gift:"🎁", gifts:"🎁", gingerbread:"🍪", go:"🟢", hand_wave:"👋", hang_ten:"🤙", heart:"❤️", hourglass:"⏳", ice_cream:"🍦", in_love:"😍", jack_o_lantern:"🎃", keyboard:"⌨️", kiss:"😘", laugh:"😂", life_ring:"🛟", mistletoe:"🌿", money:"💰", music_note:"🎵", neon_shades:"😎", noheadphones:"🎧", nomic:"🎙️", pineapple:"🍍", pizza:"🍕", portal:"🌀", question:"❓", shush:"🤫", skull:"💀", smile:"🙂", snow_fall:"🌨️", snowball:"❄️", splash:"💦", spooky_ghost:"👻", stoic:"😐", stop:"✋", sun_lotion:"🧴", sunglasses:"🕶️", thinking:"🤔", thumbs_down:"👎", thumbs_up:"👍", tomato:"🍅", tongue_out:"😛", web:"🕸️", wow:"😮", zzz:"💤" };
+const emoLabel = (k) => k.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+let VRC = { loggedIn: false }, customEmojis = null;
+async function refreshAccount(fresh) {
+  VRC = await api("/api/vrc/status" + (fresh ? "?fresh=1" : "")).catch(() => ({ loggedIn: false }));
+  const el = $("#acct");
+  if (!VRC.loggedIn) { el.innerHTML = `<button class="signin" style="display:block;width:100%;box-sizing:border-box" onclick="openLogin()">Sign in to VRChat</button>`; return; }
+  const dot = `var(${STATUS[VRC.status] || "--s-active"})`;
+  el.innerHTML = `<div class="acctcard" onclick="openAccount()"><div class="avwrap">${avatar(VRC.name, VRC.pic ? "/api/vrc/img?u=" + encodeURIComponent(VRC.pic) : "")}<span class="sdot" style="background:${dot}"></span></div>
+    <div style="min-width:0"><div class="name small">${esc(VRC.name)}</div><div class="sub" style="font-size:11px">${esc(VRC.statusText || "Connected to VRChat")}</div></div></div>`;
+}
+window.accountClick = () => VRC.loggedIn ? openAccount() : openLogin();
+window.openAccount = async () => {
+  await refreshAccount(true);
+  if (!VRC.loggedIn) return openLogin();
+  const dot = `var(${STATUS[VRC.status] || "--s-active"})`;
+  showModal(`<button class="btn" style="float:right" onclick="closeModal()">✕</button>
+    <div style="display:flex;gap:16px;align-items:center">${avatar(VRC.name, VRC.pic ? "/api/vrc/img?u=" + encodeURIComponent(VRC.pic) : "", "lg")}
+      <div><div class="name" style="font-size:20px">${esc(VRC.name)}</div>
+      <div class="sub"><span style="color:${dot}">●</span> ${esc(VRC.status || "")}${VRC.statusText ? " · " + esc(VRC.statusText) : ""}</div>
+      <div class="sub">${VRC.vrcPlus ? "VRChat Plus · " : ""}${VRC.twoFactor ? "2FA on" : "2FA off"}</div></div></div>
+    <h2 style="margin-top:16px">Your status</h2>
+    <div class="chips" style="margin-bottom:8px">${STATUSES.map(([v, l, c]) => `<label class="chip ${VRC.status === v ? "on" : ""}" style="display:inline-flex;gap:6px;align-items:center"><input type="radio" name="mystatus" value="${v}" ${VRC.status === v ? "checked" : ""} style="display:none" onchange="document.querySelectorAll('label.chip').forEach(x=>x.classList.toggle('on', x.contains(this)))"><span style="color:var(${c})">●</span>${l}</label>`).join("")}</div>
+    <div style="display:flex;gap:8px"><input id="mystatus-text" maxlength="32" placeholder="What are you up to?" value="${esc(VRC.statusText || "")}" style="flex:1"><button class="btn primary" onclick="setMyStatus()">Save</button></div>
+    <div class="kv"><div><b>${VRC.onlineFriends}</b><span>Friends in a world</span></div><div><b>${VRC.activeFriends}</b><span>Friends on web/app</span></div>
+      <div><b>${VRC.friends}</b><span>Friends</span></div><div><b>${VRC.booping ? "On" : "Off"}</b><span>Receiving boops</span></div></div>
+    <div class="muted small">Soul is connected to your VRChat account and stays signed in until you sign out. Your session is saved only on this PC.</div>
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:14px">${VRC.vrcPlus ? `<button class="btn" onclick="openEmojiUpload()">＋ Add custom emoji</button>` : ""}<a class="btn" href="https://vrchat.com/home/user/${esc(VRC.id)}" target="_blank">My VRChat profile</a><button class="btn" onclick="signOut()">Sign out</button></div>`);
+};
+window.signOut = async () => { await fetch("/api/vrc/logout", { method: "POST" }); customEmojis = null; await refreshAccount(); closeModal(); toast("Signed out of VRChat"); };
+window.closeModal = () => $("#modal").classList.remove("open");
+const showModal = (html) => { $("#mbox").innerHTML = html; $("#modal").classList.add("open"); };
+
+function openLogin(then, need2fa) {
+  S.afterLogin = then || S.afterLogin;
+  if (need2fa) return show2fa(need2fa);
+  showModal(`<h2>✦ Sign in to VRChat</h2>
+    <div class="muted small">Connect Soul to your VRChat account so you can poke friends right from here. Your password goes straight to VRChat and is never saved — Soul only keeps the login session on this PC so you stay signed in.</div>
+    <form class="form" onsubmit="event.preventDefault();doLogin()">
+      <input id="l-user" placeholder="Username or email" autocomplete="username">
+      <div class="pw"><input id="l-pass" type="password" placeholder="Password" autocomplete="current-password"><button type="button" onclick="const i=$('#l-pass');i.type=i.type==='password'?'text':'password';this.textContent=i.type==='password'?'Show':'Hide'">Show</button></div>
+      <div class="err" id="l-err"></div>
+      <div style="display:flex;gap:8px;justify-content:flex-end"><button type="button" class="btn" onclick="closeModal()">${S.firstRun ? "Skip for now" : "Cancel"}</button><button class="btn primary" id="l-go">Sign in</button></div>
+    </form>`);
+  setTimeout(() => $("#l-user")?.focus(), 30);
+}
+window.doLogin = async () => {
+  $("#l-go").textContent = "Signing in…"; $("#l-err").textContent = "";
+  const r = await fetch("/api/vrc/login", { method: "POST", body: JSON.stringify({ username: $("#l-user").value.trim(), password: $("#l-pass").value }) }).then((r) => r.json()).catch(() => ({ error: "Couldn't reach VRChat." }));
+  if (r.need2fa) return show2fa(r.need2fa);
+  if (!r.ok) { $("#l-err").textContent = r.error || "Sign-in failed."; $("#l-go").textContent = "Sign in"; return; }
+  loginDone();
+};
+function show2fa(type) {
+  showModal(`<h2>Two-factor code</h2><div class="muted small">${type === "emailOtp" ? "VRChat just emailed you a code." : "Enter the 6-digit code from your authenticator app (or a recovery code)."}</div>
+    <form class="form" onsubmit="event.preventDefault();do2fa('${type}')"><input id="l-code" inputmode="numeric" placeholder="123456" autocomplete="one-time-code"><div class="err" id="l-err"></div>
+    <div style="display:flex;gap:8px;justify-content:flex-end"><button type="button" class="btn" onclick="closeModal()">Cancel</button><button class="btn primary" id="l-go">Verify</button></div></form>`);
+  setTimeout(() => $("#l-code")?.focus(), 30);
+}
+window.do2fa = async (type) => {
+  $("#l-go").textContent = "Checking…";
+  const r = await fetch("/api/vrc/2fa", { method: "POST", body: JSON.stringify({ code: $("#l-code").value, type }) }).then((r) => r.json());
+  if (!r.ok) { $("#l-err").textContent = r.error || "That code didn't work."; $("#l-go").textContent = "Verify"; return; }
+  loginDone();
+};
+async function loginDone() {
+  await refreshAccount(true); toast(`Connected to VRChat as ${VRC.name}`); S.firstRun = false;
+  const next = S.afterLogin; S.afterLogin = null; closeModal(); if (next) next();
+}
+
+window.pokeClick = (e, id, name) => {
+  if (e.shiftKey && prefs.lastEmoji !== undefined && VRC.loggedIn) return sendPoke(id, name, prefs.lastEmoji);
+  openPoke(id, name);
+};
+window.openPoke = async (id, name) => {
+  if (!VRC.loggedIn) { await refreshAccount(); if (!VRC.loggedIn) return openLogin(() => openPoke(id, name), VRC.need2fa); }
+  S.pokeTo = { id, name }; S.pokeEmoji = prefs.lastEmoji ?? "default_arrowpoint";
+  const tab = S.pokeTab || "default";
+  const defaults = Object.keys(EMOJI).map((k) => `<button class="emo ${S.pokeEmoji === "default_" + k ? "on" : ""}" data-e="default_${k}" onclick="pickEmo(this)" ondblclick="pickEmo(this);sendPoke()"><span class="g">${EMOJI[k]}</span>${emoLabel(k)}</button>`).join("");
+  showModal(`<h2>Poke ${esc(name)}</h2><div class="muted small">They'll get a VRChat boop with the emoji you pick. Double-click an emoji to send it right away.</div>
+    <div class="chips" style="margin-top:12px"><button class="chip ${tab === "default" ? "on" : ""}" onclick="S.pokeTab='default';openPoke('${esc(jsq(id))}','${esc(jsq(name))}')">Emojis</button><button class="chip ${tab === "custom" ? "on" : ""}" onclick="S.pokeTab='custom';openPoke('${esc(jsq(id))}','${esc(jsq(name))}')">My custom emojis${VRC.vrcPlus ? "" : " (VRC+)"}</button>
+      <button class="emo ${S.pokeEmoji === "" ? "on" : ""}" data-e="" onclick="pickEmo(this)" style="padding:6px 10px;flex-direction:row">No emoji</button></div>
+    <div class="emojis" id="emos">${tab === "default" ? defaults : `<div class="muted small">Loading your emojis…</div>`}</div>
+    <div class="err" id="p-err"></div>
+    <div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn primary" id="p-go" onclick="sendPoke()">👉 Send poke</button></div>`);
+  if (tab === "custom") {
+    customEmojis = customEmojis || await api("/api/vrc/emojis").catch(() => []);
+    $("#emos").innerHTML = (VRC.vrcPlus ? `<button class="emo add" onclick="openEmojiUpload('${esc(jsq(id))}','${esc(jsq(name))}')"><span class="g">＋</span>Add emoji</button>` : "")
+      + customEmojis.map((e) => `<button class="emo ${S.pokeEmoji === e.id ? "on" : ""}" data-e="${esc(e.id)}" onclick="pickEmo(this)" ondblclick="pickEmo(this);sendPoke()">${emojiTile(e, 44)}<span class="ellip" style="max-width:70px">${e.frames > 1 ? "animated" : "emoji"}</span><span class="del" title="Delete this emoji" onclick="event.stopPropagation();deleteEmoji('${esc(e.id)}','${esc(jsq(id))}','${esc(jsq(name))}')">✕</span></button>`).join("")
+      + (customEmojis.length || VRC.vrcPlus ? "" : `<div class="muted small">Custom emojis need VRChat Plus.</div>`);
+    startEmojiAnim();
+  }
+};
+window.pickEmo = (el) => { document.querySelectorAll("#mbox .emo").forEach((x) => x.classList.remove("on")); el.classList.add("on"); S.pokeEmoji = el.dataset.e; };
+window.sendPoke = async (id, name, emoji) => {
+  id = id || S.pokeTo?.id; name = name || S.pokeTo?.name; emoji = emoji ?? S.pokeEmoji ?? "";
+  const btn = $("#p-go"); if (btn) btn.textContent = "Sending…";
+  const r = await fetch("/api/vrc/boop", { method: "POST", body: JSON.stringify({ userId: id, emojiId: emoji || undefined }) }).then((r) => r.json()).catch(() => ({ error: "Couldn't reach VRChat." }));
+  if (r.ok) {
+    prefs.lastEmoji = emoji; savePrefs(); closeModal();
+    const glyph = emoji.startsWith("default_") ? EMOJI[emoji.slice(8)] || "👉" : "👉";
+    toast(`${glyph} Poked ${name}!`);
+  } else {
+    if (r.status === 401) { await refreshAccount(); return openLogin(() => openPoke(id, name)); }
+    const msg = r.status === 403 ? `${name} isn't accepting boops right now.` : r.error;
+    if ($("#p-err")) { $("#p-err").textContent = msg; if (btn) btn.textContent = "👉 Send poke"; } else toast(msg);
+  }
+};
+
+// ================= custom emojis =================
+const imgUrl = (u) => "/api/vrc/img?u=" + encodeURIComponent(u);
+const perLine = (n) => (n > 16 ? 8 : n > 4 ? 4 : 2);
+function emojiTile(e, size) {
+  if (!(e.frames > 1)) return `<img src="${imgUrl(e.url)}" loading="lazy" style="width:${size}px;height:${size}px;object-fit:contain">`;
+  const p = perLine(e.frames);
+  return `<div class="animemo" data-frames="${e.frames}" data-fps="${e.fps || 12}" data-loop="${esc(e.loop)}" data-p="${p}" style="width:${size}px;height:${size}px;background-image:url('${imgUrl(e.url)}');background-size:${p * 100}% ${p * 100}%"></div>`;
+}
+let animOn = false;
+function startEmojiAnim() {
+  if (animOn) return; animOn = true;
+  const tick = (t) => {
+    const els = document.querySelectorAll(".animemo");
+    if (!els.length) { animOn = false; return; }
+    els.forEach((el) => {
+      const n = +el.dataset.frames, fps = +el.dataset.fps, p = +el.dataset.p;
+      let f = Math.floor((t / 1000) * fps);
+      if (el.dataset.loop === "pingpong") { const c = Math.max(1, 2 * n - 2); f %= c; if (f >= n) f = c - f; } else f %= n;
+      const col = f % p, row = Math.floor(f / p);
+      el.style.backgroundPosition = `${(col / (p - 1)) * 100}% ${(row / (p - 1)) * 100}%`;
+    });
+    requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
+window.deleteEmoji = async (fileId, id, name) => {
+  if (!confirm("Delete this emoji from your VRChat account? This can't be undone.")) return;
+  const r = await fetch("/api/vrc/emoji/delete", { method: "POST", body: JSON.stringify({ id: fileId }) }).then((r) => r.json());
+  if (!r.ok) return toast(r.error || "Couldn't delete it.");
+  customEmojis = null; toast("Emoji deleted"); openPoke(id, name);
+};
+
+const EFFECTS = ["bounce","aura","bats","bees","cloud","confetti","crying","dislike","fire","idea","lasers","like","magnet","mistletoe","money","noise","orbit","pizza","rain","rotate","shake","snow","snowball","spin","splash","stop","zzz"];
+const MASKS = ["square","circle","heart","star","flower","pow"];
+const EU = {};
+window.openEmojiUpload = (backId, backName) => {
+  Object.assign(EU, { backId, backName, frames: [], fps: 12, fit: "contain", effect: "bounce", mask: "square", loop: "linear", sheet: null });
+  showModal(`<h2>Add a custom emoji</h2>
+    <div class="muted small">Pick a picture, GIF or short video. Soul turns it into a VRChat emoji and uploads it to your account — no website needed. Animated emojis can have up to 64 frames.</div>
+    <div class="drop" id="edrop" style="margin-top:12px">Drop a PNG, JPG, GIF, WebP or MP4 here, or click to choose</div>
+    <input type="file" id="efile" accept="image/*,video/mp4,video/webm" hidden>
+    <div id="eopts"></div>
+    <div class="err" id="e-err"></div>
+    <div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn" onclick="${backId ? `openPoke('${esc(jsq(backId))}','${esc(jsq(backName))}')` : "closeModal()"}">Back</button><button class="btn primary" id="e-go" onclick="uploadEmoji()" disabled style="opacity:.5">Upload emoji</button></div>`);
+  const drop = $("#edrop"), file = $("#efile");
+  drop.onclick = () => file.click();
+  file.onchange = () => file.files[0] && loadEmojiSource(file.files[0]);
+  drop.ondragover = (e) => { e.preventDefault(); drop.classList.add("over"); };
+  drop.ondragleave = () => drop.classList.remove("over");
+  drop.ondrop = (e) => { e.preventDefault(); drop.classList.remove("over"); e.dataTransfer.files[0] && loadEmojiSource(e.dataTransfer.files[0]); };
+};
+async function loadEmojiSource(f) {
+  $("#e-err").textContent = ""; $("#edrop").textContent = "Reading " + f.name + "…";
+  try {
+    EU.frames = []; EU.fps = 12;
+    if (f.type.startsWith("video/")) await framesFromVideo(f);
+    else if (/gif|webp|png|avif/.test(f.type) && "ImageDecoder" in window) await framesFromAnimatedImage(f);
+    if (!EU.frames.length) EU.frames = [await createImageBitmap(f)];
+    $("#edrop").textContent = `${f.name} · ${EU.frames.length > 1 ? EU.frames.length + " frames" : "still image"} — click to choose a different file`;
+    renderEmojiOpts();
+  } catch (e) { console.error(e); $("#edrop").textContent = "Drop an image here, or click to choose"; $("#e-err").textContent = "Couldn't read that file. Try a PNG, JPG or GIF."; }
+}
+async function framesFromAnimatedImage(f) {
+  const dec = new ImageDecoder({ data: await f.arrayBuffer(), type: f.type });
+  await dec.tracks.ready; await dec.completed.catch(() => {});
+  const count = dec.tracks.selectedTrack?.frameCount || 1;
+  if (count < 2) return;
+  const n = Math.min(64, count), idx = [...Array(n)].map((_, i) => Math.floor((i * count) / n));
+  let dur = 0;
+  for (const i of idx) { const { image } = await dec.decode({ frameIndex: i }); dur += image.duration || 100000; EU.frames.push(await createImageBitmap(image)); image.close(); }
+  // keep the original speed even if frames were dropped
+  EU.fps = Math.max(1, Math.min(64, Math.round(1e6 / ((dur / n) * (count / n)))));
+}
+async function framesFromVideo(f) {
+  const v = document.createElement("video"); v.muted = true; v.src = URL.createObjectURL(f);
+  await new Promise((ok, bad) => { v.onloadeddata = ok; v.onerror = bad; });
+  const fps = 15, len = Math.min(v.duration || 1, 64 / fps), n = Math.max(2, Math.min(64, Math.round(len * fps)));
+  for (let i = 0; i < n; i++) { v.currentTime = (i / n) * len; await new Promise((ok) => (v.onseeked = ok)); EU.frames.push(await createImageBitmap(v)); }
+  EU.fps = fps; URL.revokeObjectURL(v.src);
+}
+function buildSheet() {
+  const n = EU.frames.length, anim = n > 1, p = anim ? perLine(n) : 1, cell = 1024 / p;
+  const c = document.createElement("canvas"); c.width = c.height = 1024; const g = c.getContext("2d");
+  EU.frames.forEach((fr, i) => {
+    const x = (i % p) * cell, y = Math.floor(i / p) * cell;
+    const s = EU.fit === "cover" ? Math.max(cell / fr.width, cell / fr.height) : Math.min(cell / fr.width, cell / fr.height);
+    const w = fr.width * s, h = fr.height * s;
+    g.save(); g.beginPath(); g.rect(x, y, cell, cell); g.clip(); g.drawImage(fr, x + (cell - w) / 2, y + (cell - h) / 2, w, h); g.restore();
+  });
+  EU.sheet = c; return c;
+}
+function renderEmojiOpts() {
+  const anim = EU.frames.length > 1;
+  const sheet = buildSheet();
+  const url = sheet.toDataURL("image/png");
+  const sel = (k, list, label) => `<div class="field"><label>${label}</label><select onchange="EU.${k}=this.value;renderEmojiOpts()">${list.map((v) => `<option value="${v}" ${EU[k] === v ? "selected" : ""}>${v[0].toUpperCase() + v.slice(1)}</option>`).join("")}</select></div>`;
+  const prevMask = { circle: "50%", square: "14px" }[EU.mask] || "14px";
+  $("#eopts").innerHTML = `<div class="erow">
+    <div class="eprev">${anim ? `<div class="animemo" data-frames="${EU.frames.length}" data-fps="${EU.fps}" data-loop="${EU.loop}" data-p="${perLine(EU.frames.length)}" style="width:160px;height:160px;border-radius:${prevMask};background-image:url('${url}');background-size:${perLine(EU.frames.length) * 100}% ${perLine(EU.frames.length) * 100}%"></div>` : `<img src="${url}" style="width:160px;height:160px;border-radius:${prevMask}">`}</div>
+    <div style="flex:1">
+      <div class="field"><label>Fit</label><select onchange="EU.fit=this.value;renderEmojiOpts()"><option value="contain" ${EU.fit === "contain" ? "selected" : ""}>Show whole image</option><option value="cover" ${EU.fit === "cover" ? "selected" : ""}>Crop to fill</option></select></div>
+      ${sel("effect", EFFECTS, "Pop-up effect")}
+      ${sel("mask", MASKS, "Shape")}
+      ${anim ? `${sel("loop", ["linear", "pingpong"], "Loop")}
+      <div class="field"><label>Speed <span class="muted small" id="e-fps">${EU.fps} fps</span></label><input type="range" min="1" max="64" value="${EU.fps}" oninput="EU.fps=+this.value;$('#e-fps').textContent=this.value+' fps';document.querySelectorAll('#eopts .animemo').forEach(e=>e.dataset.fps=this.value)"></div>` : ""}
+      <div class="muted small">${anim ? `${EU.frames.length} frames${EU.frames.length === 64 ? " (trimmed to VRChat's 64-frame limit)" : ""}` : "Still emoji"} · the effect plays when someone receives your poke.</div>
+    </div></div>`;
+  $("#e-go").disabled = false; $("#e-go").style.opacity = 1;
+  startEmojiAnim();
+}
+window.uploadEmoji = async () => {
+  if (!EU.sheet) return;
+  const btn = $("#e-go"); btn.textContent = "Uploading…"; btn.disabled = true;
+  const blob = await new Promise((ok) => EU.sheet.toBlob(ok, "image/png"));
+  const fd = new FormData();
+  fd.append("file", blob, "emoji.png");
+  fd.append("animationStyle", EU.effect); fd.append("maskTag", EU.mask);
+  if (EU.frames.length > 1) { fd.append("frames", EU.frames.length); fd.append("fps", EU.fps); fd.append("loopStyle", EU.loop); }
+  const r = await fetch("/api/vrc/emoji", { method: "POST", body: fd }).then((r) => r.json()).catch(() => ({ error: "Couldn't reach Soul." }));
+  if (!r.ok) {
+    btn.textContent = "Upload emoji"; btn.disabled = false;
+    if (r.status === 401) { await refreshAccount(); return openLogin(() => openEmojiUpload(EU.backId, EU.backName)); }
+    $("#e-err").textContent = r.status === 403 ? "VRChat said no — custom emojis need VRChat Plus, or you've hit the emoji limit." : r.error || "Upload failed.";
+    return;
+  }
+  customEmojis = null; toast("Emoji added!");
+  S.pokeTab = "custom"; prefs.lastEmoji = r.id || prefs.lastEmoji; savePrefs();
+  if (EU.backId) openPoke(EU.backId, EU.backName); else closeModal();
+};
+// ================= live updates =================
+function setLive(latest, p) {
+  const el = $("#live");
+  if (p && p.live) {
+    el.className = "live ok";
+    $("#live-t").innerHTML = `Live · ${p.live.count} online`; $("#live").title = "From VRChat, updated " + ago(p.live.at);
+    return;
+  }
+  const age = latest ? (Date.now() - new Date(latest)) / 1000 : Infinity;
+  el.className = "live " + (age < 600 ? "ok" : "stale");
+  $("#live-t").innerHTML = age < 600 ? `Live · from VRCX`
+    : (VRC.loggedIn ? (p && p.liveErr ? "Not live · " + esc(p.liveErr) : "Connecting…") : "Not live · sign in");
+  if (!(age < 600)) $("#live").title = "VRCX's last data: " + ago(latest);
+}
+async function poll() {
+  try {
+    const p = await api("/api/poll"); setLive(p.latest, p); S.vr = p.vr; updateBanner(p.update); if (S.vr?.steamvr && !VRS) VRS = (await api("/api/vr").catch(() => ({}))).settings;
+    if (p.version && S.meta.version && p.version !== S.meta.version) return location.reload();
+    if (S.dv !== -1 && p.dataVersion !== S.dv) {
+      S.dv = p.dataVersion;
+      if (S.view === "friends" || S.view === "notifications" || S.view === "friendlog") { const st = $("#view").scrollTop; await render(); $("#view").scrollTop = st; }
+      else if (S.view === "feed" && $("#view").scrollTop < 50) render();
+      else loadFriends();
+    } else S.dv = p.dataVersion;
+  } catch { $("#live").className = "live"; $("#live-t").textContent = "Soul stopped"; }
+}
+
+
+
+
+window.toggleFav = async (id, on) => { await fetch("/api/fav", { method: "POST", body: JSON.stringify({ id, on }) }); const f = S.friendMap.get(id); if (f) f.fav = on; toast(on ? "★ Added to favorites" : "Removed from favorites"); if (S.view === "friends") render(); };
+window.importFavs = async () => { const r = await fetch("/api/fav/import", { method: "POST" }).then((r) => r.json()); toast(r.ok ? `Imported ${r.count} favorites from VRChat` : r.error || "Couldn't import"); render(); };
+
+// ================= invites, notes, status, avatars =================
+const postJ = (url, body) => fetch(url, { method: "POST", body: JSON.stringify(body || {}) }).then((r) => r.json()).catch(() => ({ ok: false, error: "Couldn't reach Soul." }));
+window.selfInvite = async (loc) => { const r = await postJ("/api/vrc/selfInvite", { location: loc }); toast(r.ok ? "Sent you an invite in VRChat — open your notifications in-game" : r.error); };
+window.saveNote = async (id) => {
+  const r = await postJ("/api/note", { userId: id, note: $("#d-note").value });
+  const f = S.friendMap.get(id); if (f) f.note = $("#d-note").value;
+  toast(r.ok ? (r.synced ? "Note saved (and synced to VRChat)" : "Note saved") : "Couldn't save the note");
+};
+const STATUSES = [["join me", "Join Me", "--s-join"], ["active", "Online", "--s-active"], ["ask me", "Ask Me", "--s-ask"], ["busy", "Do Not Disturb", "--s-busy"]];
+window.setMyStatus = async () => {
+  const status = document.querySelector('input[name="mystatus"]:checked')?.value, text = $("#mystatus-text").value;
+  const r = await postJ("/api/vrc/status", { status, statusDescription: text });
+  if (!r.ok) return toast(r.error || "Couldn't change your status");
+  toast("Status updated"); await refreshAccount(true); openAccount();
+};
+
+window.wearAvatar = async (id, name) => { const r = await postJ("/api/vrc/avatar/select", { id }); toast(r.ok ? `Switched to ${name}` : r.error); if (r.ok) { await refreshAccount(true); render(); } };
+
+// ================= where you are =================
+async function youCard() {
+  const w = await api("/api/where").catch(() => ({ inWorld: false }));
+  S.whereLoc = w.inWorld ? w.location : "";
+  if (!w.inWorld) return "";
+  const L = parseLoc(w.location), mins = (Date.now() - new Date(w.since)) / 1000;
+  const chip = (p) => `<div class="member" onclick="${p.id ? `openUser('${esc(p.id)}')` : ""}"><div style="min-width:0"><div class="name small" style="color:${p.friend ? "var(--accent)" : "var(--text)"}">${esc(p.name)}${p.fav ? '<span class="mstar">★</span>' : ""}</div><div class="sub" style="font-size:11px">${p.friend && S.friendMap.get(p.id)?.statusText ? esc(S.friendMap.get(p.id).statusText) + " · " : p.friend ? "friend · " : ""}here ${fmtDur(Date.now() - new Date(p.since))}</div></div></div>`;
+  return `<div class="youcard glass">
+    <div class="inst-h"><div style="min-width:0"><div class="muted small">You're in</div><div class="w ellip lnk" onclick="openWorld('${esc(w.worldId)}')">${esc(w.worldName || "a world")}</div>
+      <div class="meta">${[L.type, L.region, "#" + L.num].filter(Boolean).map(esc).join(" · ")} · for ${fmtDur(mins * 1000)} · ${w.players.length + 1} here</div></div></div>
+    ${w.players.length ? `<div class="members">${w.players.map(chip).join("")}</div>` : `<div class="muted small">Nobody else here right now.</div>`}
+    ${w.sameWorld.length ? `<div class="muted small" style="margin-top:10px">Friends in other instances of this world: ${w.sameWorld.map((f) => uname(f.id, f.name)).join(", ")}</div>` : ""}
+  </div>`;
+}
+
+// ================= invite messages =================
+async function pickMessage(type, title, send) {
+  if (!VRC.loggedIn) return send(-1);
+  showModal(`<h2>${esc(title)}</h2><div class="muted small">Add one of your saved VRChat messages, or send it plain.</div><div id="msgs" class="muted small" style="margin:12px 0">Loading your messages…</div>
+    <div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn primary" id="msg-go">Send</button></div>`);
+  const msgs = await api("/api/vrc/messages?type=" + type).catch(() => []);
+  const last = prefs["msg_" + type] ?? -1;
+  $("#msgs").innerHTML = [`<label class="radio"><input type="radio" name="msg" value="-1" ${last === -1 ? "checked" : ""}><span>No message</span></label>`, ...msgs.map((m) => `<label class="radio"><input type="radio" name="msg" value="${m.slot}" ${last === m.slot ? "checked" : ""}><span style="color:var(--text)">${esc(m.message)}</span></label>`)].join("");
+  $("#msg-go").onclick = async () => { const slot = +(document.querySelector('input[name="msg"]:checked')?.value ?? -1); prefs["msg_" + type] = slot; savePrefs(); closeModal(); await send(slot); };
+}
+window.inviteUser = (id, name) => pickMessage("message", `Invite ${name} to your world`, async (slot) => { const r = await postJ("/api/vrc/invite", { userId: id, slot }); toast(r.ok ? `Invited ${name} to your world` : r.error); });
+window.requestInvite = (id, name) => pickMessage("request", `Ask ${name} for an invite`, async (slot) => { const r = await postJ("/api/vrc/requestInvite", { userId: id, slot }); toast(r.ok ? `Asked ${name} for an invite` : r.error); });
+
+// ================= explore worlds =================
+let favWorlds = [];
+VIEWS.explore = async () => {
+  favWorlds = await api("/api/worldfav").catch(() => []);
+  const tab = prefs.exTab || (VRC.loggedIn ? "search" : "favorites");
+  const tabs = [["search", "Search"], ["favorites", "★ Favorite worlds (" + favWorlds.length + ")"], ["recent", "Recently visited"]];
+  let body = "";
+  if (tab === "search") {
+    if (!VRC.loggedIn) body = `<div class="empty glass">Sign in to VRChat to search worlds.</div>`;
+    else {
+      const res = await api("/api/vrc/worlds/search?q=" + encodeURIComponent(S.q));
+      body = res.error ? `<div class="empty glass">${esc(res.error)}</div>` : `<div class="muted small" style="margin-bottom:10px">${S.q ? `Results for “${esc(S.q)}”` : "Popular right now — type in the search bar to find a world"}</div>
+        <div class="wgrid">${res.map(worldCard).join("") || `<div class="empty glass">No worlds found.</div>`}</div>`;
+    }
+  } else if (tab === "favorites") {
+    const list = favWorlds.filter((w) => !S.q || w.name.toLowerCase().includes(S.q.toLowerCase()));
+    body = list.length ? `<div class="wgrid">${list.map((w) => worldCard({ id: w.id, name: w.name, thumb: w.thumb, author: w.author })).join("")}</div>` : `<div class="empty glass">No favorite worlds yet. Open any world and click ☆.</div>`;
+  } else {
+    const W2 = await api("/api/worlds"); const seen = new Map();
+    for (const v of W2.visits) { if (!v.wid || seen.has(v.wid)) continue; if (S.q && !(v.name || "").toLowerCase().includes(S.q.toLowerCase())) continue; seen.set(v.wid, v); }
+    body = `<div class="wgrid">${[...seen.values()].slice(0, 60).map((v) => worldCard({ id: v.wid, name: v.name, sub: "visited " + ago(v.at) })).join("")}</div>`;
+  }
+  $("#view").innerHTML = `<div class="toolbar"><div class="chips">${tabs.map(([k, l]) => `<button class="chip ${tab === k ? "on" : ""}" onclick="prefs.exTab='${k}';savePrefs();render()">${l}</button>`).join("")}</div></div>` + body;
+};
+function worldCard(w) {
+  return `<div class="wcard glass" onclick="openWorld('${esc(w.id)}')">${w.thumb ? `<img loading="lazy" src="${proxied(w.thumb)}" onerror="this.style.opacity=0">` : `<div class="ph"></div>`}
+    <div class="name ellip">${esc(w.name || "World")}</div><div class="sub">${w.sub ? esc(w.sub) : [w.author && "by " + esc(w.author), w.occupants != null && w.occupants + " online"].filter(Boolean).join(" · ")}</div></div>`;
+}
+window.openWorld = async (wid) => {
+  if (!wid || !wid.startsWith("wrld_")) return;
+  showModal(`<div class="muted">Loading world…</div>`);
+  const w = VRC.loggedIn ? await api("/api/vrc/world?id=" + wid) : { error: "signed out" };
+  const hist = (await api("/api/worlds")).visits.filter((v) => v.wid === wid);
+  const myTime = hist.reduce((s, v) => s + (+v.time || 0), 0);
+  const fav = (favWorlds.length ? favWorlds : await api("/api/worldfav").catch(() => [])).some((x) => x.id === wid);
+  const name = w.name || hist[0]?.name || "World";
+  const friendsThere = (S.friends || []).filter((f) => f.online && f.location.startsWith(wid + ":"));
+  $("#mbox").innerHTML = `<button class="btn" style="float:right" onclick="closeModal()">✕</button>
+    ${w.image ? `<img src="${proxied(w.image)}" style="width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:12px;margin:28px 0 12px" onerror="this.remove()">` : ""}
+    <div style="display:flex;gap:10px;align-items:flex-start"><div style="flex:1;min-width:0"><div class="name" style="font-size:19px;white-space:normal">${esc(name)}</div>
+      <div class="sub">${w.author ? `by ${esc(w.author)} · ` : ""}${w.capacity ? `up to ${w.capacity} · ` : ""}${w.occupants != null ? `${w.occupants} online now` : ""}</div></div>
+      <button class="btn" onclick="favWorld('${esc(wid)}', ${!fav}, '${esc(jsq(name))}', '${esc(jsq(w.thumb || ""))}', '${esc(jsq(w.author || ""))}')">${fav ? "★ Favorite" : "☆ Favorite"}</button></div>
+    ${w.description ? `<div class="bio" style="margin-top:10px;max-height:110px">${esc(w.description)}</div>` : ""}
+    ${hist.length ? `<div class="muted small" style="margin-top:8px">You've been here ${hist.length} time${hist.length > 1 ? "s" : ""} · ${fmtDur(myTime)} total · last ${ago(hist[0].at)}</div>` : ""}
+    ${friendsThere.length ? `<h2 style="margin-top:14px">Friends here now</h2><div class="members">${friendsThere.map(memberChip).join("")}</div>` : ""}
+    ${VRC.loggedIn ? `<h2 style="margin-top:16px">Start your own instance</h2>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+        <select id="ci-type">${[["friends+", "Friends+"], ["friends", "Friends"], ["invite+", "Invite+"], ["invite", "Invite only"], ["public", "Public"]].map(([v, l]) => `<option value="${v}" ${prefs.ciType === v ? "selected" : ""}>${l}</option>`).join("")}</select>
+        <select id="ci-region">${[["us", "US West"], ["use", "US East"], ["eu", "Europe"], ["jp", "Japan"]].map(([v, l]) => `<option value="${v}" ${(prefs.ciRegion || "use") === v ? "selected" : ""}>${l}</option>`).join("")}</select>
+        <button class="btn primary" onclick="createInstance('${esc(wid)}')">Create & invite me</button></div>` : ""}
+    ${w.instances?.length ? `<h2 style="margin-top:16px">Public instances</h2><div class="rows glass">${w.instances.slice(0, 12).map((i) => `<div class="row"><div class="body">#${esc(i.id.split("~")[0])} <span class="muted small">${esc(parseLoc(i.location).region)}</span></div><div class="small muted">${i.users} people</div>
+      <a class="btn" href="${launchUrl(i.location)}">Launch</a>${VRC.loggedIn ? `<button class="btn" onclick="selfInvite('${esc(i.location)}')">Invite me</button>` : ""}</div>`).join("")}</div>` : ""}
+    ${w.error && !hist.length ? `<div class="muted small" style="margin-top:10px">${VRC.loggedIn ? esc(w.error) : "Sign in to VRChat to see more about this world."}</div>` : ""}`;
+};
+window.favWorld = async (id, on, name, thumb, author) => { await postJ("/api/worldfav", { id, on, name, thumb, author }); favWorlds = await api("/api/worldfav"); toast(on ? "★ Added to favorite worlds" : "Removed from favorite worlds"); openWorld(id); if (S.view === "explore") render(); };
+window.createInstance = async (wid) => {
+  const type = $("#ci-type").value, region = $("#ci-region").value; prefs.ciType = type; prefs.ciRegion = region; savePrefs();
+  const r = await postJ("/api/vrc/instance/create", { worldId: wid, type, region, invite: true });
+  if (!r.ok) return toast(r.error || "Couldn't create the instance");
+  closeModal(); toast("Instance created — check your invites in VRChat");
+};
+
+// ================= groups =================
+VIEWS.groups = async () => {
+  if (!VRC.loggedIn) { $("#view").innerHTML = `<div class="empty glass">Sign in to VRChat to see your groups.</div>`; return; }
+  const g = await api("/api/vrc/groups");
+  $("#view").innerHTML = `${g.instances.length ? `<div class="section glass"><h2>Group instances open now</h2><div class="rows">${g.instances.map((i) => `<div class="row"><div class="body ellip"><b class="lnk" onclick="openWorld('${esc(String(i.location).split(":")[0])}')">${esc(i.world || "World")}</b> <span class="muted small">${esc(i.groupName || "")}</span></div><div class="small muted">${i.users ?? "?"}${i.capacity ? "/" + i.capacity : ""} people</div><a class="btn" href="${launchUrl(i.location)}">Launch</a><button class="btn" onclick="selfInvite('${esc(i.location)}')">Invite me</button></div>`).join("")}</div></div>` : ""}
+    <div class="wgrid">${g.groups.map((x) => `<div class="glass" style="padding:14px;cursor:pointer" onclick="openGroup('${esc(x.id)}','${esc(jsq(x.name))}')">
+      <div style="display:flex;gap:12px;align-items:center">${x.icon ? `<img src="${proxied(x.icon)}" style="width:48px;height:48px;border-radius:12px;object-fit:cover" onerror="this.style.opacity=0">` : `<div class="av">${initials(x.name)}</div>`}
+      <div style="min-width:0"><div class="name ellip">${esc(x.name)}${x.representing ? ' <span class="badge">representing</span>' : ""}</div><div class="sub">${x.members ?? "?"} members${x.online != null ? ` · ${x.online} online` : ""}</div><div class="sub">${esc(x.code || "")}</div></div></div></div>`).join("") || `<div class="empty glass">${g.error ? esc(g.error) : "You're not in any groups."}</div>`}</div>`;
+};
+window.openGroup = async (id, name) => {
+  showModal(`<div class="muted">Loading…</div>`);
+  const a = await api("/api/vrc/group/announcement?id=" + id);
+  $("#mbox").innerHTML = `<button class="btn" style="float:right" onclick="closeModal()">✕</button><h2>${esc(name)}</h2>
+    ${a.title ? `${a.image ? `<img src="${proxied(a.image)}" style="width:100%;border-radius:12px;margin:8px 0" onerror="this.remove()">` : ""}<div class="name">${esc(a.title)}</div><div class="bio" style="margin-top:6px">${esc(a.text || "")}</div><div class="muted small" style="margin-top:6px">${ago(a.at)}</div>` : `<div class="muted">No announcement right now.</div>`}
+    <div style="margin-top:12px"><a class="btn" href="https://vrchat.com/home/group/${esc(id)}" target="_blank">Open group page</a></div>`;
+};
+
+// ================= photos =================
+let photoList = [], photoTotal = 0;
+VIEWS.photos = async (fresh) => {
+  const r = await api("/api/photos?offset=0"); photoList = r.photos; photoTotal = r.total;
+  if (!r.total) { $("#view").innerHTML = `<div class="empty glass">No VRChat photos found yet.<br><span class="small">Soul looks in ${r.dirs.length ? r.dirs.map(esc).join(", ") : "your Pictures\\VRChat folder"}. New photos you take in VRChat show up automatically.</span></div>`; return; }
+  $("#view").innerHTML = `<div class="muted small" style="margin-bottom:10px">${photoTotal} photos</div><div class="pgrid" id="pgrid"></div>${photoTotal > 60 ? `<button class="btn more" id="pmore" onclick="morePhotos()">Load more</button>` : ""}`;
+  addPhotos(photoList);
+};
+function addPhotos(list) {
+  const q = S.q.toLowerCase();
+  $("#pgrid").insertAdjacentHTML("beforeend", list.filter((p) => !q || p.name.toLowerCase().includes(q)).map((p) => `<div class="ph" title="${esc(fmtTime(p.at))}" onclick="openPhoto('${p.id}')"><img loading="lazy" src="/photo/${p.id}"></div>`).join(""));
+}
+window.morePhotos = async () => { const r = await api("/api/photos?offset=" + photoList.length); photoList.push(...r.photos); addPhotos(r.photos); if (photoList.length >= photoTotal) $("#pmore")?.remove(); };
+window.openPhoto = async (id) => {
+  const lb = document.createElement("div"); lb.className = "lb"; lb.id = "lightbox";
+  lb.innerHTML = `<img src="/photo/${id}" onclick="this.parentElement.remove()" style="cursor:zoom-out"><aside><div class="muted">Loading…</div></aside>`;
+  document.body.append(lb);
+  const info = await api("/api/photo/info?id=" + id);
+  lb.querySelector("aside").innerHTML = `<button class="btn" style="float:right" onclick="document.getElementById('lightbox').remove()">✕</button>
+    <div class="muted small">${esc(new Date(info.at).toLocaleString())}</div>
+    <div class="name" style="font-size:17px;margin:6px 0;white-space:normal">${info.world ? `<span class="lnk" onclick="document.getElementById('lightbox').remove();openWorld('${esc(info.location.split(":")[0])}')">${esc(info.world)}</span>` : "Unknown world"}</div>
+    ${info.people.length ? `<h2 style="margin-top:14px">Who was there (${info.people.length})</h2><div class="members">${info.people.map((p) => `<div class="member" onclick="document.getElementById('lightbox').remove();openUser('${esc(p.id)}')"><div class="name small" style="color:${S.friendMap.get(p.id) ? "var(--accent)" : "var(--text)"}">${esc(p.name)}</div></div>`).join("")}</div>` : `<div class="muted small">No one else was logged there.</div>`}
+    <div style="margin-top:14px"><a class="btn" href="/photo/${id}" download>Save a copy</a></div>`;
+};
+
+// ================= mutual friends =================
+async function loadMutuals(id) {
+  if (!VRC.loggedIn) return;
+  const m = await api("/api/vrc/mutuals?id=" + id).catch(() => []);
+  const el = $("#d-mutuals"); if (!el || !m.length) return;
+  el.innerHTML = `<h2>Mutual friends <span class="muted small">· ${m.length}</span></h2><div class="members" style="margin-bottom:16px">${m.map((u) => `<div class="member" onclick="openUser('${esc(u.id)}')">${avatar(u.name, u.thumb ? proxied(u.thumb) : "", "sm")}<div class="name small">${esc(u.name)}</div></div>`).join("")}</div>`;
+}
+
+// ================= friend requests =================
+window.answerFR = async (id, accept, name) => {
+  const r = await postJ("/api/vrc/friendRequest", { id, accept });
+  toast(r.ok ? (accept ? `You and ${name} are now friends 🎉` : `Declined ${name}'s request`) : r.error || "Something went wrong");
+  if (r.ok) render();
+};
+
+// ================= avatars =================
+VIEWS.avatars = async () => {
+  if (!VRC.loggedIn) { $("#view").innerHTML = `<div class="empty glass">Sign in to VRChat to see and switch your avatars.</div>`; return; }
+  const tab = prefs.avTab || "favorites", q = S.q.toLowerCase();
+  const tabs = [["favorites", "★ Favorites"], ["uploads", "My uploads"], ["worn", "Recently worn"]];
+  let list = [];
+  if (tab === "favorites") list = await api("/api/vrc/avatars/favorites");
+  else if (tab === "uploads") list = await api("/api/vrc/avatars");
+  else list = (await api("/api/avatars/worn")).map((a) => ({ id: a.id, name: a.name || a.id, author: a.author, thumb: a.thumb, sub: `worn ${fmtDur(a.time)} · ${ago(a.at)}` }));
+  if (list.error) { $("#view").innerHTML = `<div class="empty glass">${esc(list.error)}</div>`; return; }
+  const favIds = tab === "favorites" ? new Set(list.map((a) => a.id)) : new Set((await api("/api/vrc/avatars/favorites").catch(() => [])).map?.((a) => a.id) || []);
+  const shown = list.filter((a) => !q || (a.name + " " + (a.author || "")).toLowerCase().includes(q));
+  $("#view").innerHTML = `<div class="toolbar"><div class="chips">${tabs.map(([k, l]) => `<button class="chip ${tab === k ? "on" : ""}" onclick="prefs.avTab='${k}';savePrefs();render()">${l}</button>`).join("")}</div><span class="muted small" style="margin-left:auto">${shown.length} avatars · type in search to filter</span></div>
+    <div class="wgrid">${shown.map((a) => `<div class="glass" style="padding:10px">
+      <img src="${proxied(a.thumb || "")}" loading="lazy" onerror="this.style.opacity=0" style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px;display:block;background:rgba(255,255,255,.05);cursor:zoom-in" onclick="zoomImg('${proxied(a.image || a.thumb || "")}')">
+      <div style="display:flex;gap:6px;align-items:flex-start;margin-top:8px"><div style="min-width:0;flex:1"><div class="name ellip">${esc(a.name)}</div>
+        <div class="sub">${a.sub ? esc(a.sub) : [a.author && "by " + esc(a.author), a.status && (a.status === "public" ? "Public" : "Private"), a.platforms?.length && a.platforms.map((p) => ({ standalonewindows: "PC", android: "Quest", ios: "iOS" })[p] || p).join("/")].filter(Boolean).join(" · ")}</div></div>
+        ${a.id?.startsWith("avtr_") ? `<button class="star on" style="opacity:1;color:${favIds.has(a.id) ? "#ffc94d" : "var(--muted)"}" title="${favIds.has(a.id) ? "Remove from VRChat favorites" : "Add to VRChat favorites"}" onclick="favAvatar('${esc(a.id)}', ${!favIds.has(a.id)}, '${esc(a.favId || "")}')">${favIds.has(a.id) ? "★" : "☆"}</button>` : ""}</div>
+      ${a.id?.startsWith("avtr_") ? `<button class="btn ${a.current ? "" : "primary"}" style="margin-top:8px;width:100%;box-sizing:border-box;text-align:center" ${a.current ? "disabled" : ""} onclick="wearAvatar('${esc(a.id)}','${esc(jsq(a.name))}')">${a.current ? "Wearing now" : "Wear this"}</button>` : ""}
+    </div>`).join("") || `<div class="empty glass">${tab === "favorites" ? "No favorite avatars yet. Star avatars here or in VRChat." : "Nothing here yet."}</div>`}</div>`;
+};
+window.favAvatar = async (id, on, favId) => { const r = await postJ("/api/vrc/avatars/fav", { id, on, favId }); toast(r.ok ? (on ? "★ Added to your VRChat favorites" : "Removed from favorites") : r.error); if (r.ok) render(); };
+
+// ================= phone view =================
+async function renderPhone() {
+  const box = $("#phone-box"); if (!box) return;
+  const ph = await api("/api/phone").catch(() => null);
+  if (!ph || ph.enabled === undefined) { box.remove(); return; }
+  box.innerHTML = `<h2>Phone</h2>
+    <div class="setrow"><div><div>Use Soul on my phone</div><div class="d">Works on your home Wi-Fi while Soul is running on this PC</div></div><input type="checkbox" class="toggle" ${ph.enabled ? "checked" : ""} onchange="postJ('/api/phone',{enabled:this.checked}).then(()=>renderPhone())"></div>
+    ${ph.enabled ? (ph.url ? `<div style="display:flex;gap:14px;align-items:center;margin-top:10px">
+        <div style="width:150px;height:150px;flex:none;background:#fff;border-radius:12px;padding:6px">${ph.qr}</div>
+        <div class="small" style="min-width:0">Scan this with your phone's camera, or open:<br><code style="word-break:break-all;user-select:all">${esc(ph.url)}</code>
+          <div class="muted" style="margin-top:6px">Tip: on your phone, use "Add to Home Screen" to open it like an app.</div>
+          <div class="muted" style="margin-top:6px">The first time, Windows may ask whether Soul can use your network. Click <b>Allow</b> (private networks).</div></div></div>
+        <div style="display:flex;gap:8px;margin-top:10px"><button class="btn" onclick="navigator.clipboard.writeText('${esc(ph.url)}');toast('Link copied')">Copy link</button><button class="btn" onclick="if(confirm('Make a new link? Phones using the old one will need the new link.')) postJ('/api/phone',{reset:true}).then(()=>renderPhone())">New link</button></div>
+        <div class="muted small" style="margin-top:8px">Keep this link private — anyone on your Wi-Fi with it can use Soul as you.</div>`
+      : `<div class="err">${esc(ph.error || "Couldn't find this PC on your network.")}</div>`) : ""}`;
+}
+
+// ================= updates =================
+async function renderUpdate(check) {
+  const box = $("#update-box"); if (!box) return;
+  const u = await api("/api/update" + (check ? "?check=1" : "")).catch(() => null);
+  if (!u || u.current === undefined) { box.remove(); return; }
+  const busy = u.state === "downloading" || u.state === "restarting";
+  box.innerHTML = `<h2>Updates</h2>
+    <div class="small">You have Soul <b>${esc(u.current)}</b>.${u.available ? ` <b style="color:var(--accent)">Soul ${esc(u.latest)} is available!</b>` : u.latest ? " You're up to date." : ""}</div>
+    ${u.available && u.notes ? `<div class="bio" style="margin-top:8px;max-height:140px;font-size:12.5px">${esc(u.notes)}</div>` : ""}
+    ${u.state === "downloading" ? `<div class="bar" style="margin-top:10px"><i style="width:${Math.round(u.progress * 100)}%"></i></div><div class="muted small" style="margin-top:4px">Downloading… ${Math.round(u.progress * 100)}%</div>` : ""}
+    ${u.state === "restarting" ? `<div class="muted small" style="margin-top:8px">Restarting into the new version…</div>` : ""}
+    ${u.error ? `<div class="${/No releases/.test(u.error) ? "muted" : "err"} small" style="margin-top:6px">${esc(u.error)}</div>` : ""}
+    <div style="display:flex;gap:8px;margin-top:10px">${u.available ? `<button class="btn primary" ${busy ? "disabled" : ""} onclick="startUpdate()">Update now</button>` : ""}<button class="btn" ${busy ? "disabled" : ""} onclick="renderUpdate(true)">Check for updates</button>
+    <a class="btn" href="https://github.com/rpantojasphs-star/soul/releases" target="_blank">All versions</a></div>
+    <div class="muted small" style="margin-top:8px">Soul checks for updates by itself every few hours. Your history and settings are kept.</div>`;
+  if (busy) setTimeout(() => renderUpdate(), 700);
+}
+window.startUpdate = async () => { await fetch("/api/update", { method: "POST" }); renderUpdate(); };
+function updateBanner(v) {
+  let b = $("#updbanner");
+  if (!v) { b?.remove(); return; }
+  if (!b) { b = document.createElement("button"); b.id = "updbanner"; b.className = "signin"; b.style.cssText = "display:block;width:100%;box-sizing:border-box;margin:4px 0;font-size:12.5px"; b.onclick = () => go("settings"); $("#acct").before(b); }
+  b.textContent = `✨ Update to Soul ${v}`;
+}
+// ================= settings & alerts =================
+let ALERTS = null;
+VIEWS.settings = async () => {
+  const r = await api("/api/alerts"); ALERTS = r.settings;
+  const a = ALERTS, perm = "Notification" in window ? Notification.permission : "unsupported";
+  const tog = (k, label, desc) => `<div class="setrow"><div><div>${label}</div>${desc ? `<div class="d">${desc}</div>` : ""}</div><input type="checkbox" class="toggle" ${a[k] ? "checked" : ""} onchange="saveAlert('${k}', this.checked)"></div>`;
+  $("#view").innerHTML = `<div class="te" style="grid-template-columns:1fr 1fr">
+  <div>
+    <div class="section glass"><h2>Alerts</h2>
+      <div class="muted small" style="margin-bottom:6px">Soul pops up an alert when these happen (while you're signed in to VRChat).</div>
+      <div class="setrow"><div><div>Friend comes online</div><div class="d">Star friends to make them favorites</div></div>
+        <select onchange="saveAlert('online', this.value)">${[["favorites", "Favorites only"], ["all", "Everyone"], ["off", "Off"]].map(([v, l]) => `<option value="${v}" ${a.online === v ? "selected" : ""}>${l}</option>`).join("")}</select></div>
+      ${tog("poke", "Someone pokes you")}
+      ${tog("invite", "Invites")}
+      ${tog("requestInvite", "Invite requests")}
+      ${tog("friendRequest", "Friend requests")}
+      ${tog("friendAdd", "Friend request accepted")}
+      ${tog("groups", "Group announcements", "Can be a lot if you're in busy groups")}
+      ${tog("sound", "Play a sound")}
+      ${tog("popups", "Windows popups", "Show alerts as Windows notifications when Soul isn't in front")}
+      <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+        ${perm !== "granted" && perm !== "unsupported" ? `<button class="btn primary" onclick="Notification.requestPermission().then(()=>render())">Allow Windows popups</button>` : ""}
+        <button class="btn" onclick="fetch('/api/alerts/test',{method:'POST'})">Send a test alert</button>
+      </div>
+      ${perm === "denied" ? `<div class="err" style="margin-top:8px">Windows popups are blocked for Soul. Alerts will still show inside Soul.</div>` : ""}
+    </div>
+  </div>
+  <div id="settings-right">
+    <div class="section glass" id="update-box"></div>
+    <div class="section glass" id="phone-box"></div>
+    <div class="section glass" id="vr-box"></div>
+    <div class="section glass" id="startup-box"></div>
+    <div class="section glass"><h2>Backup & export</h2><div class="muted small" style="margin-bottom:10px">Save a full copy of Soul's history, or export parts of it as spreadsheets (CSV).</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn primary" href="/api/backup">Download backup</a>
+      ${[["feed", "Feed"], ["friendlog", "Friend log"], ["visits", "World visits"], ["people", "People met"], ["notifications", "Notifications"]].map(([k, l]) => `<a class="btn" href="/api/export?what=${k}">${l} CSV</a>`).join("")}</div></div>
+    <div class="section glass"><h2>Favorites</h2><div class="muted small" style="margin-bottom:10px">Favorites are pinned to the top of your lists and can get their own "online" alerts. Star anyone with ☆, or copy the ones you've favorited inside VRChat.</div>
+      <button class="btn" onclick="importFavs()">Import my VRChat favorites</button></div>
+    <div class="section glass"><h2>About</h2><div class="small muted" style="line-height:1.6">Soul v${esc(S.meta.version)}<br>Your history, theme and settings are saved in <code>${esc(S.meta.dataDir)}</code>.<br>${S.meta.vrcx ? `Also reading VRCX's history (read-only) from <code>${esc(S.meta.dbPath)}</code>.` : "VRCX isn't installed — Soul is recording everything itself."}<br>Closing the Soul window quits it; minimizing keeps it running.<br>Shortcuts: Ctrl+K search · Alt+1…7 switch pages · Esc close panel</div>
+      <button class="btn" style="margin-top:10px" onclick="if(confirm('Quit Soul?')){fetch('/api/quit',{method:'POST'});document.body.innerHTML='<div class=empty>Soul closed. You can close this window.</div>'}">Quit Soul</button>
+  </div></div>`;
+  renderVR();
+  renderPhone();
+  renderUpdate();
+  renderStartup();
+};
+async function renderStartup() {
+  const st = await api("/api/startup").catch(() => ({ supported: false }));
+  const box = $("#startup-box"); if (!box) return;
+  box.innerHTML = `<h2>Startup</h2><div class="setrow"><div><div>Start Soul when Windows starts</div><div class="d">Runs quietly in the background so your history keeps recording. Open Soul.exe to see the window.</div></div>
+    ${st.supported ? `<input type="checkbox" class="toggle" ${st.on ? "checked" : ""} onchange="postJ('/api/startup',{on:this.checked}).then(r=>toast(r.on?'Soul will start with Windows':'Soul won\\'t start with Windows'))">` : `<span class="muted small">Windows only</span>`}</div>`;
+}
+window.saveAlert = async (k, v) => { ALERTS[k] = v; await fetch("/api/alerts", { method: "POST", body: JSON.stringify({ [k]: v }) }); };
+let audioCtx = null;
+function blip() {
+  try {
+    audioCtx = audioCtx || new AudioContext();
+    const o = audioCtx.createOscillator(), g = audioCtx.createGain(), t = audioCtx.currentTime;
+    o.type = "sine"; o.frequency.setValueAtTime(880, t); o.frequency.exponentialRampToValueAtTime(1320, t + .08);
+    g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.15, t + .02); g.gain.exponentialRampToValueAtTime(.0001, t + .35);
+    o.connect(g).connect(audioCtx.destination); o.start(t); o.stop(t + .4);
+  } catch {}
+}
+async function handleAlert(a) {
+  if (!ALERTS) ALERTS = (await api("/api/alerts").catch(() => ({ settings: {} }))).settings;
+  const open = () => { window.focus(); if (a.kind === "friendRequest") { prefs.nGroup = "friendreq"; go("notifications"); } else if (a.kind === "invite" || a.kind === "requestInvite" || a.kind === "group") go("notifications"); else if (a.uid) openUser(a.uid); };
+  const el = document.createElement("div");
+  el.className = "atoast glass";
+  el.innerHTML = `${a.uid || a.img ? avatar(a.title, a.img ? proxied(a.img) : "", "sm") : `<div class="av sm">👻</div>`}<div style="min-width:0"><div class="t1 ellip">${esc(a.title)}</div><div class="t2 ellip">${esc(a.body || "")}</div></div><span class="x">✕</span>`;
+  el.onclick = (e) => { el.remove(); if (!e.target.classList.contains("x")) open(); };
+  $("#toasts").prepend(el);
+  setTimeout(() => el.remove(), 8000);
+  while ($("#toasts").children.length > 4) $("#toasts").lastChild.remove();
+  if (ALERTS.sound) blip();
+  vrHud(a);
+  if (ALERTS.popups && "Notification" in window && Notification.permission === "granted" && (document.hidden || !document.hasFocus())) {
+    try { const n = new Notification(a.title, { body: a.body || "", icon: a.img ? proxied(a.img) : undefined, tag: "soul-" + a.id }); n.onclick = () => { n.close(); open(); }; } catch {}
+  }
+  if (a.kind !== "test") { if (S.view === "notifications") render(); }
+}
+
+// ================= VR =================
+let VRS = null;
+async function renderVR() {
+  const box = $("#vr-box"); if (!box) return;
+  const v = await api("/api/vr").catch(() => null); if (!v) return;
+  VRS = v.settings;
+  const s = v.settings, tog = (k, label, desc) => `<div class="setrow"><div><div>${label}</div>${desc ? `<div class="d">${desc}</div>` : ""}</div><input type="checkbox" class="toggle" ${s[k] ? "checked" : ""} onchange="saveVR('${k}', this.checked)"></div>`;
+  box.innerHTML = `<h2>VR</h2>
+    <div class="muted small" style="margin-bottom:6px">${!v.windows ? "VR features need Windows." : v.steamvr ? (v.overlay ? "● SteamVR is running — Soul's overlay is on." : "SteamVR is running — starting Soul's overlay…") : "SteamVR isn't running. Soul's overlay starts by itself when it is."}${v.overlayError ? ` <span class="err">${esc(v.overlayError)}</span>` : ""}</div>
+    ${tog("enabled", "Show Soul in SteamVR", "A small panel on your wrist and alerts in front of you")}
+    ${tog("wrist", "Wrist panel", "Who's online and where you are")}
+    <div class="setrow"><div>Wrist</div><select onchange="saveVR('hand', this.value)"><option value="left" ${s.hand === "left" ? "selected" : ""}>Left hand</option><option value="right" ${s.hand === "right" ? "selected" : ""}>Right hand</option></select></div>
+    ${tog("hud", "Alerts in front of you", "Pops up for a few seconds when something happens")}
+    ${tog("xso", "Also send alerts to XSOverlay")}
+    ${tog("ovrt", "Also send alerts to OVR Toolkit")}
+    <div style="margin-top:10px"><button class="btn" onclick="fetch('/api/vr/test',{method:'POST'});vrHud({title:'Soul VR alerts are working 👻',body:'This is what alerts look like in VR.'})">Send a test VR alert</button></div>`;
+}
+window.saveVR = async (k, v) => { VRS = (await postJ("/api/vr", { [k]: v })).settings; renderVR(); };
+function vrActive() { return S.vr?.steamvr && VRS?.enabled; }
+function roundRect(g, x, y, w, h, r) { g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); }
+const cssVar = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+async function postFrame(which, canvas, showMs) {
+  const g = canvas.getContext("2d"), d = g.getImageData(0, 0, canvas.width, canvas.height);
+  await fetch("/api/overlay/frame", { method: "POST", headers: { "x-which": which, "x-w": canvas.width, "x-h": canvas.height, "x-show-ms": showMs || 0 }, body: d.data }).catch(() => {});
+}
+async function vrWrist() {
+  if (!vrActive() || !VRS.wrist) return;
+  const c = document.createElement("canvas"); c.width = 512; c.height = 512; const g = c.getContext("2d");
+  const font = theme.font || "Segoe UI", text = cssVar("--text") || "#fff", muted = cssVar("--muted") || "#aaa", accent = cssVar("--accent") || "#8b7cff";
+  g.fillStyle = "rgba(" + (cssVar("--panel-rgb") || "24,22,40") + ",0.92)"; roundRect(g, 0, 0, 512, 512, 36); g.fill();
+  g.fillStyle = accent; g.font = `700 30px "${font}"`; g.fillText("Soul", 28, 52);
+  g.fillStyle = muted; g.font = `500 22px "${font}"`; g.textAlign = "right"; g.fillText(new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }), 484, 52); g.textAlign = "left";
+  let y = 92;
+  const w = await api("/api/where").catch(() => ({}));
+  if (w.inWorld) { g.fillStyle = text; g.font = `600 22px "${font}"`; g.fillText(("📍 " + (w.worldName || "World")).slice(0, 34), 28, y); g.fillStyle = muted; g.font = `400 18px "${font}"`; const nf = w.players.filter((p) => p.friend).length; g.fillText(`${w.players.length + 1} here · ${nf} friend${nf === 1 ? "" : "s"}`, 28, y + 24); y += 58; }
+  const on = (S.friends || []).filter((f) => f.online && f.location !== "web").sort((a, b) => b.fav - a.fav || (a.name || "").localeCompare(b.name || ""));
+  g.fillStyle = muted; g.font = `600 18px "${font}"`; g.fillText(`ONLINE · ${on.length}`, 28, y); y += 14;
+  for (const f of on.slice(0, Math.floor((500 - y) / 44))) {
+    y += 44;
+    g.fillStyle = cssVar(STATUS[f.status] || "--s-active") || "#3ddc84"; g.beginPath(); g.arc(38, y - 7, 7, 0, 7); g.fill();
+    g.fillStyle = text; g.font = `600 21px "${font}"`; g.fillText(((f.fav ? "★ " : "") + f.name).slice(0, 24), 56, y);
+    g.fillStyle = muted; g.font = `400 16px "${font}"`; g.fillText((f.world || parseLoc(f.location).label || "").slice(0, 40), 56, y + 18);
+  }
+  await postFrame("wrist", c, 0);
+}
+async function vrHud(a) {
+  if (!vrActive() || !VRS.hud) return;
+  const c = document.createElement("canvas"); c.width = 768; c.height = 160; const g = c.getContext("2d");
+  const font = theme.font || "Segoe UI";
+  g.fillStyle = "rgba(" + (cssVar("--panel-rgb") || "24,22,40") + ",0.95)"; roundRect(g, 0, 0, 768, 160, 32); g.fill();
+  g.fillStyle = cssVar("--accent") || "#8b7cff"; roundRect(g, 0, 0, 12, 160, 6); g.fill();
+  g.fillStyle = cssVar("--text") || "#fff"; g.font = `700 36px "${font}"`; g.fillText(String(a.title || "").slice(0, 34), 40, 68);
+  g.fillStyle = cssVar("--muted") || "#aaa"; g.font = `400 26px "${font}"`; g.fillText(String(a.body || "").slice(0, 48), 40, 112);
+  await postFrame("hud", c, 6000);
+}
+setInterval(vrWrist, 3000);
+// ================= window presence =================
+// Keeps a live line open to Soul. Closing this window drops it, and Soul shuts down.
+function connectPresence() {
+  try {
+    const ws = new WebSocket(`ws://${location.host}/ws`);
+    ws.onclose = () => { if (!S.leaving) setTimeout(connectPresence, 1500); };
+    ws.onmessage = (e) => { try { const m = JSON.parse(e.data); if (m.type === "alert") handleAlert(m.alert); } catch {} };
+    S.ws = ws;
+  } catch {}
+}
+connectPresence();
+// a held lock stops the browser from freezing Soul while it's minimized
+try { navigator.locks?.request("soul-keepalive", () => new Promise(() => {})); } catch {}
+addEventListener("pagehide", () => { S.leaving = true; });
+// ================= boot =================
+(async () => {
+  const [meta, saved] = await Promise.all([api("/api/meta"), api("/api/theme").catch(() => null)]);
+  S.meta = meta; S.dv = meta.dataVersion; setLive(meta.latest);
+  theme = { ...THEME_DEFAULT, ...(saved || JSON.parse(localStorage.getItem("soul-theme") || "null") || {}) };
+  // one-time: you asked for see-through panels over your background image
+  if (!theme.seeThroughV13) { if (theme.bgType === "image" && theme.panelA > .5) Object.assign(theme, { panelA: .22, blur: 0, dim: .05 }); theme.seeThroughV13 = true; saveTheme(); }
+  applyTheme();
+  await loadFriends();
+  refreshAccount().then(() => { poll(); if (VRC.loggedIn && "Notification" in window && Notification.permission === "default" && !prefs.askedPopups) { prefs.askedPopups = true; savePrefs(); Notification.requestPermission(); } if (!VRC.loggedIn && !prefs.loginOffered) { prefs.loginOffered = true; savePrefs(); S.firstRun = true; openLogin(null, VRC.need2fa); } });
+  go(prefs.view && TITLES[prefs.view] ? prefs.view : "friends");
+  poll();
+  setInterval(poll, 4000);
+  setInterval(() => refreshAccount(), 5 * 60_000);
+})();
+</script>
+</body>
+</html>
