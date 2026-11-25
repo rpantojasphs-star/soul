@@ -2,6 +2,7 @@ name: Build & release Soul
 # Push a tag like v3.2.0 (matching VERSION in server.ts) and GitHub builds Soul.exe,
 # the installer and the portable zip, then publishes them as a release.
 # Soul checks this repository's latest release to update itself.
+# You can also start it from the Actions tab ("Run workflow") with a tag name.
 on:
   push:
     tags: ["v*"]
@@ -19,8 +20,6 @@ jobs:
       BUN_VERSION: "1.4.4"
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.inputs.tag || github.ref }}
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: ${{ env.BUN_VERSION }}
@@ -58,6 +57,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ steps.v.outputs.tag }}
+          target_commitish: ${{ github.sha }}
           name: Soul ${{ steps.v.outputs.version }}
           body_path: release-notes.md
           files: |
