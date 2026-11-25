@@ -11,7 +11,7 @@ import { networkInterfaces } from "node:os";
 import { randomBytes } from "node:crypto";
 import icon256 from "./icon-256.png" with { type: "file" };
 
-const VERSION = "3.2.2";
+const VERSION = "3.2.3";
 const APPDATA = process.env.APPDATA || join(process.env.HOME || ".", ".config");
 const args = process.argv.slice(2);
 const BACKGROUND = args.includes("--background");
