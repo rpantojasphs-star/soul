@@ -11,7 +11,7 @@ import { networkInterfaces } from "node:os";
 import { randomBytes } from "node:crypto";
 import icon256 from "./icon-256.png" with { type: "file" };
 
-const VERSION = "3.3.1";
+const VERSION = "3.4.0";
 const APPDATA = process.env.APPDATA || join(process.env.HOME || ".", ".config");
 const args = process.argv.slice(2);
 const BACKGROUND = args.includes("--background");
@@ -1136,6 +1136,72 @@ let PORT = 7317, steamvr = false, overlayProc: any = null, overlayExit = "";
 const frames: Record<string, { buf: Uint8Array; w: number; h: number; ver: number; until: number }> = {};
 let frameVer = 0;
 const IS_DEV = /bun(\.exe)?$/i.test(process.execPath);
+// ---------- VRChat cache ----------
+// VRChat keeps downloaded avatars and worlds in "Cache-WindowsPlayer" (in LocalLow\VRChat\VRChat,
+// or wherever config.json's cache_directory points). Its files are locked while VRChat runs, so
+// the automatic clean happens right after VRChat closes. Only that one folder is ever touched.
+function cacheDir() {
+  if (process.env.SOUL_VRC_CACHE) return process.env.SOUL_VRC_CACHE;
+  let base = LOG_DIR;
+  try { const c = JSON.parse(readFileSync(join(LOG_DIR, "config.json"), "utf8")); if (typeof c.cache_directory === "string" && c.cache_directory.trim()) base = c.cache_directory.trim(); } catch {}
+  return join(base, "Cache-WindowsPlayer");
+}
+function cacheCfg() { try { return { auto: false, ...JSON.parse(scfg("vrccache") || "{}") }; } catch { return { auto: false }; } }
+const cacheState: any = { size: null as number | null, items: null as number | null, measuredAt: 0, busy: "", lastCleared: "", freed: 0, error: "" };
+async function dirSize(dir: string) {
+  const { readdir, stat } = await import("node:fs/promises");
+  let total = 0, items = 0; const stack = [dir];
+  while (stack.length) {
+    const d = stack.pop()!; let ents: any[] = [];
+    try { ents = await readdir(d, { withFileTypes: true }); } catch { continue; }
+    if (d === dir) items = ents.filter((e) => e.isDirectory()).length;
+    for (const e of ents) { const f = join(d, e.name); if (e.isDirectory()) stack.push(f); else { try { total += (await stat(f)).size; } catch {} } }
+  }
+  return { total, items };
+}
+async function measureCache() {
+  const dir = cacheDir();
+  if (!existsSync(dir)) { Object.assign(cacheState, { size: 0, items: 0, measuredAt: Date.now() }); return; }
+  cacheState.busy = cacheState.busy || "measuring";
+  try { const r = await dirSize(dir); Object.assign(cacheState, { size: r.total, items: r.items, measuredAt: Date.now() }); } finally { if (cacheState.busy === "measuring") cacheState.busy = ""; }
+}
+let vrcRunning = false;
+function isVRChatRunning() {
+  if (process.env.SOUL_VRC_RUNNING_FILE) return existsSync(process.env.SOUL_VRC_RUNNING_FILE);
+  if (process.platform !== "win32") return false;
+  try { return /VRChat\.exe/i.test(Bun.spawnSync(["tasklist", "/FI", "IMAGENAME eq VRChat.exe", "/NH"], { windowsHide: true } as any).stdout.toString()); } catch { return false; }
+}
+async function clearCache(reason: string) {
+  if (cacheState.busy === "clearing") return { ok: false, error: "Already clearing." };
+  if (isVRChatRunning()) return { ok: false, error: "Close VRChat first — it keeps its cache in use while it's running." };
+  const dir = cacheDir();
+  if (!/Cache-WindowsPlayer$/i.test(dir)) return { ok: false, error: "That doesn't look like VRChat's cache folder." };
+  if (!existsSync(dir)) return { ok: true, freed: 0 };
+  cacheState.busy = "clearing"; cacheState.error = "";
+  const { readdir, rm } = await import("node:fs/promises");
+  const before = cacheState.size ?? (await dirSize(dir)).total;
+  let failed = 0;
+  try {
+    for (const e of await readdir(dir)) { try { await rm(join(dir, e), { recursive: true, force: true, maxRetries: 2 }); } catch { failed++; } }
+  } finally { cacheState.busy = ""; }
+  const after = (await dirSize(dir)).total;
+  Object.assign(cacheState, { size: after, items: 0, measuredAt: Date.now(), lastCleared: iso(), freed: Math.max(0, before - after), error: failed ? `${failed} item(s) were in use and were skipped.` : "" });
+  setScfg("vrccache_dirty", "0");
+  logErr(`VRChat cache cleared (${reason}): freed ${Math.round(cacheState.freed / 1048576)} MB`);
+  return { ok: true, freed: cacheState.freed, skipped: failed };
+}
+function watchVRChat() {
+  const now = isVRChatRunning();
+  if (now && !vrcRunning) setScfg("vrccache_dirty", "1");
+  if (!now && vrcRunning && cacheCfg().auto) setTimeout(() => { if (!isVRChatRunning()) clearCache("VRChat closed").catch(logErr); }, 8000);
+  vrcRunning = now;
+}
+setTimeout(() => {
+  vrcRunning = isVRChatRunning();
+  // VRChat was played since the last clean but Soul wasn't running when it closed
+  if (!vrcRunning && cacheCfg().auto && scfg("vrccache_dirty") === "1") clearCache("catch-up").catch(logErr);
+  setInterval(watchVRChat, 15_000);
+}, 4000);
 function checkSteamVR() {
   if (process.platform !== "win32") return;
   try {
@@ -1173,7 +1239,7 @@ function vrAlert(a: any) {
 // ===================================================================================
 // PHONE VIEW — Soul on your phone over your home Wi-Fi, protected by a secret link
 // ===================================================================================
-const PHONE_BLOCKED = new Set(["/api/update", "/api/quit", "/api/backup", "/api/startup", "/api/phone", "/api/vrc/logout"]);
+const PHONE_BLOCKED = new Set(["/api/vrccache", "/api/update", "/api/quit", "/api/backup", "/api/startup", "/api/phone", "/api/vrc/logout"]);
 function phoneCfg(): { enabled: boolean; key: string } {
   let c: any = {}; try { c = JSON.parse(scfg("phone") || "{}"); } catch {}
   if (!c.key) { c.key = randomBytes(18).toString("base64url"); setScfg("phone", JSON.stringify(c)); }
@@ -1416,6 +1482,16 @@ function handle(req: Request, server?: any): Response | Promise<Response> | unde
       if (!session.auth) return json({ error: "signed out", status: 401 });
       return vrcUserInfo(id).then(json);
     }
+    if (p === "/api/vrccache" && req.method === "GET") {
+      const go = s.get("measure") ? measureCache().catch(logErr) : Promise.resolve();
+      return go.then(() => json({ dir: cacheDir(), exists: existsSync(cacheDir()), ...cacheState, ...cacheCfg(), running: isVRChatRunning(), windows: process.platform === "win32" }));
+    }
+    if (p === "/api/vrccache" && req.method === "POST") return req.json().then(async (b: any) => {
+      if (b.auto !== undefined) setScfg("vrccache", JSON.stringify({ ...cacheCfg(), auto: !!b.auto }));
+      if (b.clear) return json(await clearCache("Clear now"));
+      if (b.open && process.platform === "win32") { try { Bun.spawn(["explorer.exe", existsSync(cacheDir()) ? cacheDir() : LOG_DIR]); } catch {} }
+      return json({ ok: true });
+    });
     if (p === "/api/avdb" && req.method === "GET") return json(avdbCfg());
     if (p === "/api/avdb" && req.method === "POST") return req.json().then((b: any) => {
       const c = { ...avdbCfg(), ...(b.enabled !== undefined ? { enabled: !!b.enabled } : {}), ...(typeof b.url === "string" ? { url: b.url.trim() || AVDB_DEFAULT } : {}) };

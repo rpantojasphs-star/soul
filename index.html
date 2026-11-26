@@ -1614,6 +1614,35 @@ async function renderPhone() {
       : `<div class="err">${esc(ph.error || "Couldn't find this PC on your network.")}</div>`) : ""}`;
 }
 
+// ================= VRChat cache =================
+const fmtBytes = (n) => n == null ? "—" : n >= 1073741824 ? (n / 1073741824).toFixed(1) + " GB" : n >= 1048576 ? Math.round(n / 1048576) + " MB" : Math.round(n / 1024) + " KB";
+async function renderCache(measure) {
+  const box = $("#cache-box"); if (!box) return;
+  const c = await api("/api/vrccache" + (measure ? "?measure=1" : "")).catch(() => null);
+  if (!c || c.dir === undefined) { box.remove(); return; }
+  const busy = c.busy === "clearing";
+  box.innerHTML = `<h2>VRChat cache</h2>
+    <div class="small muted">Downloaded avatars and worlds. Clearing it frees space and fixes broken or outdated avatars; VRChat downloads them again as you need them.</div>
+    <div style="display:flex;gap:18px;align-items:baseline;margin:12px 0 4px">
+      <div><div style="font-size:22px;font-weight:700">${c.busy === "measuring" ? "…" : fmtBytes(c.size)}</div><div class="muted small">${c.size == null ? "not measured yet" : (c.items ? c.items.toLocaleString() + " items" : "empty")}</div></div>
+      ${c.lastCleared ? `<div class="muted small">Last cleared ${ago(c.lastCleared)}${c.freed ? ` · freed ${fmtBytes(c.freed)}` : ""}</div>` : ""}</div>
+    ${c.error ? `<div class="err small">${esc(c.error)}</div>` : ""}
+    ${c.running ? `<div class="small" style="color:var(--s-ask);margin-top:6px">VRChat is running — the cache can be cleared after you close it.</div>` : ""}
+    <div class="setrow"><div><div>Clear automatically</div><div class="d">Every time you close VRChat, so you start fresh next time</div></div>
+      <input type="checkbox" class="toggle" ${c.auto ? "checked" : ""} onchange="postJ('/api/vrccache',{auto:this.checked}).then(()=>renderCache())"></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+      <button class="btn primary" ${busy || c.running ? "disabled" : ""} onclick="clearVrcCache()">${busy ? "Clearing…" : "Clear now"}</button>
+      <button class="btn" onclick="renderCache(true)">${c.size == null ? "Check size" : "Refresh size"}</button>
+      ${c.windows ? `<button class="btn" onclick="postJ('/api/vrccache',{open:true})">Open folder</button>` : ""}</div>
+    <div class="muted small" style="margin-top:8px;word-break:break-all">${esc(c.dir)}</div>`;
+}
+window.clearVrcCache = async () => {
+  if (!confirm("Clear VRChat's cache? Avatars and worlds will download again the next time you see them.")) return;
+  renderCacheBusy(); const r = await postJ("/api/vrccache", { clear: true });
+  toast(r.ok ? `VRChat cache cleared${r.freed ? " — freed " + fmtBytes(r.freed) : ""}` : r.error); renderCache();
+};
+function renderCacheBusy() { const b = document.querySelector("#cache-box .btn.primary"); if (b) { b.disabled = true; b.textContent = "Clearing…"; } }
+
 // ================= avatar ID lookup setting =================
 async function renderAvdb() {
   const box = $("#avdb-box"); if (!box) return;
@@ -1681,6 +1710,7 @@ VIEWS.settings = async () => {
     <div class="section glass" id="update-box"></div>
     <div class="section glass" id="phone-box"></div>
     <div class="section glass" id="avdb-box"></div>
+    <div class="section glass" id="cache-box"></div>
     <div class="section glass" id="vr-box"></div>
     <div class="section glass" id="startup-box"></div>
     <div class="section glass"><h2>Backup & export</h2><div class="muted small" style="margin-bottom:10px">Save a full copy of Soul's history, or export parts of it as spreadsheets (CSV).</div>
@@ -1692,7 +1722,7 @@ VIEWS.settings = async () => {
       <button class="btn" style="margin-top:10px" onclick="if(confirm('Quit Soul?')){fetch('/api/quit',{method:'POST'});document.body.innerHTML='<div class=empty>Soul closed. You can close this window.</div>'}">Quit Soul</button>
   </div></div>`;
   renderVR();
-  renderPhone(); renderAvdb();
+  renderPhone(); renderAvdb(); renderCache(true);
   renderUpdate();
   renderStartup();
 };

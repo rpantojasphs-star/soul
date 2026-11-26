@@ -1,7 +1,7 @@
-## Soul 3.3.1
+## Soul 3.4.0
 
-**Avatar IDs for other people's avatars**
-- VRChat doesn't share the IDs of avatars other people wear. Soul can now look them up in **avtrDB**, a community database of public avatars (the same kind VRCX uses).
-- Click **Find avatar ID** on an avatar's details the first time to turn it on. After that, IDs (plus performance, platforms, Wear this and ★) show up automatically for avatars in the database.
-- It sends the avatar's name to avtrdb.com. Turn it off or use a different database in **Settings → Avatar IDs**.
-- Private avatars and ones nobody has added to the database still only show name, creator and dates.
+**New: VRChat cache (Settings → VRChat cache)**
+- See how much space VRChat's downloaded avatars and worlds take up.
+- **Clear now** with one click (when VRChat is closed).
+- **Clear automatically**: Soul empties the cache every time you close VRChat, so you start fresh next time. If Soul wasn't running when VRChat closed, it catches up the next time it starts.
+- Works with a custom cache location set in VRChat's config.json. Only the Cache-WindowsPlayer folder is touched.
