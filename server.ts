@@ -11,7 +11,7 @@ import { networkInterfaces } from "node:os";
 import { randomBytes } from "node:crypto";
 import icon256 from "./icon-256.png" with { type: "file" };
 
-const VERSION = "3.4.2";
+const VERSION = "3.4.3";
 const APPDATA = process.env.APPDATA || join(process.env.HOME || ".", ".config");
 const args = process.argv.slice(2);
 const BACKGROUND = args.includes("--background");
@@ -405,7 +405,12 @@ function notifications() {
         NULL AS title, image_url AS img, NULL AS link FROM {notifications} ORDER BY created_at DESC LIMIT 1500`);
     const b = each(`SELECT id, created_at AS at, type, sender_user_id AS uid, sender_username AS name,
         message, NULL AS world, NULL AS location, NULL AS inviteMsg, NULL AS requestMsg, NULL AS responseMsg,
-        title, image_url AS img, link_text AS link FROM {notifications_v2} ORDER BY created_at DESC LIMIT 1500`);
+        title, image_url AS img, link_text AS link, details FROM {notifications_v2} ORDER BY created_at DESC LIMIT 1500`);
+    for (const r of b) {
+      // live pokes often arrive without a picture link; the emoji is in details
+      if (r.type === "boop" && !r.img && r.details) { try { const d = JSON.parse(r.details); const e = String(d.emojiId || ""); if (e.startsWith("default_")) r.img = e; else if (/^file_[0-9a-f-]{36}$/.test(e)) r.img = `https://api.vrchat.cloud/api/1/file/${e}/${+d.emojiVersion || 1}`; } catch {} }
+      delete r.details;
+    }
     const states = new Map((sdb.query("SELECT id, state FROM notif_state").all() as any[]).map((r) => [r.id, r.state]));
     const friendIds = new Set(friendRoster().map((r) => r.user_id));
     return dedupe([...a, ...b], (r) => r.id).sort(byAtDesc).slice(0, 2000).map((r) => {

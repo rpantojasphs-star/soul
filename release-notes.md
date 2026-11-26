@@ -1,6 +1,3 @@
-## Soul 3.4.2
+## Soul 3.4.3
 
-**See what you got poked with**
-- Poke alerts now show the emoji they used — VRChat's built-in ones (🤫 Shush, ❤️ Heart…) or their own custom emoji picture, animated if it moves.
-- The Windows notification uses their custom emoji as its icon.
-- Notifications → **Boops** shows the emoji on every poke, including old ones.
+- Pokes received while Soul is running now show their emoji in Notifications → Boops too (VRChat's live message leaves out the picture link, so Soul reads the emoji from the poke's details).
