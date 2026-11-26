@@ -306,7 +306,7 @@ nav .logo+.navlabel{padding-top:6px}
 .dacts{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;align-items:center}
 .btn.icon{padding:7px 11px;font-size:15px;line-height:1}
 .btn.icon.on{color:#ffc94d}
-.moremenu{position:relative;display:inline-block;flex:none}
+.moremenu{position:relative;display:inline-block;flex:none;align-self:center}.moremenu>summary.btn{display:block}
 .moremenu>summary{list-style:none}.moremenu>summary::-webkit-details-marker{display:none}
 .moremenu .menu{position:absolute;right:0;top:calc(100% + 6px);min-width:190px;padding:6px;z-index:20;display:flex;flex-direction:column;background:rgba(var(--panel-rgb),.98);box-shadow:0 10px 30px rgba(0,0,0,.4)}
 .moremenu .menu>*,.moremenu .menu>span>*{all:unset;cursor:pointer;display:block;padding:8px 10px;border-radius:8px;font-size:13px}
@@ -1265,7 +1265,13 @@ window.openAvatar = async (img, id, local = {}) => {
       <div style="min-width:0">
         ${a.description ? `<div class="bio" style="max-height:120px">${esc(a.description)}</div>` : ""}
         <dl class="facts">${rows.filter(([k]) => k !== "Made by").map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl>
-        ${!a.id ? `<div class="muted small" style="margin-top:12px">This avatar is private, so VRChat only shares its name, creator and dates — not its performance or who can wear it.</div>` : ""}
+        ${!a.id ? (a.dbEnabled
+          ? `<div class="muted small" style="margin-top:12px">No avatar ID found — it isn't in the avatar database${a.dbError ? ` (${esc(a.dbError)})` : ""}, so it's most likely private. VRChat only shares its name, creator and dates.</div>`
+          : `<div class="small" style="margin-top:12px;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.05)">
+              <div>VRChat doesn't share other people's avatar IDs. Soul can look it up in <b>avtrDB</b>, a community database of public avatars (the same kind VRCX uses).</div>
+              <div class="muted" style="margin:4px 0 8px">This sends the avatar's name to avtrdb.com. You can turn it off in Settings.</div>
+              <button class="btn primary" onclick="postJ('/api/avdb',{enabled:true}).then(()=>openAvatar('${esc(jsq(img))}','',${esc(JSON.stringify(local)).replace(/"/g, "&quot;")}))">Find avatar ID</button></div>`) : ""}
+        ${a.foundVia ? `<div class="muted small" style="margin-top:8px">ID found via ${esc(a.foundVia)}</div>` : ""}
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:16px">
           ${a.id && a.status === "public" ? `<button class="btn primary" ${a.current ? "disabled" : ""} onclick="wearAvatar('${esc(a.id)}','${esc(jsq(name))}')">${a.current ? "Wearing now" : "Wear this"}</button>
             <button class="btn icon ${a.fav ? "on" : ""}" title="${a.fav ? "Remove from your favorites" : "Add to your favorites"}" onclick="favAvatar('${esc(a.id)}', ${!a.fav}, '${esc(a.fav || "")}').then(()=>openAvatar('${esc(jsq(img))}','${esc(a.id)}',${esc(JSON.stringify(local)).replace(/"/g, "&quot;")}))">${a.fav ? "★" : "☆"}</button>` : ""}
@@ -1608,6 +1614,17 @@ async function renderPhone() {
       : `<div class="err">${esc(ph.error || "Couldn't find this PC on your network.")}</div>`) : ""}`;
 }
 
+// ================= avatar ID lookup setting =================
+async function renderAvdb() {
+  const box = $("#avdb-box"); if (!box) return;
+  const c = await api("/api/avdb").catch(() => null); if (!c) { box.remove(); return; }
+  box.innerHTML = `<h2>Avatar IDs</h2>
+    <div class="setrow"><div><div>Look up IDs of public avatars</div><div class="d">VRChat doesn't share other people's avatar IDs. When on, Soul searches a community avatar database by the avatar's name.</div></div>
+      <input type="checkbox" class="toggle" ${c.enabled ? "checked" : ""} onchange="postJ('/api/avdb',{enabled:this.checked}).then(renderAvdb)"></div>
+    ${c.enabled ? `<div class="field"><input id="avdb-url" value="${esc(c.url)}" style="flex:1;font-size:12px" placeholder="Avatar database search URL"><button class="btn" onclick="postJ('/api/avdb',{url:$('#avdb-url').value}).then(()=>{toast('Saved');renderAvdb()})">Save</button></div>
+      <div class="muted small">Any VRCX-style avatar search URL works. Leave blank for avtrDB.</div>` : ""}`;
+}
+
 // ================= updates =================
 async function renderUpdate(check) {
   const box = $("#update-box"); if (!box) return;
@@ -1663,6 +1680,7 @@ VIEWS.settings = async () => {
   <div id="settings-right">
     <div class="section glass" id="update-box"></div>
     <div class="section glass" id="phone-box"></div>
+    <div class="section glass" id="avdb-box"></div>
     <div class="section glass" id="vr-box"></div>
     <div class="section glass" id="startup-box"></div>
     <div class="section glass"><h2>Backup & export</h2><div class="muted small" style="margin-bottom:10px">Save a full copy of Soul's history, or export parts of it as spreadsheets (CSV).</div>
@@ -1674,7 +1692,7 @@ VIEWS.settings = async () => {
       <button class="btn" style="margin-top:10px" onclick="if(confirm('Quit Soul?')){fetch('/api/quit',{method:'POST'});document.body.innerHTML='<div class=empty>Soul closed. You can close this window.</div>'}">Quit Soul</button>
   </div></div>`;
   renderVR();
-  renderPhone();
+  renderPhone(); renderAvdb();
   renderUpdate();
   renderStartup();
 };

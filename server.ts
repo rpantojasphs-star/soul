@@ -11,7 +11,7 @@ import { networkInterfaces } from "node:os";
 import { randomBytes } from "node:crypto";
 import icon256 from "./icon-256.png" with { type: "file" };
 
-const VERSION = "3.3.0";
+const VERSION = "3.3.1";
 const APPDATA = process.env.APPDATA || join(process.env.HOME || ".", ".config");
 const args = process.argv.slice(2);
 const BACKGROUND = args.includes("--background");
@@ -488,6 +488,26 @@ function personRow(u: any) {
 // avatar's name, who made it and when; if the avatar is public (or known from VRCX's cache)
 // we can also find the avatar itself: platforms, performance, description, and let you wear it.
 const avInfoCache = new Map<string, { at: number; v: any }>();
+// Optional: community avatar databases (the same kind VRCX uses) know the IDs of many public
+// avatars. Off until you turn it on — it sends the avatar's name to that website.
+const AVDB_DEFAULT = "https://api.avtrdb.com/v2/avatar/search/vrcx";
+function avdbCfg() { try { return { enabled: false, url: AVDB_DEFAULT, ...JSON.parse(scfg("avdb") || "{}") }; } catch { return { enabled: false, url: AVDB_DEFAULT }; } }
+async function avdbFind(name: string, fid: string, authorId: string) {
+  const c = avdbCfg(); if (!c.enabled || !name) return { id: "", tried: false };
+  const urls = String(c.url || AVDB_DEFAULT).split(/[\s,]+/).filter((u) => /^(https:\/\/|http:\/\/127\.0\.0\.1[:/])/.test(u)).slice(0, 3);
+  let err = "";
+  for (const base of urls) {
+    try {
+      const r = await fetch(`${base}${base.includes("?") ? "&" : "?"}search=${encodeURIComponent(name.slice(0, 64))}&n=200`, { headers: { "User-Agent": UA, Accept: "application/json" }, signal: AbortSignal.timeout(8000) });
+      if (!r.ok) { err = `${new URL(base).host} said ${r.status}`; continue; }
+      const j: any = await r.json(); const list: any[] = Array.isArray(j) ? j : j.avatars || j.data || [];
+      const hit = list.find((a) => fid && ((a.imageUrl || "").includes(fid) || (a.thumbnailImageUrl || "").includes(fid)))
+        || list.find((a) => a.name === name && (!authorId || a.authorId === authorId));
+      if (hit?.id && /^avtr_[0-9a-f-]{36}$/.test(hit.id)) return { id: hit.id, tried: true, source: new URL(base).host };
+    } catch (e: any) { err = `${(() => { try { return new URL(base).host; } catch { return "database"; } })()} didn't answer`; }
+  }
+  return { id: "", tried: true, error: err };
+}
 const PERF_ORDER = ["Excellent", "Good", "Medium", "Poor", "VeryPoor"];
 async function avatarInfo(img: string, avatarId = "") {
   const fid = (img.match(/file_[0-9a-f-]{36}/) || [])[0] || "";
@@ -507,11 +527,11 @@ async function avatarInfo(img: string, avatarId = "") {
       const hit = each(`SELECT id FROM cache_avatar WHERE image_url LIKE ? OR thumbnail_image_url LIKE ? LIMIT 1`, `%${fid}%`, `%${fid}%`)[0];
       if (hit?.id) avatarId = hit.id;
     }
-    if (!avatarId && v.authorId) {
+    if (!avatarId && v.name) {
       // public avatars by the same creator; match on the picture
-      const r = await vrc(`avatars?userId=${v.authorId}&releaseStatus=public&n=100&sort=updated&order=descending`);
-      const a = Array.isArray(r.body) ? r.body.find((x: any) => (x.imageUrl || "").includes(fid) || (x.thumbnailImageUrl || "").includes(fid)) : null;
-      if (a) avatarId = a.id;
+      // VRChat doesn't let anyone list other people's avatars, so ask the avatar database (if on)
+      const f2 = await avdbFind(v.name, fid, v.authorId);
+      if (f2.id) { avatarId = f2.id; v.foundVia = f2.source; } else { v.dbTried = f2.tried; v.dbError = f2.error || ""; }
     }
   }
   if (avatarId && /^avtr_[0-9a-f-]{36}$/.test(avatarId)) {
@@ -526,6 +546,7 @@ async function avatarInfo(img: string, avatarId = "") {
         impostor: pk.some((u: any) => u.variant === "impostor"), current: a.id === vrcUser?.currentAvatar });
     } else if (r.status === 404 || r.status === 403) v.privateNote = true;
   } else v.privateNote = true;
+  v.dbEnabled = avdbCfg().enabled;
   if (v.authorId && !v.author) {
     if (!nameCache.has(v.authorId)) { const local = friends().find((x) => x.id === v.authorId)?.name; if (local) nameCache.set(v.authorId, local); else { const o = await vrc(`users/${v.authorId}`); if (o.status === 200) nameCache.set(v.authorId, o.body.displayName); } }
     v.author = nameCache.get(v.authorId) || "";
@@ -1395,6 +1416,11 @@ function handle(req: Request, server?: any): Response | Promise<Response> | unde
       if (!session.auth) return json({ error: "signed out", status: 401 });
       return vrcUserInfo(id).then(json);
     }
+    if (p === "/api/avdb" && req.method === "GET") return json(avdbCfg());
+    if (p === "/api/avdb" && req.method === "POST") return req.json().then((b: any) => {
+      const c = { ...avdbCfg(), ...(b.enabled !== undefined ? { enabled: !!b.enabled } : {}), ...(typeof b.url === "string" ? { url: b.url.trim() || AVDB_DEFAULT } : {}) };
+      setScfg("avdb", JSON.stringify(c)); avInfoCache.clear(); return json({ ok: true, settings: c });
+    });
     if (p === "/api/vrc/avatarinfo") {
       const img = s.get("img") || "", id = s.get("id") || "";
       if (img && !/^https:\/\/([a-z0-9-]+\.)*vrchat\.(cloud|com)\//i.test(img)) return json({ error: "bad image" }, 400);
