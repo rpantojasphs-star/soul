@@ -286,7 +286,44 @@ th{font-weight:500;text-transform:none;letter-spacing:0;font-size:12px}
 .radio:hover{background:rgba(255,255,255,.05)}.radio input{margin-top:3px;accent-color:var(--accent)}
 
 /* ---------- phone layout ---------- */
+/* ---------- tidy-up pass ---------- */
+.navlabel{font-size:10.5px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;color:var(--muted);opacity:.6;padding:14px 12px 4px}
+nav .logo+.navlabel{padding-top:6px}
+.search{max-width:380px}
+.toolbar{margin-bottom:14px}
+.grid{gap:10px}
+.fcard{position:relative;border-radius:var(--radius)}
+.fcard .name{font-size:14px}
+.fcard .sub{font-size:12px;line-height:1.35}
+.fact{position:absolute;right:8px;top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:2px;padding:3px;border-radius:10px;
+  background:rgba(var(--panel-rgb),.92);box-shadow:0 2px 10px rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:opacity .12s}
+.fcard:hover .fact{opacity:1;pointer-events:auto}
+.fact .star,.fact .pokebtn{opacity:.85!important;font-size:16px;padding:4px 6px}
+.fact .star.on{color:#ffc94d}
+.favdot{position:absolute;right:10px;top:8px;font-size:11px;color:#ffc94d;opacity:.9}
+.fcard:hover .favdot{opacity:0}
+@media (hover:none){.fact{position:static;transform:none;opacity:1;pointer-events:auto;background:none;box-shadow:none}.favdot{display:none}}
+.dacts{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;align-items:center}
+.btn.icon{padding:7px 11px;font-size:15px;line-height:1}
+.btn.icon.on{color:#ffc94d}
+.moremenu{position:relative;display:inline-block;flex:none}
+.moremenu>summary{list-style:none}.moremenu>summary::-webkit-details-marker{display:none}
+.moremenu .menu{position:absolute;right:0;top:calc(100% + 6px);min-width:190px;padding:6px;z-index:20;display:flex;flex-direction:column;background:rgba(var(--panel-rgb),.98);box-shadow:0 10px 30px rgba(0,0,0,.4)}
+.moremenu .menu>*,.moremenu .menu>span>*{all:unset;cursor:pointer;display:block;padding:8px 10px;border-radius:8px;font-size:13px}
+.moremenu .menu>*:hover,.moremenu .menu>span>*:hover{background:rgba(255,255,255,.08)}
+.moremenu .menu .danger{color:var(--s-busy)}
+#drawer h2{margin-top:22px;font-size:13px;color:var(--muted);font-weight:600;letter-spacing:.2px}
+#drawer .kv{margin:16px 0 6px}
+.avmodal{display:grid;grid-template-columns:230px 1fr;gap:18px;align-items:start;margin-top:6px}
+.avmodal .pic{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:12px;cursor:zoom-in;background:rgba(255,255,255,.05);display:block}
+.avmodal .facts{display:grid;grid-template-columns:auto 1fr;gap:7px 14px;font-size:13px;margin-top:12px}
+.avmodal .facts dt{color:var(--muted)}.avmodal .facts dd{margin:0}
+#modal .box.wide{width:min(720px,94vw)}
+.section h2,.glass>h2:first-child{margin-top:0}
+.setrow{padding:12px 0}
 @media (max-width: 760px) {
+  .navlabel{display:none}
+  .avmodal{grid-template-columns:1fr}.avmodal .pic{aspect-ratio:4/3}
   html,body{font-size:14px}
   #app{grid-template-columns:1fr;grid-template-rows:1fr auto;height:100dvh}
   main{padding:10px 10px 0;height:auto;min-height:0;order:1;gap:8px}
@@ -324,13 +361,15 @@ th{font-weight:500;text-transform:none;letter-spacing:0;font-size:12px}
 <div id="app">
   <nav class="glass">
     <div class="logo"><svg class="ghost" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"> <defs> <linearGradient id="gb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e3dcff"/></linearGradient> </defs> <g transform="rotate(-8 128 132)"> <path d="M52 132 C30 120 22 100 30 88 C40 96 50 104 62 108 Z" fill="url(#gb)" stroke="#2b2342" stroke-width="7" stroke-linejoin="round"/> <path d="M204 140 C226 136 238 120 236 104 C224 110 212 116 196 118 Z" fill="url(#gb)" stroke="#2b2342" stroke-width="7" stroke-linejoin="round"/> <path d="M56 214 L56 112 C56 62 88 30 130 30 C172 30 202 62 202 112 L202 214 C192 232 178 232 170 216 C162 232 146 234 138 216 C130 234 114 234 106 216 C98 232 82 232 74 216 C68 228 58 228 56 214 Z" fill="url(#gb)" stroke="#2b2342" stroke-width="8" stroke-linejoin="round"/> <circle cx="104" cy="104" r="24" fill="#fff" stroke="#2b2342" stroke-width="6"/> <circle cx="160" cy="98" r="19" fill="#fff" stroke="#2b2342" stroke-width="6"/> <circle cx="112" cy="112" r="11" fill="#2b2342"/> <circle cx="154" cy="92" r="9" fill="#2b2342"/> <circle cx="116" cy="108" r="3.5" fill="#fff"/> <circle cx="157" cy="89" r="3" fill="#fff"/> <ellipse cx="82" cy="140" rx="12" ry="7" fill="#ff8fb8" opacity=".75"/> <ellipse cx="180" cy="134" rx="11" ry="6.5" fill="#ff8fb8" opacity=".75"/> <path d="M108 140 C116 166 156 164 164 136 Z" fill="#2b2342" stroke="#2b2342" stroke-width="6" stroke-linejoin="round"/> <path d="M128 152 C128 172 152 176 154 154 C146 150 136 150 128 152 Z" fill="#ff6b9a" stroke="#2b2342" stroke-width="5" stroke-linejoin="round"/> <path d="M141 154 L142 166" stroke="#d94a7a" stroke-width="3" stroke-linecap="round"/> </g> </svg><span>Soul</span></div>
+    <div class="navlabel">Social</div>
     <button data-v="friends"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14.8c1.8.7 3 2.4 3.5 5.2"/></svg>Friends<span class="count" id="c-online" hidden></span></button>
     <button data-v="people"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="8" r="3.5"/><path d="M3.5 20c.8-3.6 3.4-5.5 6.5-5.5 1.3 0 2.5.3 3.5.9"/><circle cx="17.5" cy="16.5" r="3"/><path d="M21.5 20.5l-1.8-1.8"/></svg>People</button>
+    <button data-v="notifications"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg>Notifications</button>
     <button data-v="feed"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h3l2.5-6 5 12 2.5-6h3"/></svg>Feed</button>
     <button data-v="friendlog"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3.5" width="14" height="17" rx="2.5"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>Friend Log</button>
-    <button data-v="worlds"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.4 2.6 3.5 5.4 3.5 8.5s-1.1 5.9-3.5 8.5c-2.4-2.6-3.5-5.4-3.5-8.5s1.1-5.9 3.5-8.5z"/></svg>My Worlds</button>
-    <button data-v="notifications"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg>Notifications</button>
+    <div class="navlabel">Explore</div>
     <button data-v="explore"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg>Explore Worlds</button>
+    <button data-v="worlds"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.4 2.6 3.5 5.4 3.5 8.5s-1.1 5.9-3.5 8.5c-2.4-2.6-3.5-5.4-3.5-8.5s1.1-5.9 3.5-8.5z"/></svg>My Worlds</button>
     <button data-v="groups"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20v-1.5A4.5 4.5 0 0 1 8.5 14h7a4.5 4.5 0 0 1 4.5 4.5V20"/><circle cx="12" cy="7.5" r="3.5"/><path d="M3 11.5a2.5 2.5 0 0 1 3-2.4M21 11.5a2.5 2.5 0 0 0-3-2.4"/></svg>Groups</button>
     <button data-v="photos"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><circle cx="9" cy="10" r="1.8"/><path d="M21 16l-5-5-8 8"/></svg>Photos</button>
     <button data-v="avatars"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="3.5"/><path d="M6 21v-3.5A4.5 4.5 0 0 1 10.5 13h3a4.5 4.5 0 0 1 4.5 4.5V21"/><path d="M4 10l2-1M20 10l-2-1"/></svg>Avatars</button>
@@ -447,7 +486,7 @@ const saveTheme = debounce(() => {
 function setTheme(patch) { Object.assign(theme, patch); applyTheme(); saveTheme(); }
 
 // ================= navigation =================
-const TITLES = { friends: "Friends", people: "People", feed: "Feed", friendlog: "Friend Log", worlds: "My Worlds", notifications: "Notifications", explore: "Explore Worlds", groups: "Groups", photos: "Photos", avatars: "Avatars", profile: "My Profile", theme: "Theme", settings: "Settings" };
+const TITLES = { friends: "Friends", people: "People", notifications: "Notifications", feed: "Feed", friendlog: "Friend Log", explore: "Explore Worlds", worlds: "My Worlds", groups: "Groups", photos: "Photos", avatars: "Avatars", profile: "My Profile", theme: "Theme", settings: "Settings" };
 function go(v) {
   S.view = v; prefs.view = v; savePrefs();
   document.querySelectorAll("nav button").forEach((b) => b.classList.toggle("on", b.dataset.v === v));
@@ -530,7 +569,7 @@ function friendCard(f) {
     <div class="avwrap">${avatar(f.name, f.thumb)}<span class="sdot" style="background:${statusColor(f)}"></span></div>
     <div class="info"><div class="name" style="color:${trustVar(f.trust)}">${esc(f.name)}</div>
       <div class="sub">${f.statusText ? esc(f.statusText) : f.online ? esc(f.status || "online") : ""}</div>
-      <div class="sub">${where}</div></div><button class="star ${f.fav ? "on" : ""}" title="${f.fav ? "Remove from favorites" : "Add to favorites"}" onclick="event.stopPropagation();toggleFav('${esc(f.id)}', ${!f.fav})">${f.fav ? "★" : "☆"}</button><button class="pokebtn" title="Message" onclick="event.stopPropagation();openChat('${esc(f.id)}','${esc(jsq(f.name))}')">💬</button><button class="pokebtn" title="Poke (Shift+click: repeat last poke)" onclick="event.stopPropagation();pokeClick(event,'${esc(f.id)}','${esc(jsq(f.name))}')">👉</button></div>`;
+      <div class="sub">${where}</div></div><div class="fact"><button class="star ${f.fav ? "on" : ""}" title="${f.fav ? "Remove from favorites" : "Add to favorites"}" onclick="event.stopPropagation();toggleFav('${esc(f.id)}', ${!f.fav})">${f.fav ? "★" : "☆"}</button><button class="pokebtn" title="Message" onclick="event.stopPropagation();openChat('${esc(f.id)}','${esc(jsq(f.name))}')">💬</button><button class="pokebtn" title="Poke (Shift+click: repeat last poke)" onclick="event.stopPropagation();pokeClick(event,'${esc(f.id)}','${esc(jsq(f.name))}')">👉</button></div>${f.fav ? '<span class="favdot" title="Favorite">★</span>' : ""}</div>`;
 }
 function memberChip(f) {
   return `<div class="member" onclick="openUser('${esc(f.id)}')"><div class="avwrap">${avatar(f.name, f.thumb, "sm")}<span class="sdot" style="background:${statusColor(f)};width:11px;height:11px"></span></div>
@@ -718,17 +757,20 @@ window.openUser = async (id) => {
         <div class="sub" id="d-trust">${f ? esc(f.trust) + (f.num ? ` · friend #${f.num}` : "") : id === VRC.id ? "This is you" : "Not on your friends list"}</div>
         ${f?.statusText ? `<div class="sub" style="color:var(--text)">${esc(f.statusText)}</div>` : ""}
         <div class="sub">${f ? (f.online ? (L.kind === "world" ? "In " + esc(f.world) + " · " + esc(L.type) : esc(L.label)) : "Last seen " + ago(f.since)) : ""}</div></div></div>
-    <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
-      ${f?.online && L.kind === "world" ? `<a class="btn primary" href="${launchUrl(L.loc)}">Launch to their world</a>` : ""}
-      ${f ? `<button class="btn" onclick="toggleFav('${esc(id)}', ${!f.fav}).then(()=>openUser('${esc(id)}'))">${f.fav ? "★ Favorite" : "☆ Add to favorites"}</button>` : ""}
+    <div class="dacts">
       ${f && VRC.loggedIn ? `<button class="btn primary" onclick="openChat('${esc(id)}','${esc(jsq(name))}')">💬 Message</button>` : ""}
-      ${f ? `<button class="btn primary" onclick="openPoke('${esc(id)}','${esc(jsq(name))}')">👉 Poke</button>` : ""}
-      ${f && VRC.loggedIn ? `<button class="btn" onclick="inviteUser('${esc(id)}','${esc(jsq(name))}')">Invite to my world</button>` : ""}
-      ${f?.online && VRC.loggedIn ? `<button class="btn" onclick="requestInvite('${esc(id)}','${esc(jsq(name))}')">Ask to join</button>` : ""}
+      ${f ? `<button class="btn" onclick="openPoke('${esc(id)}','${esc(jsq(name))}')">👉 Poke</button>` : ""}
+      ${f?.online && L.kind === "world" ? `<a class="btn" href="${launchUrl(L.loc)}">🚀 Join them</a>` : ""}
       <span id="d-friend" style="display:contents"></span>
       ${id === VRC.id ? `<button class="btn primary" onclick="closeUser();go('profile')">Edit my profile</button>` : ""}
-      <a class="btn" href="https://vrchat.com/home/user/${esc(id)}" target="_blank">VRChat profile</a>
-      <button class="btn" onclick="navigator.clipboard.writeText('${esc(id)}');toast('User ID copied')">Copy ID</button></div>
+      ${f ? `<button class="btn icon ${f.fav ? "on" : ""}" title="${f.fav ? "Remove from favorites" : "Add to favorites"}" onclick="toggleFav('${esc(id)}', ${!f.fav}).then(()=>openUser('${esc(id)}'))">${f.fav ? "★" : "☆"}</button>` : ""}
+      <details class="moremenu"><summary class="btn icon" title="More">⋯</summary><div class="menu glass" onclick="this.parentElement.open=false">
+        ${f && VRC.loggedIn ? `<button onclick="inviteUser('${esc(id)}','${esc(jsq(name))}')">Invite to my world</button>` : ""}
+        ${f?.online && VRC.loggedIn ? `<button onclick="requestInvite('${esc(id)}','${esc(jsq(name))}')">Ask to join</button>` : ""}
+        <a href="https://vrchat.com/home/user/${esc(id)}" target="_blank">Open on vrchat.com</a>
+        <button onclick="navigator.clipboard.writeText('${esc(id)}');toast('User ID copied')">Copy user ID</button>
+        <span id="d-more-friend" style="display:contents"></span>
+      </div></details></div>
     <div class="kv">
       <div><b>${u.met?.meets ? fmtDur(u.met.time || 0) : "—"}</b><span>Time together</span></div>
       <div><b>${u.met?.meets || 0}</b><span>Times met</span></div>
@@ -743,7 +785,7 @@ window.openUser = async (id) => {
     <div id="d-bio">${u.bio ? `<h2>Bio</h2><div class="bio">${esc(u.bio)}</div><div class="muted small" style="margin:4px 0 14px">updated ${ago(u.bioUpdated)}</div>` : ""}</div>
     ${u.names.length ? `<h2>Past names</h2><div class="rows glass" style="margin-bottom:14px">${u.names.map((n) => `<div class="row"><div class="body ellip">${esc(n.prev)} → ${esc(n.name)}</div><div class="small muted">${fmtDate(n.at)}</div></div>`).join("")}</div>` : ""}
     ${u.log.length ? `<h2>Friendship</h2><div class="rows glass" style="margin-bottom:14px">${u.log.map((n) => `<div class="row"><div class="body kl k-${n.type}">${esc(n.type)}</div><div class="small muted">${fmtDate(n.at)}</div></div>`).join("")}</div>` : ""}
-    ${u.avatars?.length > 1 ? `<h2>Avatars they've worn <span class="muted small">· ${u.avatars.length}${u.avatars.length >= 24 ? "+" : ""}</span></h2><div class="avgrid">${u.avatars.map((a) => `<div class="avtile" title="${esc(a.name)} — last worn ${ago(a.at)}${a.times > 1 ? ", " + a.times + " times" : ""}">${a.thumb ? `<img loading="lazy" referrerpolicy="no-referrer" style="cursor:zoom-in" onclick="zoomImg(this.src.replace(/%2F256$/, '%2F1024'))" src="${proxied(a.thumb)}" onerror="this.style.visibility='hidden'">` : "<div class=img></div>"}<div class="ellip small">${esc(a.name || "Unknown")}</div><div class="muted" style="font-size:11px">${ago(a.at)}</div></div>`).join("")}</div>` : ""}
+    ${u.avatars?.length > 1 ? `<h2>Avatars they've worn <span class="muted small">· ${u.avatars.length}${u.avatars.length >= 24 ? "+" : ""}</span></h2><div class="avgrid">${u.avatars.map((a) => `<div class="avtile" style="cursor:pointer" title="${esc(a.name)} — click for details" onclick="openAvatar('${esc(jsq(a.thumb || ""))}', '', {name:'${esc(jsq(a.name || ""))}', times:${+a.times || 0}, at:'${esc(a.at || "")}', who:'${esc(jsq(name))}'})">${a.thumb ? `<img loading="lazy" referrerpolicy="no-referrer" src="${proxied(a.thumb)}" onerror="this.style.visibility='hidden'">` : "<div class=img></div>"}<div class="ellip small">${esc(a.name || "Unknown")}</div><div class="muted" style="font-size:11px">${ago(a.at)}</div></div>`).join("")}</div>` : ""}
     <h2>Recent activity</h2><div class="rows glass">${u.recent.map(feedRow).join("") || `<div class="empty">No activity logged.</div>`}</div>`;
   if (VRC.loggedIn) {
     loadMutuals(id); friendButtons(id, name);
@@ -768,7 +810,7 @@ function avatarSection(a, live) {
     <div class="avcard glass">
       <div class="avimg">${img ? `<img src="${img}" referrerpolicy="no-referrer" onclick="zoomImg(this.src)" onerror="this.parentElement.classList.add('noimg');this.remove()">` : ""}</div>
       <div class="avinfo">
-        <div class="name" style="font-size:16px;white-space:normal">${esc(a.name || "Unknown avatar")}</div>
+        <div class="name lnk" style="font-size:16px;white-space:normal" title="Avatar details" onclick="openAvatar('${esc(jsq(a.image || a.thumb || ""))}', '', {name:'${esc(jsq(a.name || ""))}'})">${esc(a.name || "Unknown avatar")} <span class="muted small">· details ›</span></div>
         ${a.author ? `<div class="sub" style="white-space:normal">by ${a.authorId ? uname(a.authorId, a.author) : esc(a.author)}${a.own ? " · their own upload" : ""}</div>` : live || VRC.loggedIn ? "" : `<div class="sub">Sign in to VRChat to see who made it</div>`}
         ${a.created ? `<div class="sub">Uploaded ${fmtDate(a.created)}</div>` : ""}
         ${warn.length ? `<div class="sub" style="color:var(--s-ask)">Content: ${warn.join(", ")}</div>` : ""}
@@ -902,8 +944,8 @@ window.openAccount = async () => {
     <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:14px">${VRC.vrcPlus ? `<button class="btn" onclick="openEmojiUpload()">＋ Add custom emoji</button>` : ""}<a class="btn" href="https://vrchat.com/home/user/${esc(VRC.id)}" target="_blank">My VRChat profile</a><button class="btn" onclick="signOut()">Sign out</button></div>`);
 };
 window.signOut = async () => { await fetch("/api/vrc/logout", { method: "POST" }); customEmojis = null; await refreshAccount(); closeModal(); toast("Signed out of VRChat"); };
-window.closeModal = () => { $("#modal").classList.remove("open"); clearInterval(window.chatTimerRef); };
-const showModal = (html) => { $("#mbox").innerHTML = html; $("#modal").classList.add("open"); };
+window.closeModal = () => { $("#modal").classList.remove("open"); $("#modal .box")?.classList.remove("wide"); clearInterval(window.chatTimerRef); };
+const showModal = (html) => { $("#modal .box")?.classList.remove("wide"); $("#mbox").innerHTML = html; $("#modal").classList.add("open"); };
 
 function openLogin(then, need2fa) {
   S.afterLogin = then || S.afterLogin;
@@ -1189,6 +1231,50 @@ async function pickMessage(type, title, send) {
 window.inviteUser = (id, name) => pickMessage("message", `Invite ${name} to your world`, async (slot) => { const r = await postJ("/api/vrc/invite", { userId: id, slot }); toast(r.ok ? `Invited ${name} to your world` : r.error); });
 window.requestInvite = (id, name) => pickMessage("request", `Ask ${name} for an invite`, async (slot) => { const r = await postJ("/api/vrc/requestInvite", { userId: id, slot }); toast(r.ok ? `Asked ${name} for an invite` : r.error); });
 
+// ================= avatar details =================
+const PERF = { Excellent: ["Excellent", "#3ddc84"], Good: ["Good", "#8be36b"], Medium: ["Medium", "#ffd24d"], Poor: ["Poor", "#ff9a3d"], VeryPoor: ["Very Poor", "#ff4d5e"] };
+window.openAvatar = async (img, id, local = {}) => {
+  if (!VRC.loggedIn) return img ? zoomImg(proxied(img)) : null;
+  showModal(`<div class="muted">Looking up ${esc(local.name || "this avatar")}…</div>`);
+  const a = await api(`/api/vrc/avatarinfo?img=${encodeURIComponent(img || "")}&id=${encodeURIComponent(id || "")}`).catch(() => ({ error: "Couldn't reach Soul." }));
+  if (!$("#modal").classList.contains("open")) return;
+  if (a.error) { $("#mbox").innerHTML = `<button class="btn" style="float:right" onclick="closeModal()">✕</button><div class="empty">${esc(a.error)}</div>`; return; }
+  const big = proxied(a.image || img), name = a.name || local.name || "Unknown avatar";
+  const plat = (a.platforms || []).map((p) => ({ standalonewindows: "PC", android: "Quest / Android", ios: "iPhone / iPad" })[p] || p);
+  const warn = (a.tags || []).filter((t) => CONTENT[t]).map((t) => CONTENT[t]);
+  const ctags = (a.tags || []).filter((t) => t.startsWith("author_tag_")).map((t) => t.slice(11));
+  const perf = Object.entries(a.perf || {}).map(([p, r]) => `${({ standalonewindows: "PC", android: "Quest", ios: "iOS" })[p] || p}: <b style="color:${(PERF[r] || [, "inherit"])[1]}">${(PERF[r] || [r])[0]}</b>`).join(" · ");
+  const rows = [
+    a.author && ["Made by", a.authorId ? `<span class="lnk" onclick="closeModal();openUser('${esc(a.authorId)}')">${esc(a.author)}</span>` : esc(a.author)],
+    a.status && ["Visibility", a.status === "public" ? "Public — anyone can wear it" : "Private — only the creator can wear it"],
+    plat.length && ["Works on", plat.join(", ")],
+    perf && ["Performance", perf],
+    a.created && ["Uploaded", fmtDate(a.created)],
+    (a.updated || a.imageUpdated) && ["Last updated", fmtDate(a.updated || a.imageUpdated) + (a.version ? ` · version ${a.version}` : "")],
+    a.styles?.length && ["Style", a.styles.map(esc).join(", ")],
+    warn.length && ["Content", `<span style="color:var(--s-ask)">${warn.join(", ")}</span>`],
+    ctags.length && ["Tags", ctags.map((t) => "#" + esc(t)).join(" ")],
+    a.id && ["Avatar ID", `<code style="font-size:11px;user-select:all;word-break:break-all;display:block">${esc(a.id)}</code><span class="lnk small" onclick="navigator.clipboard.writeText('${esc(a.id)}');toast('Avatar ID copied')">Copy ID</span>`],
+    local.times && [`${esc(local.who || "They")} wore it`, `${local.times} time${local.times > 1 ? "s" : ""}${local.at ? " · last " + ago(local.at) : ""}`],
+  ].filter(Boolean);
+  $("#modal .box").classList.add("wide");
+  $("#mbox").innerHTML = `<div style="display:flex;align-items:center;gap:10px"><div style="flex:1;min-width:0"><div class="name" style="font-size:19px;white-space:normal">${esc(name)}</div>
+      ${a.author ? `<div class="sub">by ${a.authorId ? `<span class="lnk" onclick="closeModal();openUser('${esc(a.authorId)}')">${esc(a.author)}</span>` : esc(a.author)}</div>` : ""}</div><button class="btn" onclick="closeModal()">✕</button></div>
+    <div class="avmodal">
+      <div>${big ? `<img class="pic" src="${big}" referrerpolicy="no-referrer" onclick="zoomImg(this.src)" onerror="this.style.visibility='hidden'">` : `<div class="pic"></div>`}</div>
+      <div style="min-width:0">
+        ${a.description ? `<div class="bio" style="max-height:120px">${esc(a.description)}</div>` : ""}
+        <dl class="facts">${rows.filter(([k]) => k !== "Made by").map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl>
+        ${!a.id ? `<div class="muted small" style="margin-top:12px">This avatar is private, so VRChat only shares its name, creator and dates — not its performance or who can wear it.</div>` : ""}
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:16px">
+          ${a.id && a.status === "public" ? `<button class="btn primary" ${a.current ? "disabled" : ""} onclick="wearAvatar('${esc(a.id)}','${esc(jsq(name))}')">${a.current ? "Wearing now" : "Wear this"}</button>
+            <button class="btn icon ${a.fav ? "on" : ""}" title="${a.fav ? "Remove from your favorites" : "Add to your favorites"}" onclick="favAvatar('${esc(a.id)}', ${!a.fav}, '${esc(a.fav || "")}').then(()=>openAvatar('${esc(jsq(img))}','${esc(a.id)}',${esc(JSON.stringify(local)).replace(/"/g, "&quot;")}))">${a.fav ? "★" : "☆"}</button>` : ""}
+          ${a.id ? `<details class="moremenu"><summary class="btn icon" title="More">⋯</summary><div class="menu glass" onclick="this.parentElement.open=false"><a href="https://vrchat.com/home/avatar/${esc(a.id)}" target="_blank">Open on vrchat.com</a><button onclick="navigator.clipboard.writeText('${esc(a.id)}');toast('Avatar ID copied')">Copy avatar ID</button></div></details>` : ""}
+        </div>
+      </div>
+    </div>`;
+};
+
 // ================= messages =================
 let chatTimer = null, chatFor = null;
 window.openChat = async (id, name) => {
@@ -1269,7 +1355,8 @@ async function friendButtons(id, name) {
   const st = await api("/api/vrc/friendStatus?id=" + id).catch(() => null);
   if (!st || st.error || st.self || !$("#d-friend")) return;
   const n = esc(jsq(name));
-  $("#d-friend").innerHTML = st.isFriend ? `<button class="btn" onclick="friendAction('${esc(id)}','unfriend','${n}')">Unfriend</button>`
+  if (st.isFriend) { $("#d-friend").innerHTML = ""; if ($("#d-more-friend")) $("#d-more-friend").innerHTML = `<button class="danger" onclick="friendAction('${esc(id)}','unfriend','${n}')">Unfriend</button>`; return; }
+  $("#d-friend").innerHTML = false ? ""
     : st.incoming ? `<button class="btn primary" onclick="friendAction('${esc(id)}','accept','${n}')">✓ Accept their friend request</button>`
     : st.outgoing ? `<button class="btn" onclick="friendAction('${esc(id)}','cancel','${n}')">Request sent · Cancel</button>`
     : `<button class="btn primary" onclick="friendAction('${esc(id)}','add','${n}')">+ Add friend</button>`;

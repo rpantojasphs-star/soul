@@ -11,7 +11,7 @@ import { networkInterfaces } from "node:os";
 import { randomBytes } from "node:crypto";
 import icon256 from "./icon-256.png" with { type: "file" };
 
-const VERSION = "3.2.3";
+const VERSION = "3.3.0";
 const APPDATA = process.env.APPDATA || join(process.env.HOME || ".", ".config");
 const args = process.argv.slice(2);
 const BACKGROUND = args.includes("--background");
@@ -482,6 +482,57 @@ function personRow(u: any) {
   return { id: u.id, name: u.displayName, statusText: u.statusDescription || "", status: u.status || "", trust: trustOf(u.tags), pronouns: u.pronouns || "",
     thumb: u.profilePicOverrideThumbnail || u.profilePicOverride || u.userIcon || u.currentAvatarThumbnailImageUrl || "", platform: u.last_platform || "",
     friend, me: u.id === ME, vrcPlus: (u.tags || []).includes("system_supporter"), bio: (u.bio || "").slice(0, 140) };
+}
+// ---------- details about one avatar (from its picture) ----------
+// VRChat only tells us which picture someone's avatar had. From the picture's file we get the
+// avatar's name, who made it and when; if the avatar is public (or known from VRCX's cache)
+// we can also find the avatar itself: platforms, performance, description, and let you wear it.
+const avInfoCache = new Map<string, { at: number; v: any }>();
+const PERF_ORDER = ["Excellent", "Good", "Medium", "Poor", "VeryPoor"];
+async function avatarInfo(img: string, avatarId = "") {
+  const fid = (img.match(/file_[0-9a-f-]{36}/) || [])[0] || "";
+  const key = fid || avatarId;
+  if (!key) return { error: "Unknown avatar." };
+  const c = avInfoCache.get(key); if (c && Date.now() - c.at < 10 * 60_000) return c.v;
+  const v: any = { fileId: fid, image: img };
+  if (fid) {
+    const f = await vrc(`file/${fid}`);
+    if (f.status === 200) {
+      const vers = (f.body.versions || []).filter((x: any) => x.version > 0);
+      v.name = (/Avatar - (.*) - Image -/i.exec(f.body.name || "") || [])[1] || "";
+      v.authorId = f.body.ownerId || "";
+      v.created = vers[0]?.created_at || ""; v.imageUpdated = vers[vers.length - 1]?.created_at || ""; v.imageVersions = vers.length;
+    }
+    if (!avatarId) {
+      const hit = each(`SELECT id FROM cache_avatar WHERE image_url LIKE ? OR thumbnail_image_url LIKE ? LIMIT 1`, `%${fid}%`, `%${fid}%`)[0];
+      if (hit?.id) avatarId = hit.id;
+    }
+    if (!avatarId && v.authorId) {
+      // public avatars by the same creator; match on the picture
+      const r = await vrc(`avatars?userId=${v.authorId}&releaseStatus=public&n=100&sort=updated&order=descending`);
+      const a = Array.isArray(r.body) ? r.body.find((x: any) => (x.imageUrl || "").includes(fid) || (x.thumbnailImageUrl || "").includes(fid)) : null;
+      if (a) avatarId = a.id;
+    }
+  }
+  if (avatarId && /^avtr_[0-9a-f-]{36}$/.test(avatarId)) {
+    const r = await vrc(`avatars/${avatarId}`);
+    if (r.status === 200) {
+      const a = r.body, pk = a.unityPackages || [];
+      const perf: Record<string, string> = {};
+      for (const u of pk) if (u.performanceRating && u.performanceRating !== "None") { const k = u.platform; if (!perf[k] || PERF_ORDER.indexOf(u.performanceRating) > PERF_ORDER.indexOf(perf[k])) perf[k] = u.performanceRating; }
+      Object.assign(v, { id: a.id, name: a.name || v.name, authorId: a.authorId || v.authorId, author: a.authorName || "", description: a.description || "", status: a.releaseStatus || "",
+        created: a.created_at || v.created, updated: a.updated_at || "", version: a.version || 0, platforms: [...new Set(pk.map((u: any) => u.platform))], perf,
+        tags: a.tags || [], image: a.imageUrl || img, thumb: a.thumbnailImageUrl || "", styles: [a.styles?.primary, a.styles?.secondary].filter(Boolean),
+        impostor: pk.some((u: any) => u.variant === "impostor"), current: a.id === vrcUser?.currentAvatar });
+    } else if (r.status === 404 || r.status === 403) v.privateNote = true;
+  } else v.privateNote = true;
+  if (v.authorId && !v.author) {
+    if (!nameCache.has(v.authorId)) { const local = friends().find((x) => x.id === v.authorId)?.name; if (local) nameCache.set(v.authorId, local); else { const o = await vrc(`users/${v.authorId}`); if (o.status === 200) nameCache.set(v.authorId, o.body.displayName); } }
+    v.author = nameCache.get(v.authorId) || "";
+  }
+  if (v.id) { const fav = await vrc("avatars/favorites?n=300"); v.fav = Array.isArray(fav.body) ? fav.body.find((x: any) => x.id === v.id)?.favoriteId || "" : ""; }
+  avInfoCache.set(key, { at: Date.now(), v });
+  return v;
 }
 // ---------- theme ----------
 function readTheme() {
@@ -1344,6 +1395,12 @@ function handle(req: Request, server?: any): Response | Promise<Response> | unde
       if (!session.auth) return json({ error: "signed out", status: 401 });
       return vrcUserInfo(id).then(json);
     }
+    if (p === "/api/vrc/avatarinfo") {
+      const img = s.get("img") || "", id = s.get("id") || "";
+      if (img && !/^https:\/\/([a-z0-9-]+\.)*vrchat\.(cloud|com)\//i.test(img)) return json({ error: "bad image" }, 400);
+      if (!session.auth) return json({ error: "Sign in to VRChat to see avatar details." });
+      return avatarInfo(img, /^avtr_[0-9a-f-]{36}$/.test(id) ? id : "").then(json);
+    }
     if (p === "/api/vrc/img") {
       const u = s.get("u") || "";
       const okHost = /^https:\/\/([a-z0-9-]+\.)*(vrchat\.cloud|vrchat\.com)\//i.test(u);
@@ -1458,6 +1515,7 @@ function handle(req: Request, server?: any): Response | Promise<Response> | unde
       if (!/^avtr_[0-9a-f-]{36}$/.test(id || "")) return json({ ok: false, error: "Bad avatar." });
       const r = on ? await vrc("favorites", { method: "POST", body: JSON.stringify({ type: "avatar", favoriteId: id, tags: ["avatars1"] }) })
         : await vrc(`favorites/${/^fvrt_/.test(favId || "") ? favId : id}`, { method: "DELETE" });
+      avInfoCache.clear();
       return json(r.status === 200 ? { ok: true } : { ok: false, error: vrcError(r) });
     });
     if (p === "/api/avatars/worn") return json(worlds().avatars);

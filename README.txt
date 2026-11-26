@@ -2,7 +2,7 @@ SOUL  -  a fast, themeable VRChat companion
 ===========================================
 
 HOW TO INSTALL
-1. Run Soul-Setup-3.2.3.exe. It installs Soul for just you (no admin needed),
+1. Run Soul-Setup-3.3.0.exe. It installs Soul for just you (no admin needed),
    adds Start menu and desktop shortcuts, and an uninstaller in Windows'
    "Installed apps". Your history and settings are always kept.
    Windows may show "Windows protected your PC" because the app isn't signed:
