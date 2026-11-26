@@ -3,7 +3,7 @@ Unicode true
 !include "MUI2.nsh"
 !define APP "Soul"
 !ifndef VERSION
-  !define VERSION "3.4.1"
+  !define VERSION "3.4.2"
 !endif
 Name "${APP}"
 OutFile "..\dist\Soul-Setup-${VERSION}.exe"

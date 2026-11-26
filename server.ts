@@ -11,7 +11,7 @@ import { networkInterfaces } from "node:os";
 import { randomBytes } from "node:crypto";
 import icon256 from "./icon-256.png" with { type: "file" };
 
-const VERSION = "3.4.1";
+const VERSION = "3.4.2";
 const APPDATA = process.env.APPDATA || join(process.env.HOME || ".", ".config");
 const args = process.argv.slice(2);
 const BACKGROUND = args.includes("--background");
@@ -846,7 +846,7 @@ function saveNotificationV2(n: any) {
     VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`).run(n.id, n.createdAt || iso(), n.updatedAt || iso(), n.expiresAt || "", n.type || "", n.link || "", n.linkText || "", n.message || "", n.title || "",
     n.imageUrl || "", n.seen ? 1 : 0, n.senderUserId || "", n.senderUsername || "", JSON.stringify(n.data || {}), JSON.stringify(n.responses || []), JSON.stringify(n.details || {}));
   const uid = n.senderUserId || (String(n.link || "").startsWith("user:") ? String(n.link).slice(5) : "");
-  bump(); alertEvent("notification", { type: n.type, uid, name: n.senderUsername || fstate.get(uid)?.name, title: n.title, message: n.message, id: n.id });
+  bump(); alertEvent("notification", { type: n.type, uid, name: n.senderUsername || n.data?.boopingUserDisplayName || fstate.get(uid)?.name, title: n.title, message: n.message, id: n.id, details: n.details, imageUrl: n.imageUrl });
 }
 let ownAvatar = { id: "", at: 0 };
 async function recordOwnAvatar(avatarId: string) {
@@ -992,6 +992,24 @@ function pushAlert(a: any) {
   try { SERVER?.publish("alerts", JSON.stringify({ type: "alert", alert: a })); } catch (e) { logErr(e); }
   try { if (steamvr || process.env.SOUL_VR_TEST) vrAlert(a); } catch (e) { logErr(e); }
 }
+// what someone poked you with: a built-in VRChat emoji ("default_heart") or one of their own uploads
+const emojiFileCache = new Map<string, any>();
+async function boopEmoji(details: any, imageUrl = "") {
+  const d = typeof details === "string" ? (() => { try { return JSON.parse(details); } catch { return {}; } })() : details || {};
+  const id = String(d.emojiId || (imageUrl.startsWith("default_") ? imageUrl : "") || "");
+  if (id.startsWith("default_")) return { key: id.slice(8) };
+  const fid = (id.match(/^file_[0-9a-f-]{36}$/) || (imageUrl.match(/file_[0-9a-f-]{36}/) || []))[0];
+  if (!fid) return null;
+  const ver = +d.emojiVersion || +((imageUrl.match(/file_[0-9a-f-]{36}\/(\d+)/) || [])[1]) || 1;
+  if (!emojiFileCache.has(fid)) { const f = await vrc(`file/${fid}`).catch(() => null); emojiFileCache.set(fid, f?.status === 200 ? { frames: f.body.frames || 0, fps: f.body.framesOverTime || 0, loop: f.body.loopStyle || "linear", name: f.body.name || "" } : {}); }
+  const m = emojiFileCache.get(fid) || {};
+  return { url: `https://api.vrchat.cloud/api/1/file/${fid}/${ver}/file`, frames: m.frames || 0, fps: m.fps || 12, loop: m.loop || "linear" };
+}
+async function pokeAlert(d: any, name: string) {
+  const emoji = await boopEmoji(d.details, d.imageUrl || "");
+  const label = emoji?.key ? emoji.key.replace(/_/g, " ") : emoji?.url ? "a custom emoji" : "";
+  pushAlert({ kind: "poke", uid: d.uid, title: `${name} poked you!`, body: label ? `with ${label}` : "👉 Boop", img: picFor(d.uid), emoji });
+}
 function picFor(uid: string) {
   const L = live?.map.get(uid);
   return L?.profilePicOverrideThumbnail || L?.userIcon || L?.currentAvatarThumbnailImageUrl || fstate.get(uid)?.avatarThumb || "";
@@ -1012,7 +1030,7 @@ let alertEvent = (kind: string, d: any) => {
     else if (t === "requestInvite" && c.requestInvite) pushAlert({ kind: "requestInvite", uid: d.uid, title: d.text ? `💬 ${name}` : `${name} wants an invite`, body: d.text || "Asked to join you", img: picFor(d.uid) });
     else if ((t === "inviteResponse" || t === "requestInviteResponse") && d.text && c.requestInvite) pushAlert({ kind: "requestInvite", uid: d.uid, title: `💬 ${name} replied`, body: d.text, img: picFor(d.uid) });
     else if (t === "friendRequest" && c.friendRequest) pushAlert({ kind: "friendRequest", uid: d.uid, title: `${name} sent you a friend request`, body: "Open Notifications to see it", img: picFor(d.uid) });
-    else if (t === "boop" && c.poke) pushAlert({ kind: "poke", uid: d.uid, title: `${name} poked you!`, body: d.title || "👉 Boop", img: picFor(d.uid) });
+    else if (t === "boop" && c.poke) pokeAlert(d, name).catch(logErr);
     else if (t.startsWith("group.") && c.groups) pushAlert({ kind: "group", uid: d.uid, title: d.title || "Group update", body: d.message || "", img: "" });
   }
 };

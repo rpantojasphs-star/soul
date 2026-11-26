@@ -247,6 +247,10 @@ th{font-weight:500;text-transform:none;letter-spacing:0;font-size:12px}
 #toasts{position:fixed;right:18px;bottom:18px;z-index:9;display:flex;flex-direction:column;gap:10px;align-items:flex-end;pointer-events:none}
 .atoast{pointer-events:auto;display:flex;gap:12px;align-items:center;min-width:280px;max-width:380px;padding:12px 14px;cursor:pointer;background:rgba(var(--panel-rgb),.96)!important;animation:tin .25s ease}
 .atoast .t1{font-weight:600}.atoast .t2{font-size:12px;color:var(--muted)}
+.atoast .aemo{flex:none;font-size:36px;line-height:1;margin-left:4px;filter:drop-shadow(0 2px 6px rgba(0,0,0,.4));animation:pokepop .5s cubic-bezier(.3,1.6,.5,1)}
+.atoast .aemo img,.atoast .aemo .animemo{display:block;border-radius:8px}
+@keyframes pokepop{0%{transform:scale(.3) rotate(-20deg)}100%{transform:none}}
+.bemo{font-size:18px;vertical-align:middle}img.bemo{width:26px;height:26px;object-fit:contain;border-radius:6px}
 .atoast .x{margin-left:auto;color:var(--muted);font-size:12px;align-self:flex-start}
 @keyframes tin{from{transform:translateY(12px);opacity:0}to{transform:none;opacity:1}}
 .toggle{position:relative;width:44px;height:24px;flex:none;appearance:none;-webkit-appearance:none;background:#d9434f;border-radius:99px;cursor:pointer;
@@ -737,7 +741,11 @@ VIEWS.notifications = async () => {
     if (r.type === "invite") what = `invited you to <b>${esc(r.world)}</b>` + (r.location && parseLoc(r.location).kind === "world" ? ` <a class="small muted" href="${launchUrl(r.location)}">launch</a>${VRC.loggedIn ? ` · <a class="small muted" style="cursor:pointer" onclick="selfInvite('${esc(r.location)}')">invite me in-game</a>` : ""}` : "");
     else if (r.type === "friendRequest") what = "sent you a friend request" + (r.state === "pending" && VRC.loggedIn ? ` <button class="btn primary" style="padding:3px 10px;margin-left:6px" onclick="answerFR('${esc(r.id)}', true, '${esc(jsq(r.name))}')">Accept</button> <button class="btn" style="padding:3px 10px" onclick="answerFR('${esc(r.id)}', false, '${esc(jsq(r.name))}')">Decline</button>` : r.state === "accepted" ? ' <span class="badge" style="color:var(--s-active)">accepted</span>' : r.state === "declined" ? ' <span class="badge">declined</span>' : "");
     else if (r.type === "requestInvite") what = "asked for an invite" + (VRC.loggedIn && r.uid ? ` · <a class="small muted" style="cursor:pointer" onclick="inviteUser('${esc(r.uid)}','${esc(jsq(r.name))}')">invite them</a>` : "");
-    else if (r.type === "boop") what = "booped you";
+    else if (r.type === "boop") {
+      const key = (r.img || "").startsWith("default_") ? r.img.slice(8) : "";
+      what = key ? `poked you with <span class="bemo">${EMOJI[key] || "👉"}</span> <span class="muted">${esc(emoLabel(key))}</span>` : /file_/.test(r.img || "") ? `poked you with <img class="bemo" loading="lazy" src="${imgUrl(r.img.replace(/\/file$/, "") + "/file")}" onerror="this.replaceWith('a custom emoji')">` : "poked you 👉";
+      r = { ...r, img: "" };
+    }
     else if (r.type.endsWith("Response")) what = "replied" + (r.responseMsg ? `: ${esc(r.responseMsg)}` : "");
     else if (r.message) what = `<span class="muted">${esc(r.message)}</span>`;
     const extra = r.inviteMsg || r.requestMsg ? ` <span class="muted">“${esc(r.inviteMsg || r.requestMsg)}”</span>` : "";
@@ -1749,17 +1757,21 @@ function blip() {
 async function handleAlert(a) {
   if (!ALERTS) ALERTS = (await api("/api/alerts").catch(() => ({ settings: {} }))).settings;
   const open = () => { window.focus(); if (a.kind === "friendRequest") { prefs.nGroup = "friendreq"; go("notifications"); } else if (a.kind === "invite" || a.kind === "requestInvite" || a.kind === "group") go("notifications"); else if (a.uid) openUser(a.uid); };
+  // pokes: show the emoji they used
+  let emoHtml = "";
+  if (a.emoji?.key) { const ch = EMOJI[a.emoji.key] || "👉"; a.body = `${ch} ${emoLabel(a.emoji.key)}`; emoHtml = `<div class="aemo">${ch}</div>`; }
+  else if (a.emoji?.url) { emoHtml = `<div class="aemo">${emojiTile({ url: a.emoji.url, frames: a.emoji.frames, fps: a.emoji.fps, loop: a.emoji.loop }, 46)}</div>`; }
   const el = document.createElement("div");
-  el.className = "atoast glass";
-  el.innerHTML = `${a.uid || a.img ? avatar(a.title, a.img ? proxied(a.img) : "", "sm") : `<div class="av sm">👻</div>`}<div style="min-width:0"><div class="t1 ellip">${esc(a.title)}</div><div class="t2 ellip">${esc(a.body || "")}</div></div><span class="x">✕</span>`;
+  el.className = "atoast glass" + (emoHtml ? " poke" : "");
+  el.innerHTML = `${a.uid || a.img ? avatar(a.title, a.img ? proxied(a.img) : "", "sm") : `<div class="av sm">👻</div>`}<div style="min-width:0"><div class="t1 ellip">${esc(a.title)}</div><div class="t2 ellip">${esc(a.body || "")}</div></div>${emoHtml}<span class="x">✕</span>`;
   el.onclick = (e) => { el.remove(); if (!e.target.classList.contains("x")) open(); };
-  $("#toasts").prepend(el);
-  setTimeout(() => el.remove(), 8000);
+  $("#toasts").prepend(el); if (a.emoji?.url) startEmojiAnim();
+  setTimeout(() => el.remove(), a.kind === "poke" ? 12000 : 8000);
   while ($("#toasts").children.length > 4) $("#toasts").lastChild.remove();
   if (ALERTS.sound) blip();
   vrHud(a);
   if (ALERTS.popups && "Notification" in window && Notification.permission === "granted" && (document.hidden || !document.hasFocus())) {
-    try { const n = new Notification(a.title, { body: a.body || "", icon: a.img ? proxied(a.img) : undefined, tag: "soul-" + a.id }); n.onclick = () => { n.close(); open(); }; } catch {}
+    try { const n = new Notification(a.title, { body: a.body || "", icon: a.emoji?.url ? imgUrl(a.emoji.url) : a.img ? proxied(a.img) : undefined, tag: "soul-" + a.id }); n.onclick = () => { n.close(); open(); }; } catch {}
   }
   if (a.kind !== "test") { if (S.view === "notifications") render(); }
 }

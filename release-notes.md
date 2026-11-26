@@ -1,3 +1,6 @@
-## Soul 3.4.1
+## Soul 3.4.2
 
-- **Clearer switches:** green with the circle on the right when on, red with the circle on the left when off, with a smooth slide. They stay readable with any accent color (including white).
+**See what you got poked with**
+- Poke alerts now show the emoji they used — VRChat's built-in ones (🤫 Shush, ❤️ Heart…) or their own custom emoji picture, animated if it moves.
+- The Windows notification uses their custom emoji as its icon.
+- Notifications → **Boops** shows the emoji on every poke, including old ones.
