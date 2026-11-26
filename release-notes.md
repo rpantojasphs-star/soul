@@ -1,3 +1,4 @@
-## Soul 3.4.3
+## Soul 3.4.4
 
-- Pokes received while Soul is running now show their emoji in Notifications → Boops too (VRChat's live message leaves out the picture link, so Soul reads the emoji from the poke's details).
+- **How many people are there:** every world card on Friends → Where they are now shows the instance's head count, e.g. **👥 12 / 40 · 3 friends** (red when it's full, plus how many are waiting in the queue).
+- Also: pokes received live now show their emoji in Notifications → Boops.

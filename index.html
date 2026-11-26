@@ -265,6 +265,7 @@ th{font-weight:500;text-transform:none;letter-spacing:0;font-size:12px}
 .bub.in{align-self:flex-start;background:rgba(255,255,255,.1);border-bottom-left-radius:4px}
 .bub .t{display:block;font-size:10.5px;opacity:.65;margin-top:2px}
 .chatday{align-self:center;font-size:11px;color:var(--muted);margin:6px 0 2px}
+.ppl{font-size:13px}.ppl.full b{color:var(--s-busy)}
 .pform h2{margin-top:20px}
 .pbadge{flex:none;font-size:11.5px;font-weight:700;padding:4px 9px;border-radius:99px;background:rgba(255,255,255,.08);color:var(--muted);align-self:center}.pbadge.on{background:color-mix(in srgb,var(--s-active) 25%,transparent);color:var(--text)}
 .setrow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.05)}
@@ -550,7 +551,7 @@ VIEWS.friends = async () => {
       const L = parseLoc(fs[0].location);
       const head = L.kind === "world"
         ? `<div style="min-width:0"><div class="w ellip lnk" onclick="openWorld('${esc(L.wid)}')">${esc(fs[0].world || "Unknown world")}</div><div class="meta">${[L.type, L.region, fs[0].group, "#" + L.num].filter(Boolean).map(esc).join(" · ")}</div></div>
-           <span style="margin-left:auto" class="muted small">${fs.length} friend${fs.length > 1 ? "s" : ""}</span><a class="btn primary" href="${launchUrl(L.loc)}">Join</a>`
+           <span style="margin-left:auto" class="small icount" data-loc="${esc(L.loc)}" data-f="${fs.length}"><span class="muted">${fs.length} friend${fs.length > 1 ? "s" : ""}</span></span><a class="btn primary" href="${launchUrl(L.loc)}">Join</a>`
         : `<div class="w">${esc(L.label)}</div><span style="margin-left:auto" class="muted small">${fs.length} friend${fs.length > 1 ? "s" : ""}</span>`;
       return `<div class="inst glass"><div class="inst-h">${head}</div><div class="members">${fs.map(memberChip).join("")}</div></div>`;
     }).join("") || (body ? "" : `<div class="empty glass">None of your friends are online right now.</div>`);
@@ -568,7 +569,23 @@ VIEWS.friends = async () => {
       : `<div class="empty glass">No friends match.</div>`;
   }
   $("#view").innerHTML = tb + body;
+  fillCounts();
 };
+// how many people are in each instance (from VRChat; refreshed at most once a minute)
+const instCache = new Map();
+async function fillCounts() {
+  if (!VRC.loggedIn) return;
+  const els = [...document.querySelectorAll(".icount[data-loc]")].slice(0, 20);
+  await Promise.all(els.map(async (el) => {
+    const loc = el.dataset.loc, f = +el.dataset.f || 0;
+    let c = instCache.get(loc);
+    if (!c || Date.now() - c.at > 60_000) { const v = await api("/api/vrc/instance?loc=" + encodeURIComponent(loc)).catch(() => null); c = { at: Date.now(), v }; instCache.set(loc, c); }
+    const v = c.v; if (!v || v.error || !el.isConnected) return;
+    const full = v.full || (v.capacity && v.users >= v.capacity);
+    el.title = `${v.users} people in this instance${v.capacity ? ` (room for ${v.capacity})` : ""}, ${f} of them your friend${f === 1 ? "" : "s"}`;
+    el.innerHTML = `<span class="ppl ${full ? "full" : ""}">👥 <b>${v.users}</b>${v.capacity ? `<span class="muted"> / ${v.capacity}</span>` : ""}</span><span class="muted"> · ${f} friend${f === 1 ? "" : "s"}${v.queue ? ` · ${v.queue} waiting` : ""}</span>`;
+  }));
+}
 function friendCard(f) {
   const L = parseLoc(f.location);
   const where = f.online ? (L.kind === "world" ? esc(f.world || "In a world") + ` · ${esc(L.type)}` : esc(L.label)) : "Last seen " + ago(f.since);
